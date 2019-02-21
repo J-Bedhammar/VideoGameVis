@@ -3,5 +3,46 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<title>Video Game Sales Visualization</title>
+		<link rel="stylesheet" href="css/index.css"/>
+		<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" />
 	</head>
+	
+	<body id="background">
+		<div class="card-body">
+			<div class="card-header">
+				<h2>Video Game Sales and Ratings</h2>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-9 pre-scrollable">
+					<div class="row" >
+						<div class="col-7">
+							<h2 class="graph-title">Top 5</h1>
+							<img id="sales" src="css/images/BarChartPlaceholder.png">
+						</div>
+						<div class="col-5" id="sales">
+							<h2 class="graph-title">Donut</h1>
+							<img id="sales" src="css/images/DonutChartPlaceholder.png">
+						</div>
+					</div>
+					<div class="col">
+						<h3 class="graph-title">Brush</h1>
+						<img id="sales" src="css/images/brush.png">
+						<h3 class="graph-title">Annual Sales</h1>
+						<img id="sales" src="css/images/sales.png">
+					</div>
+				</div>
+				<div class="col"  id="options"><h2 class="graph-title">Options</h1></div>
+			</div>
+		</div>
+		
+	</body>
+	
+	<!-- Library scripts -->
+	<script type=text/javascript src="libs/jquery/jquery.min.js"></script>
+	<script type=text/javascript src=libs/bootstrap/js/bootstrap.min.js></script>
+	<script type="text/javascript" src="libs/d3/d3.min.js"></script>
+	<!-- Visualization scripts -->
 </html>

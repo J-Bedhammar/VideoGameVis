@@ -1,54 +1,44 @@
-/**
- * 
-    Author: Kahin Akram
-    Date: Jan 24, 2019
-    TNM048 Lab 1 - Visual Information-Seeking Mantra
-    Css file
- *  
-*/
+#background{
+	background-color: #990000;
+	height: 100%;
+}
 
-.zoom {
-  cursor: move;
-  fill: none;
-  pointer-events: all;
+#sales{
+	position: relative;
+	width: 100%;
 }
-.no-mouse {
-    pointer-events: none;
+
+#options{
+	background-color: #990000;
 }
-#mapid {
-  height: 300px;
-  width: auto;
-  position: relative;
-  margin-top: -30px;
-  margin-left: 40px;
-  margin-right: 20px;
-  margin-bottom: 10px;
+
+
+
+/* CLASS */
+.pre-scrollable{
+	height:75vh;
 }
-#tooltip, #color-info{
-        height: 270px;
-        background-color: white;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;
-        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-        -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-        pointer-events: none;
-        opacity: 0.8;
+
+.card-body{
+	background-color: #800000;
+	padding: 1rem !important;
 }
-#tooltip p {
-    margin: 0;
-    font-family: sans-serif;
-    font-size: 14px;
-    line-height: 30px;
+
+.card-header{
+	padding: 0.5rem 1rem !important;
+	text-align: center;
+	background-color: #990000 !important;
+	color:white !important;
 }
-#tooltip, #color-info{
-    margin-top: 20px;
-    position: relative;
-    width: auto;
+
+.container-fluid{
+	background-color: #dfbe9f;
+	min-height: 100%;
+	overflow:hidden !important;
 }
-#color-info {
-    font-family: sans-serif;
-    font-size: 14px;
-    line-height: 30px;
+
+.graph-title{
+	text-align: center;
 }
+
+
