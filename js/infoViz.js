@@ -1,13 +1,18 @@
 
+var annualSales;
+
 function infoViz(data){
 	
 	//Print outs
 	console.log("infoViz()");
-	console.log("First game: " + data[0].Name);
+	//console.log(data);
 	
-	var tempPublisher = data[0].Publisher;
+	var tempColumn = "Publisher";
+	var tempPublisher = "Nintendo";
 	
-	annualSales = new annualSales(data, tempPublisher);
+	console.log("AnnualSales: " + tempColumn + ", " + tempPublisher);
+	
+	annualSales = new annualSales(data, tempColumn, tempPublisher);
 	
 	/*
 	//Bar Chart

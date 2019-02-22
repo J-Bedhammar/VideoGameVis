@@ -8,6 +8,10 @@
 	color: white;
 }
 
+#annualSales{
+	border: 1px solid #d98c8c;
+}
+
 /* CLASS */
 .sales{
 	position: relative;
@@ -35,5 +39,4 @@
 .graph-title{
 	text-align: center;
 }
-
 
