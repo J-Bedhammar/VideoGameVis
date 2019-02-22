@@ -3,21 +3,15 @@
 	height: 100%;
 }
 
-#sales{
-	position: relative;
-	width: 100%;
-}
-
 #options{
 	background-color: #990000;
 	color: white;
 }
 
-
-
 /* CLASS */
-.pre-scrollable{
-	height:75vh;
+.sales{
+	position: relative;
+	width: 100%;
 }
 
 .card-body{

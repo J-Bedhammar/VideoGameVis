@@ -18,20 +18,22 @@
 			<div class="row">
 				<div class="col-9">
 					<div class="row" >
-						<div class="col-7">
+						<div class="col-7" id="bar-chart">
 							<h2 class="graph-title">Top 5</h2>
-							<img id="sales" src="css/images/BarChartPlaceholder.png">
+							<img class="sales" src="css/images/BarChartPlaceholder.png">
 						</div>
-						<div class="col-5" id="sales">
+						<div class="col-5 sales" id="donut">
 							<h2 class="graph-title">Donut</h2>
-							<img id="sales" src="css/images/DonutChartPlaceholder.png">
+							<img class="sales" src="css/images/DonutChartPlaceholder.png">
 						</div>
 					</div>
 					<div class="col">
 						<h3 class="graph-title">Brush</h3>
-						<img id="sales" src="css/images/brush.png">
+						<div id="brush"></div>
+						<img class="sales" src="css/images/brush.png">
 						<h3 class="graph-title">Annual Sales</h3>
-						<img id="sales" src="css/images/sales.png">
+						<div id="annualSales"></div>
+						<img class="sales" src="css/images/sales.png">
 					</div>
 				</div>
 				<div class="col"  id="options"><h2 class="graph-title">Options</h2></div>
@@ -47,5 +49,7 @@
 	<!-- Visualization scripts -->
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/infoViz.js"></script>
+	<script type="text/javascript" src="js/barChart.js"></script>
+	<script type="text/javascript" src="js/annualSales.js"></script>
 
 </html>
