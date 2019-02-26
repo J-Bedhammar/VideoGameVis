@@ -42,11 +42,8 @@ function sunBurst(data){
     };
 	
 	//sets the height and width of the chart
-	var container = $("#donut");
-	var width = $("#donut")
-		.width();
-	var height = $("#donut")
-		.height();
+	var width = 300;
+	var height = 150;
 	var radius = Math.min(width, height)/ 2;
 	
 	//sets the color of the chart

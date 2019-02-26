@@ -18,28 +18,28 @@ function barChart(data){
 	//sorts the top5 data, highest value to lowest value
 	top5.sort(function(a, b) { return a.Global_Sales - b.Global_Sales; });
 	
-	var container = $("#bar-chart");
-	var containerWidth = $("#bar-chart")
-		.width()*0.7;
-	var containerHeight = $("#bar-chart")
-		.height()*0.7;
-	
 	marginTop = 20;
 	marginLeft = 150;
 	
+	var container = $("#bar-chart");
+	var containerWidth =  $("#bar-chart").parent().width();
+	var containerHeight = 300 - marginTop;
+	
+	
+	
 	//creates scales in x and y
 	var x = d3.scaleLinear()
-		.range([0, containerWidth*0.8]);
-	var y = d3.scaleBand().range([containerHeight*6, 0])
+		.range([0, containerWidth*0.6]);
+	var y = d3.scaleBand().range([containerHeight, 0])
 		.padding(0.3);
-	var names = d3.scaleBand().range([containerHeight*6, 0])
+	var names = d3.scaleBand().range([containerHeight, 0])
 		.padding(0.3);
 	
 	//creates the svg element
 	var svg = d3.select("#bar-chart")
 		.append("svg")
-		.attr("width", "100%")
-		.attr("height", "100%")
+		.attr("width", containerWidth)
+		.attr("height", containerHeight)
 		.append("g")
 		.attr("transform", "translate(" + marginLeft + ',' + marginTop + ")");
 		
