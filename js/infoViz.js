@@ -9,7 +9,7 @@ function infoViz(data){
 	
 	// Annual Sales
 	var tempColumn = "Name";
-	var tempPublisher = "All";
+	var tempPublisher = "Grand Theft Auto V";
 	
 	annualSales(data, tempColumn, tempPublisher);
 	
