@@ -52,4 +52,18 @@
 	pointer-events: none;
 }
 
+.salesInfo{
+	position: absolute;			
+    text-align: center;			
+    min-width: 120px;		
+    min-height: 28px;					
+    padding: 2px 5px;				
+    font: 12px sans-serif;	
+	color: white;
+    background: #b30000;	
+    border: 6px black;		
+    border-radius: 2px;	
+	border-left-style: solid;
+    pointer-events: none;	
+}
 
