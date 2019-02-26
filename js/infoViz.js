@@ -1,21 +1,23 @@
 
-var annualSales;
-
 function infoViz(data){
 	
 	//Print outs
 	console.log("infoViz()");
 	//console.log(data);
 	
+
+	
+	// Annual Sales
 	var tempColumn = "Publisher";
 	var tempPublisher = "Nintendo";
 	
-	console.log("AnnualSales: " + tempColumn + ", " + tempPublisher);
+	annualSales(data, tempColumn, tempPublisher);
 	
-	annualSales = new annualSales(data, tempColumn, tempPublisher);
-
+	// Bar chart
 	barChart(data)
-		
+	
+	// Brush
+	brushChart(data);
 	
 	// END OF infoViz
 	console.log("DONE!");

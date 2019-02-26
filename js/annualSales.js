@@ -14,7 +14,7 @@ function annualSales(data, columnName, itemName){
 					salesArray.push({name: row.Name, year: +row.Year_of_Release, sales: +row.Global_Sales});
 		}
 	}
-		
+	
 	// Sort data in ascending order after year
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	
@@ -31,12 +31,10 @@ function annualSales(data, columnName, itemName){
         .attr("height", height + margin.top + margin.bottom);
 
 	var g = svg.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		
 	// Parse date for printout
-	var parseDate = d3.timeParse("%Y"),
-		parseDate2 = d3.timeParse("%d-%b-%y"),
-		formatTime = d3.timeParse("%e %B");
+	var parseDate = d3.timeParse("%Y");
 	
 	// Axes and scales
 	var xScale = d3.scaleTime().range([0, width]);
@@ -46,18 +44,21 @@ function annualSales(data, columnName, itemName){
 	// Creating the line
 	var line = d3.line()
 		.x(function(d) { return xScale(d.year)}) //console.log(xScale(d.year));
-		.y(function(d) { return yScale(d.sales)})
+		.y(function(d) { return yScale(d.sales)});
 	
 	xScale.domain(d3.extent(salesArray, function(d) { return d.year }));
 	yScale.domain(d3.extent(salesArray, function(d) { return d.sales }));
 	xTime.domain(d3.extent(salesArray, function(d) { return parseDate(d.year) }));
 	
+	this.changeXScale = function (newScale) {
+		xScale = newScale;
+	}
+	
 	// Append the axes
-	g.append("g")
-		.attr("transform", "translate(0," + height + ")")
-		.call(d3.axisBottom(xTime))
-		.select(".domain")
-		.remove();
+    g.append("g")
+		.attr("class","axis axis--x")
+		.attr("transform", "translate(0, " + height + ")")
+		.call(d3.axisBottom(xTime));
 		
 	g.append("g")
 		.call(d3.axisLeft(yScale))
@@ -129,6 +130,8 @@ function annualSales(data, columnName, itemName){
 			dot_sales.text("");*/
 			infoDiv.style("display", "none");
 		})
+	
+
 	
 	// END OF ANNUAL SALES
 }
