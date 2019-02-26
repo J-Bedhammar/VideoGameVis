@@ -14,7 +14,9 @@ function infoViz(data){
 	
 	annualSales = new annualSales(data, tempColumn, tempPublisher);
 
-	barChart(data)
+	barChart(data);
+	
+	sunBurst(data);
 		
 	
 	// END OF infoViz
