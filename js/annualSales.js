@@ -6,12 +6,19 @@ function annualSales(data, columnName, itemName){
 	//Extract year and global_sales depending on column and itemName. Ex: Publisher - Nintendo
 	for (var i = 0; i < data.length; i++){
 		var row = data[i];
-		for (var key in row){
-			if (row[key] == itemName)
+		if(itemName == "All" || itemName == ""){
+			if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
+				continue;
+			else
+				salesArray.push({name: row.Name, year: +row.Year_of_Release, sales: +row.Global_Sales});
+		}
+		else{
+			if (row[columnName] == itemName){
 				if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
-					console.log("NaN");
+					continue;
 				else
 					salesArray.push({name: row.Name, year: +row.Year_of_Release, sales: +row.Global_Sales});
+			}
 		}
 	}
 	

@@ -8,16 +8,16 @@ function infoViz(data){
 
 	
 	// Annual Sales
-	var tempColumn = "Publisher";
-	var tempPublisher = "Nintendo";
+	var tempColumn = "Name";
+	var tempPublisher = "All";
 	
 	annualSales(data, tempColumn, tempPublisher);
 	
 	// Bar chart
-	barChart(data)
+	barChart(data);
 	
 	// Brush
-	brushChart(data);
+	brushChart(data, tempColumn, tempPublisher);
 	
 	// Donut
 	sunBurst(data);

@@ -1,5 +1,5 @@
 
-function brushChart(data){
+function brushChart(data, tempColumn, tempPublisher){
 
 	
 	// Creating margins and figure sizes
@@ -75,12 +75,12 @@ function brushChart(data){
 		var selectedMin = Math.floor(xScale.domain()[0]);
 		var selectedMax = Math.floor(xScale.domain()[1]);
 		
-		console.log("pls: " + selectedMax);
+		console.log("Min: " + selectedMin + ", Max: " + selectedMax);
 		
 		//Extract data from the selected years
 		for (var i = 0; i < data.length; i++){
 			var row = data[i];
-			if ((row.Year_of_Release >= selectedMin && row.Year_of_Release <= selectedMax) || isNaN(row.Year_of_Release)){
+			if (row.Year_of_Release >= selectedMin && row.Year_of_Release <= selectedMax ){ // || isNaN(row.Year_of_Release)
 				targetData.push(row);
 			}
 
@@ -90,9 +90,6 @@ function brushChart(data){
 		
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
-		
-		var tempColumn = "Publisher";
-		var tempPublisher = "Nintendo";
 	
 		annualSales(targetData, tempColumn, tempPublisher);
 		barChart(targetData);
