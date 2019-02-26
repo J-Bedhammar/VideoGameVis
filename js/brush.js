@@ -75,7 +75,7 @@ function brushChart(data, tempColumn, tempPublisher){
 		var selectedMin = Math.floor(xScale.domain()[0]);
 		var selectedMax = Math.floor(xScale.domain()[1]);
 		
-		console.log("Min: " + selectedMin + ", Max: " + selectedMax);
+		//console.log("Min: " + selectedMin + ", Max: " + selectedMax);
 		
 		//Extract data from the selected years
 		for (var i = 0; i < data.length; i++){
@@ -85,8 +85,6 @@ function brushChart(data, tempColumn, tempPublisher){
 			}
 
 		}
-		
-		console.log(targetData.length);
 		
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
