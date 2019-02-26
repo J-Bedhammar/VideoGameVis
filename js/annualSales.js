@@ -11,7 +11,7 @@ function annualSales(data, columnName, itemName){
 				if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
 					console.log("NaN");
 				else
-					salesArray.push({year: +row.Year_of_Release, sales: +row.Global_Sales});
+					salesArray.push({name: row.Name, year: +row.Year_of_Release, sales: +row.Global_Sales});
 		}
 	}
 		
@@ -52,7 +52,7 @@ function annualSales(data, columnName, itemName){
 	xScale.domain(d3.extent(salesArray, function(d) { return d.year }));
 	yScale.domain(d3.extent(salesArray, function(d) { return d.sales }));
 	xTime.domain(d3.extent(salesArray, function(d) { return parseDate(d.year) }));
-
+	
 	
 	// Append the axes
 	g.append("g")
@@ -82,7 +82,7 @@ function annualSales(data, columnName, itemName){
 		.attr("d", line);
 	
 	//"Legend"
-	var dot_year = g.append("g")
+	/*var dot_year = g.append("g")
 		.append("text")
 		.attr("fill", "#000")
 		.attr("x", width-100)
@@ -94,8 +94,15 @@ function annualSales(data, columnName, itemName){
 		.attr("fill", "#000")
 		.attr("x", width-100)
 		.attr("y", 40);
-		
-	// Add the "scatterplot"
+	*/	
+	
+	// Sales Information div
+	var infoDiv = d3.select("body").append("div")	
+    .attr("class", "salesInfo")
+	.style("display", "none");
+	
+	
+	// Add the circles and mouseover information
 	svg.selectAll("dot")
 		.data(salesArray)
 		.enter().append("circle")
@@ -106,18 +113,23 @@ function annualSales(data, columnName, itemName){
 		.on("mouseover", function(d) {		
             d3.select(this)
 				.transition(200)
-				.attr("fill", "white")
+				.attr("fill", "red")
 				.attr("r", 10);
-			dot_year.text( "Year: " + d.year);
-			dot_sales.text("Sales: " + d.sales + "M");
+			/*dot_year.text( "Year: " + d.year);
+			dot_sales.text("Sales: " + d.sales + "M");*/
+			infoDiv.html("<strong>" + d.name + "</strong>" + "</br> Year: " + d.year + "</br> Sales: "  + d.sales + "M")
+				.style("display", "inline-block")
+                .style("left", (d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY - 40) + "px");
             })
 		.on("mouseout", function(d){
 			d3.select(this)
 				.transition(200)
 				.attr("fill", "black")
 				.attr("r", 2);
-			dot_year.text("");
-			dot_sales.text("");
+			/*dot_year.text("");
+			dot_sales.text("");*/
+			infoDiv.style("display", "none");
 		})
 	
 	// END OF ANNUAL SALES
