@@ -62,13 +62,20 @@ function barChart(data){
 		.attr("width", function(d) { return x(d.Global_Sales); })
 		.attr("y", function(d) { return y(d.Name); })
 		.attr("height", y.bandwidth() )
+		.attr("fill", "#b30000")
 		.on("mouseover", function(d) { 
 			tooltip.style("display", "inline-block")
-			.style("left", d3.event.pageX - 50 + "px")
-			.style("top", d3.event.pageY - 70 + "px")
+			.style("left", d3.event.pageX - 100 + "px")
+			.style("top", d3.event.pageY - 150 + "px")
 			.html("<strong>" + d.Name + " </strong> <br/> Global Sales: " + d.Global_Sales );
+			d3.select(this)
+			.attr('opacity', 0.6);
 		})
-		.on("mouseout", function(d){ tooltip.style("display", "none");});
+		.on("mouseout", function(d){ 
+			tooltip.style("display", "none");
+			d3.select(this)
+			.attr('opacity', 1);
+		});
 	
 	
 	//creates axes for the bar chart 	

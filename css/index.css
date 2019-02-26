@@ -49,6 +49,7 @@
 	border: 1px solid #6F257F;
 	padding: 5px;
 	text-align: center;
+	pointer-events: none;
 }
 
 
