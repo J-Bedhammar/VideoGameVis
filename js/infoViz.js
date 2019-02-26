@@ -19,6 +19,9 @@ function infoViz(data){
 	// Brush
 	brushChart(data);
 	
+	// Donut
+	sunBurst(data);
+	
 	// END OF infoViz
 	console.log("DONE!");
 }
