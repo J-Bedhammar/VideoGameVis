@@ -43,7 +43,7 @@ function sunBurst(data){
 	
 	//sets the height and width of the chart
 	var width = 300;
-	var height = 150;
+	var height = 125;
 	var radius = Math.min(width, height)/ 2;
 	
 	//sets the color of the chart
