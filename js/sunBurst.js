@@ -42,8 +42,11 @@ function sunBurst(data){
     };
 	
 	//sets the height and width of the chart
-	var width = 300;
-	var height = 125;
+	var marginTop = 20;
+	var marginBottom = 30;
+	
+	var width = $("#donut").parent().width();
+	var height = (240 - marginTop - marginBottom)/2;
 	var radius = Math.min(width, height)/ 2;
 	
 	//sets the color of the chart
@@ -55,7 +58,7 @@ function sunBurst(data){
 		.attr("width", width)
 		.attr("height", height*2)
 		.append("g")
-		.attr("transform", "translate(" + width/2 + "," + height/1.2 + ")");
+		.attr("transform", "translate(" + width/2 + "," + height + ")");
 	
 	//sets the data structure
 	var partition  = d3.partition()
