@@ -20,20 +20,20 @@ function barChart(data){
 	//sorts the top5 data, highest value to lowest value
 	top5.sort(function(a, b) { return a.Global_Sales - b.Global_Sales; });
 	
-	marginTop = 20;
-	marginLeft = 150;
+	var marginTop = 20;
+	var marginLeft = 150;
+	var marginBottom = 30;
 	
 	var container = $("#bar-chart");
 	var containerWidth =  $("#bar-chart").parent().width();
-	var containerHeight = 250 - marginTop;
-	
+	var containerHeight = 240 - marginTop - marginBottom;
 	
 	//creates scales in x and y
 	var x = d3.scaleLinear()
 		.range([0, containerWidth*0.6]);
-	var y = d3.scaleBand().range([containerHeight, 0])
+	var y = d3.scaleBand().range([containerHeight - marginBottom, 0])
 		.padding(0.3);
-	var names = d3.scaleBand().range([containerHeight, 0])
+	var names = d3.scaleBand().range([containerHeight - marginBottom, 0])
 		.padding(0.3);
 	
 	//creates the svg element

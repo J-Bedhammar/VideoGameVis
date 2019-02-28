@@ -5,7 +5,7 @@ function brushChart(data, tempColumn, tempPublisher){
 	// Creating margins and figure sizes
     var margin = { top: 10, right: 50, bottom: 30, left: 50 },
         width = $("#brush").parent().width() - margin.left - margin.right,
-        height = 60 - margin.top - margin.bottom;
+        height = 55 - margin.top - margin.bottom;
 	
 	// create svg for annual sales chart
 	var svg = d3.select("#brush").append("svg")

@@ -1,3 +1,11 @@
+/* FONTS */
+.graph-title{
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+
+/* ID */
 #background{
 	background-color: #800000;
 	height: 100%;
@@ -35,10 +43,6 @@
 	background-color: #f2f2f2;/*#df9f9f; /*#dfbe9f;*/
 	min-height: 100%;
 	overflow:hidden !important;
-}
-
-.graph-title{
-	text-align: center;
 }
 
 .toolTip {
