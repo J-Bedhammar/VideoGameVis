@@ -7,7 +7,7 @@ function main(update){
 	d3.csv('data/Video_Games_Sales_as_at_22_Dec_2016.csv', function(error, data) {
 		if(error) throw(error);
 		
-		console.log("main()");
+		//console.log("main()");
 	
 		//Send in dataset
 		infoViz(data, update);
@@ -16,13 +16,4 @@ function main(update){
 
 	
 	// END OF MAIN
-}
-
-function update(){
-	/*d3.select("#bar-chart > *").remove();
-	d3.select("#annualSales > *").remove();
-	d3.select("#donut> *").remove();
-	d3.select("#brush > *").remove();
-	main();
-	*/
 }

@@ -1,5 +1,5 @@
 
-function annualSales(data, columnName, itemName, summed){
+function annualSales(data, columnName, itemName, sumSales){
 	
 	var salesArray = [];
 	
@@ -26,12 +26,15 @@ function annualSales(data, columnName, itemName, summed){
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	
 	// Sum the annual sales if summed is true
-	if(summed)
-		var summedSales = annualSums(salesArray);
+	if(sumSales){
+		salesArray = annualSums(salesArray);
+	}
+	
+	//console.log(salesArray);
 	
 	// Creating margins and figure sizes
     var margin = { top: 20, right: 50, bottom: 30, left: 50 },
-        width = $("#annualSales").parent(){}.width() - margin.left - margin.right,
+        width = $("#annualSales").parent().width() - margin.left - margin.right,
         height = 190 - margin.top - margin.bottom;
 
 	// create svg for annual sales chart
@@ -142,19 +145,36 @@ function annualSales(data, columnName, itemName, summed){
 			infoDiv.style("display", "none");
 		})
 	
-
-	
-	function annualSums(salesArray){
-		var summedSales = [];
-		
-		return summedSales;
-	}
-	
 	
 	// END OF ANNUAL SALES
 }
 
 
+function annualSums(salesArray){
+		var summedSales = [];
+		var tempYear = salesArray[0].year;
+		var currYearSales = 0;
+		
+		//console.log(salesArray)
+		
+		for (var i = 0; i < salesArray.length; i++){
+			
+			if(tempYear == salesArray[i].year)
+				currYearSales += salesArray[i].sales;
+			else{
+				summedSales.push( { sales: currYearSales, year: tempYear});
+				currYearSales = salesArray[i].sales;
+				tempYear = salesArray[i].year;				
+			}
+			//Last item
+			if( i == salesArray.length-1)
+				summedSales.push( { sales: currYearSales, year: salesArray[i].year});
+			
+		}
+		
+		//console.log(summedSales);
+		return summedSales;
+	}
 
 
 

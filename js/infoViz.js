@@ -2,9 +2,10 @@
 function infoViz(data, update){
 	
 	//Print outs
-	console.log("infoViz()");
+	//console.log("infoViz()");
 	//console.log(data);
 	
+	var annualSaleSetting = $("#sumAnnualSales").val();
 	var columnName = $("#category").val();
 	var itemName = "Nintendo";
 	
@@ -12,30 +13,36 @@ function infoViz(data, update){
 		columnName = "Name";
 		itemName = "Grand Theft Auto V"
 	}
-	
-	console.log(columnName)
-	
+
 	
 	if(!update){
+		var sumYear = false;
 		barChart(data);
 		sunBurst(data);
-		annualSales(data, columnName, itemName);
-		brushChart(data, columnName, itemName);
+		annualSales(data, columnName, itemName, sumYear);
+		brushChart(data, columnName, itemName, sumYear);
 	}
 	else{
+		var sumYear = false;
+		
+		console.log("Update")
 		d3.select("#brush > *").remove();
 		d3.select("#bar-chart > *").remove();
 		d3.select("#donut > *").remove();
 		d3.select("#annualSales > *").remove();
 		
+		
+		if(annualSaleSetting == "Total Sum")
+			sumYear = true;
+		
 		barChart(data);
 		sunBurst(data);
-		annualSales(data, columnName, itemName);
-		brushChart(data, columnName, itemName);
+		annualSales(data, columnName, itemName, sumYear);
+		brushChart(data, columnName, itemName, sumYear);
 	}
 
 	
 	
 	// END OF infoViz
-	console.log("DONE!");
+	//console.log("DONE!");
 }

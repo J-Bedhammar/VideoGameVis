@@ -39,12 +39,17 @@
 				<div class="col"  id="options">
 					<h2 class="graph-title">Options</h2>
 					<div class="form-group">
-						<label for="sel1">Show Top 5:</label>
+						<label for="category">Show Top 5:</label>
 						<select class="form-control" id="category" onchange="main(true)">
 							<option>Game</option>
 							<option>Publisher</option>
 							<option>Developer</option>
 							<option>Platform</option>
+						</select>
+						<label for="sumAnnualSales">Annual Sales:</label>
+						<select class="form-control" id="sumAnnualSales" onchange="main(true)">
+							<option>Individual Game Sales</option>
+							<option>Total Sum</option>
 						</select>
 					</div>
 				</div>
