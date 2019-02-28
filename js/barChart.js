@@ -4,11 +4,13 @@ function barChart(data){
 	
 	//extracts the top 5 values from the data
 	var top5 = [];
-	top5.push(data[0]);
-	top5.push(data[1]);
-	top5.push(data[2]);
-	top5.push(data[3]);
-	top5.push(data[4]);
+	
+	for ( i = 0; i<=4; i++){
+		if( data[i] != null)
+			top5.push(data[i]);
+			top5[i].nr = i;
+	}
+
 	
 	//converts the sales to numbers
 	top5.forEach(function(d) {
@@ -26,10 +28,6 @@ function barChart(data){
 	var containerWidth =  $("#bar-chart").parent().width();
 	var containerHeight = 240 - marginTop - marginBottom;
 	
-	    /*var margin = { top: 20, right: 50, bottom: 30, left: 50 },
-        width = $("#annualSales").parent().width() - margin.left - margin.right,
-        height = 250 - margin.top - margin.bottom;*/
-	
 	//creates scales in x and y
 	var x = d3.scaleLinear()
 		.range([0, containerWidth*0.6]);
@@ -45,19 +43,17 @@ function barChart(data){
 		.attr("height", containerHeight)
 		.append("g")
 		.attr("transform", "translate(" + marginLeft + ',' + marginTop + ")");
-		
-	
 	
 	//maps the data to the x and y values
-	y.domain(top5.map(function(d) { return d.Name;}));
+	y.domain(top5.map(function(d) { return d.nr;}));
 	x.domain([0, d3.max(top5, function(d) { return d.Global_Sales;})]);
 	
 	//shorten the names of the games
 	names.domain(top5.map(function(d) { 
-		if( d.Name.length > 26)
-			return d.Name.substring(0,23) + "...";
+		if( d.Name.length > 20)
+			return d.Name.substring(0,15) + "... (" + d.Platform + ")";
 		else
-			return d.Name;
+			return d.Name + " (" +  d.Platform + ")";
 	}));
 	
 	//creates the mouseover tooltip
@@ -69,6 +65,7 @@ function barChart(data){
 	var barColor = d3.scaleLinear()
 		.range(["#E60000", "#CC0000", "#B30000", "#990000", "#800000"]);
 	
+	//OBS! måste kolla om de har samma namn.
 	//attaches the x and y to the bars
 	svg.selectAll(".bar")
 		.data(top5)
@@ -76,14 +73,14 @@ function barChart(data){
 		.append("rect")
 		.attr("class","bar")
 		.attr("width", function(d) { return x(d.Global_Sales); })
-		.attr("y", function(d) { return y(d.Name); })
+		.attr("y", function(d) { return y(d.nr); })
 		.attr("height", y.bandwidth() )
 		.attr("fill", function(d, i) { return barColor(i)} )
 		.on("mouseover", function(d) { 
 			tooltip.style("display", "inline-block")
 			.style("left", d3.event.pageX + 10 + "px")
 			.style("top", d3.event.pageY - 15 + "px")
-			.html("<strong>" + d.Name + " </strong> <br/> Global Sales: " + d.Global_Sales );
+			.html("<strong>" + d.Name + " (" + d.Platform + ") </strong> <br/> Global Sales: " + d.Global_Sales );
 			d3.select(this)
 			.attr('opacity', 0.6);
 		})

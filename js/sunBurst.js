@@ -17,27 +17,32 @@ function sunBurst(data){
             "name": "PS3",
             "children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
 				{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
-				{"name": "Sales JP", "size": gamesData[0].JP_Sales}]
+				{"name": "Sales JP", "size": gamesData[0].JP_Sales},
+				{"name": "Sales other", "size": gamesData[0].Other_Sales}]
         }, {
             "name": "XBOX360",
             "children": [{"name": "Sales EU", "size": gamesData[1].EU_Sales}, 
 				{"name": "Sales NA", "size": gamesData[1].NA_Sales}, 
-				{"name": "Sales JP", "size": gamesData[1].JP_Sales}]
+				{"name": "Sales JP", "size": gamesData[1].JP_Sales},
+				{"name": "Sales other", "size": gamesData[1].Other_Sales}]
         }, {
             "name": "PS4",
             "children": [{"name": "Sales EU", "size": gamesData[2].EU_Sales}, 
 				{"name": "Sales NA", "size": gamesData[2].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[2].JP_Sales}]
+				{"name": "Sales JP", "size": gamesData[2].JP_Sales},
+				{"name": "Sales other", "size": gamesData[2].Other_Sales}]
         }, {
             "name": "XBOXONE",
             "children": [{"name": "Sales EU", "size": gamesData[3].EU_Sales}, 
 				{"name": "Sales NA", "size": gamesData[3].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[3].JP_Sales}]
+				{"name": "Sales JP", "size": gamesData[3].JP_Sales},
+				{"name": "Sales other", "size": gamesData[3].Other_Sales}]
         }, {
             "name": "PC",
             "children": [{"name": "Sales EU", "size": gamesData[4].EU_Sales}, 
 				{"name": "Sales NA", "size": gamesData[4].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[4].JP_Sales}]
+				{"name": "Sales JP", "size": gamesData[4].JP_Sales},
+				{"name": "Sales other", "size": gamesData[4].Other_Sales}]
         }]
     };
 	
@@ -97,7 +102,7 @@ function sunBurst(data){
 			tooltip.style("display", "inline-block")
 			.style("left", d3.event.pageX + 10 + "px")
 			.style("top", d3.event.pageY - 15 + "px")
-			.html( "Global Sales: " );
+			.html( d.name + d.value );
 			d3.select(this)
 			.attr('opacity', 0.6);
 		})
