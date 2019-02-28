@@ -65,7 +65,8 @@ function barChart(data){
 	var barColor = d3.scaleLinear()
 		.range(["#E60000", "#CC0000", "#B30000", "#990000", "#800000"]);
 	
-	//OBS! måste kolla om de har samma namn.
+	var displayData = " ";
+	
 	//attaches the x and y to the bars
 	svg.selectAll(".bar")
 		.data(top5)
@@ -82,13 +83,20 @@ function barChart(data){
 			.style("top", d3.event.pageY - 15 + "px")
 			.html("<strong>" + d.Name + " (" + d.Platform + ") </strong> <br/> Global Sales: " + d.Global_Sales );
 			d3.select(this)
-			.attr('opacity', 0.6);
+			.attr("opacity", 0.6);
 		})
 		.on("mouseout", function(d){ 
 			tooltip.style("display", "none");
 			d3.select(this)
-			.attr('opacity', 1.0);
+			.attr("opacity", 1.0);
+		})
+		.on("click", function(d){
+			displayData = data[d.nr];
+			d3.select(this)
+			.attr("fill", "#ffff00");
+			//updateCharts(displayData);
 		});
+	
 	
 	
 	//creates axes for the bar chart 	
@@ -97,5 +105,11 @@ function barChart(data){
 	svg.append("g")
 		.call(d3.axisLeft(names));
 		
-
+	function updateCharts(displayData){
+		
+		d3.select("#donut > *").remove();
+		sunBurst(data, displayData);
+		d3.select("#donut > *").remove();
+		
+	}
 }

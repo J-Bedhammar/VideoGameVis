@@ -75,3 +75,7 @@
 	border-left-style: solid;
     pointer-events: none;	
 }
+
+.sunburstName{
+	text-align: center;
+}

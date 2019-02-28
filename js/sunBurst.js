@@ -1,49 +1,21 @@
 
-function sunBurst(data){
+function sunBurst(data, displayData){
 	
 	//extract the relevant data from the dataset
 	var gamesData = [];
-	gamesData.push(data[16]);
-	gamesData.push(data[23]);
-	gamesData.push(data[42]);
-	gamesData.push(data[165]);
-	gamesData.push(data[1730]);
 	
+	var name = displayData.Name;
+	var gamesData = [];
+	for (var i = 0; i < data.length; i++){
+		var row = data[i];
+		if(row.Name == displayData.Name)
+			gamesData.push(data[i]);
+	}
+	
+	var nodeData = createHierarchy(gamesData, displayData);
 	
 	//creates an hierarchy data
-	var nodeData = {
-        "name": "GTA V", "children": [{
-            "name": "PS3",
-            "children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
-				{"name": "Sales JP", "size": gamesData[0].JP_Sales},
-				{"name": "Sales other", "size": gamesData[0].Other_Sales}]
-        }, {
-            "name": "XBOX360",
-            "children": [{"name": "Sales EU", "size": gamesData[1].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[1].NA_Sales}, 
-				{"name": "Sales JP", "size": gamesData[1].JP_Sales},
-				{"name": "Sales other", "size": gamesData[1].Other_Sales}]
-        }, {
-            "name": "PS4",
-            "children": [{"name": "Sales EU", "size": gamesData[2].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[2].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[2].JP_Sales},
-				{"name": "Sales other", "size": gamesData[2].Other_Sales}]
-        }, {
-            "name": "XBOXONE",
-            "children": [{"name": "Sales EU", "size": gamesData[3].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[3].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[3].JP_Sales},
-				{"name": "Sales other", "size": gamesData[3].Other_Sales}]
-        }, {
-            "name": "PC",
-            "children": [{"name": "Sales EU", "size": gamesData[4].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[4].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[4].JP_Sales},
-				{"name": "Sales other", "size": gamesData[4].Other_Sales}]
-        }]
-    };
+	
 	
 	//sets the height and width of the chart
 	var marginTop = 20;
@@ -87,6 +59,11 @@ function sunBurst(data){
 		.style("display", "none")
 		.attr("class","salesInfo");
 		
+	//SKAPAR BUGGAR
+	/*var sunburstName = d3.select("#donut")
+		.append("div")
+		.html(nodeData.name)
+		.attr("class","sunburstName"); */
 		
 	//put all the parts together
 	g.selectAll("path")
@@ -101,7 +78,7 @@ function sunBurst(data){
 			tooltip.style("display", "inline-block")
 			.style("left", d3.event.pageX + 10 + "px")
 			.style("top", d3.event.pageY - 15 + "px")
-			.html(parseFloat(Math.round(d.value * 100) / 100).toFixed(2));
+			.html( "<strong>" + d.data.name + ": </strong> " + parseFloat(Math.round(d.value * 100) / 100).toFixed(2));
 			d3.select(this)
 			.attr('opacity', 0.6);
 		})
@@ -111,6 +88,42 @@ function sunBurst(data){
 			.attr('opacity', 1.0);
 		});
 	
-
+	function createHierarchy(gamesData, displayData){
+		
+		var nodeData = {
+        "name": displayData.Name, "children": [{
+            "name": gamesData[0].Platform,
+            "children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
+				{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
+				{"name": "Sales JP", "size": gamesData[0].JP_Sales},
+				{"name": "Sales other", "size": gamesData[0].Other_Sales}]
+        }]}; /*, {
+            "name": "XBOX360",
+            "children": [{"name": "Sales EU", "size": gamesData[1].EU_Sales}, 
+				{"name": "Sales NA", "size": gamesData[1].NA_Sales}, 
+				{"name": "Sales JP", "size": gamesData[1].JP_Sales},
+				{"name": "Sales other", "size": gamesData[1].Other_Sales}]
+        }, {
+            "name": "PS4",
+            "children": [{"name": "Sales EU", "size": gamesData[2].EU_Sales}, 
+				{"name": "Sales NA", "size": gamesData[2].NA_Sales},
+				{"name": "Sales JP", "size": gamesData[2].JP_Sales},
+				{"name": "Sales other", "size": gamesData[2].Other_Sales}]
+        }, {
+            "name": "XBOXONE",
+            "children": [{"name": "Sales EU", "size": gamesData[3].EU_Sales}, 
+				{"name": "Sales NA", "size": gamesData[3].NA_Sales},
+				{"name": "Sales JP", "size": gamesData[3].JP_Sales},
+				{"name": "Sales other", "size": gamesData[3].Other_Sales}]
+        }, {
+            "name": "PC",
+            "children": [{"name": "Sales EU", "size": gamesData[4].EU_Sales}, 
+				{"name": "Sales NA", "size": gamesData[4].NA_Sales},
+				{"name": "Sales JP", "size": gamesData[4].JP_Sales},
+				{"name": "Sales other", "size": gamesData[4].Other_Sales}]
+        }]}; */
+		
+	return nodeData;
+	}
 	
 }

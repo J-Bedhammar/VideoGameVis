@@ -18,7 +18,7 @@ function infoViz(data, update){
 	if(!update){
 		var sumYear = false;
 		barChart(data);
-		sunBurst(data);
+		sunBurst(data, data[0]);
 		annualSales(data, columnName, itemName, sumYear);
 		brushChart(data, columnName, itemName, sumYear);
 	}
@@ -36,7 +36,7 @@ function infoViz(data, update){
 			sumYear = true;
 		
 		barChart(data);
-		sunBurst(data);
+		sunBurst(data, data[0]);
 		annualSales(data, columnName, itemName, sumYear);
 		brushChart(data, columnName, itemName, sumYear);
 	}
