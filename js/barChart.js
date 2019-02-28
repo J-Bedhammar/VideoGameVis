@@ -50,10 +50,10 @@ function barChart(data){
 	
 	//shorten the names of the games
 	names.domain(top5.map(function(d) { 
-		if( d.Name.length > 26)
-			return d.Name.substring(0,23) + "...";
+		if( d.Name.length > 20)
+			return d.Name.substring(0,15) + "... (" + d.Platform + ")";
 		else
-			return d.Name;
+			return d.Name + " (" +  d.Platform + ")";
 	}));
 	
 	//creates the mouseover tooltip
@@ -80,7 +80,7 @@ function barChart(data){
 			tooltip.style("display", "inline-block")
 			.style("left", d3.event.pageX + 10 + "px")
 			.style("top", d3.event.pageY - 15 + "px")
-			.html("<strong>" + d.Name + " </strong> <br/> Global Sales: " + d.Global_Sales );
+			.html("<strong>" + d.Name + " (" + d.Platform + ") </strong> <br/> Global Sales: " + d.Global_Sales );
 			d3.select(this)
 			.attr('opacity', 0.6);
 		})
