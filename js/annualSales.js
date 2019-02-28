@@ -1,5 +1,5 @@
 
-function annualSales(data, columnName, itemName){
+function annualSales(data, columnName, itemName, summed){
 	
 	var salesArray = [];
 	
@@ -17,7 +17,7 @@ function annualSales(data, columnName, itemName){
 				if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
 					continue;
 				else
-					salesArray.push({name: row.Name, year: +row.Year_of_Release, sales: +row.Global_Sales});
+					salesArray.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales});
 			}
 		}
 	}
@@ -25,9 +25,13 @@ function annualSales(data, columnName, itemName){
 	// Sort data in ascending order after year
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	
+	// Sum the annual sales if summed is true
+	if(summed)
+		var summedSales = annualSums(salesArray);
+	
 	// Creating margins and figure sizes
     var margin = { top: 20, right: 50, bottom: 30, left: 50 },
-        width = $("#annualSales").parent().width() - margin.left - margin.right,
+        width = $("#annualSales").parent(){}.width() - margin.left - margin.right,
         height = 190 - margin.top - margin.bottom;
 
 	// create svg for annual sales chart
@@ -123,7 +127,7 @@ function annualSales(data, columnName, itemName){
 				.attr("r", 10);
 			/*dot_year.text( "Year: " + d.year);
 			dot_sales.text("Sales: " + d.sales + "M");*/
-			infoDiv.html("<strong>" + d.name + "</strong>" + "</br> Year: " + d.year + "</br> Sales: "  + d.sales + "M")
+			infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br> Sales: "  + d.sales + "M")
 				.style("display", "inline-block")
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 40) + "px");
@@ -140,6 +144,17 @@ function annualSales(data, columnName, itemName){
 	
 
 	
+	function annualSums(salesArray){
+		var summedSales = [];
+		
+		return summedSales;
+	}
+	
+	
 	// END OF ANNUAL SALES
 }
+
+
+
+
 

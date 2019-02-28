@@ -1,42 +1,40 @@
 
-function infoViz(data){
+function infoViz(data, update){
 	
 	//Print outs
 	console.log("infoViz()");
 	//console.log(data);
 	
+	var columnName = $("#category").val();
+	var itemName = "Nintendo";
+	
+	if(columnName == "Game"){
+		columnName = "Name";
+		itemName = "Grand Theft Auto V"
+	}
+	
+	console.log(columnName)
 	
 	
-	// create options
-	var options = d3.select("#category").append("svg");
-	var firstRow = data[0];
-	
-	console.log(firstRow[0]);
-	for (var i = 0; i <firstRow.length; i++){
-		var row = data[i];
-		console.log(row)
-		/*
-		svg.append("option")
-			.append("text")
-			.text(row);
-		*/
+	if(!update){
+		barChart(data);
+		sunBurst(data);
+		annualSales(data, columnName, itemName);
+		brushChart(data, columnName, itemName);
+	}
+	else{
+		d3.select("#brush > *").remove();
+		d3.select("#bar-chart > *").remove();
+		d3.select("#donut > *").remove();
+		d3.select("#annualSales > *").remove();
+		
+		barChart(data);
+		sunBurst(data);
+		annualSales(data, columnName, itemName);
+		brushChart(data, columnName, itemName);
 	}
 
 	
-	// Annual Sales
-	var tempColumn = "Name";
-	var tempPublisher = "Grand Theft Auto V";
-	
-	annualSales(data, tempColumn, tempPublisher);
-	
-	// Bar chart
-	barChart(data);
-	
-	// Brush
-	brushChart(data, tempColumn, tempPublisher);
-	
-	// Donut
-	sunBurst(data);
 	
 	// END OF infoViz
 	console.log("DONE!");

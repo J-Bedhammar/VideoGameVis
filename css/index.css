@@ -21,6 +21,10 @@
 	margin-bottom: 1vh;
 }
 
+#container-charts{
+	min-height: 80vh;
+}
+
 /* CLASS */
 .sales{
 	position: relative;
