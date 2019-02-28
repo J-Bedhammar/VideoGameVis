@@ -102,7 +102,7 @@ function sunBurst(data){
 			tooltip.style("display", "inline-block")
 			.style("left", d3.event.pageX + 10 + "px")
 			.style("top", d3.event.pageY - 15 + "px")
-			.html( d.name + d.value );
+			.html(parseFloat(Math.round(d.value * 100) / 100).toFixed(2));
 			d3.select(this)
 			.attr('opacity', 0.6);
 		})
