@@ -1,5 +1,5 @@
 #background{
-	background-color: #990000;
+	background-color: #800000;
 	height: 100%;
 }
 
@@ -10,6 +10,7 @@
 
 #annualSales{
 	border: 1px solid #d98c8c;
+	margin-bottom: 1vh;
 }
 
 /* CLASS */

@@ -28,7 +28,7 @@ function annualSales(data, columnName, itemName){
 	// Creating margins and figure sizes
     var margin = { top: 20, right: 50, bottom: 30, left: 50 },
         width = $("#annualSales").parent().width() - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+        height = 250 - margin.top - margin.bottom;
 
 	// create svg for annual sales chart
 	var svg = d3.select("#annualSales").append("svg")

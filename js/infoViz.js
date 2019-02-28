@@ -5,8 +5,6 @@ function infoViz(data){
 	console.log("infoViz()");
 	//console.log(data);
 	
-
-	
 	// Annual Sales
 	var tempColumn = "Name";
 	var tempPublisher = "Grand Theft Auto V";

@@ -25,7 +25,7 @@ function barChart(data){
 	
 	var container = $("#bar-chart");
 	var containerWidth =  $("#bar-chart").parent().width();
-	var containerHeight = 300 - marginTop;
+	var containerHeight = 250 - marginTop;
 	
 	
 	//creates scales in x and y
