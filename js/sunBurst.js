@@ -12,9 +12,8 @@ function sunBurst(data, displayData){
 			gamesData.push(row);
 	}
 	
+		//creates an hierarchy data
 	var nodeData = createHierarchy(gamesData, displayData);
-	
-	//creates an hierarchy data
 	
 	
 	//sets the height and width of the chart
