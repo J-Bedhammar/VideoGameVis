@@ -50,8 +50,7 @@ function barChart(data, columnName, sumYear){
 			}
 			//Last item
 			if( i == sortedData.length-1)
-				publisherArray.push( { xValue: currGames, yValue: tempPublisher});
-			
+				publisherArray.push( { xValue: currGames, yValue: tempPublisher});			
 		}
 		
 		publisherArray.sort(function(a, b) { return b.xValue - a.xValue; });
