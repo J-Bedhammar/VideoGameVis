@@ -46,7 +46,7 @@ function barChart(data){
 	
 	//maps the data to the x and y values
 	y.domain(top5.map(function(d) { return d.nr;}));
-	x.domain([0, d3.max(top5, function(d) { return d.Global_Sales;})]);
+	x.domain([0, d3.max(top5, function(d) { return d.Global_Sales; })]);
 	
 	//shorten the names of the games
 	names.domain(top5.map(function(d) { 
@@ -81,7 +81,7 @@ function barChart(data){
 			tooltip.style("display", "inline-block")
 			.style("left", d3.event.pageX + 10 + "px")
 			.style("top", d3.event.pageY - 15 + "px")
-			.html("<strong>" + d.Name + " (" + d.Platform + ") </strong> <br/> Global Sales: " + d.Global_Sales );
+			.html("<strong>" + d.Name + " (" + d.Platform + ") </strong> <br/> Global Sales: " + d.Global_Sales + "M" );
 			d3.select(this)
 			.attr("opacity", 0.6);
 		})
@@ -94,7 +94,7 @@ function barChart(data){
 			displayData = data[d.nr];
 			d3.select(this)
 			.attr("fill", "#ffff00");
-			//updateCharts(displayData);
+			updateCharts(displayData);
 		});
 	
 	
@@ -109,7 +109,6 @@ function barChart(data){
 		
 		d3.select("#donut > *").remove();
 		sunBurst(data, displayData);
-		d3.select("#donut > *").remove();
 		
 	}
 }
