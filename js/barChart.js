@@ -1,7 +1,5 @@
 
 function barChart(data, columnName, annualSetting){
-
-	console.log(data[1].Developer);
 	
 	//extracts the top 5 values from the data
 	var top5 = [];
@@ -103,9 +101,51 @@ function barChart(data, columnName, annualSetting){
 		top5.sort(function(a, b) { return a.xValue - b.xValue; });
 		
 		axisText = "Units (K)";
+		
+	} else if ( columnName == "Platform"){
+		
+		sortedData = data;
+		sortedData.sort(function(a, b){
+			if(a.Platform < b.Platform) { return -1; }
+			if(a.Platform > b.Platform) { return 1; }
+			return 0;
+		});
+		
+		sortedData.forEach(function(d) {
+			d.Global_Sales = + d.Global_Sales;
+		});
+		
+		var tempPlatform = sortedData[0].Platform;
+		var currSales= 0;
+		var platformArray = [];
+		
+		for( var i = 0; i < sortedData.length; i++){
+
+		if(tempPlatform == sortedData[i].Platform)
+			currSales += sortedData[i].Global_Sales;
+		else{
+			platformArray.push( { xValue: currSales, yValue: tempPlatform});
+			currGames = sortedData[i].Global_Sales;
+			tempPlatform = sortedData[i].Platform;				
+			}
+			//Last item
+			if( i == sortedData.length-1)
+				platformArray.push( { xValue: currSales, yValue: tempPlatform});			
+		}
+		
+		platformArray.sort(function(a, b) { return b.xValue - a.xValue; });
+		
+		for ( i = 0; i<=4; i++){
+			if( data[i] != null)
+				top5.push(platformArray[i]);
+				top5[i].nr = i;
+		}
+		
+		top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		
+		axisText = "Units (M)";
+	
 	}
-	
-	
 	
 	var marginTop = 20;
 	var marginLeft = 150;
@@ -177,6 +217,13 @@ function barChart(data, columnName, annualSetting){
 				.style("left", d3.event.pageX + 10 + "px")
 				.style("top", d3.event.pageY - 15 + "px")
 				.html("<strong>" + d.yValue + " (" + d.Platform + ") </strong> <br/> Global Sales: " + d.xValue + "M" );
+				d3.select(this)
+				.attr("opacity", 0.6);
+			} else if( columnName == "Platform"){
+				tooltip.style("display", "inline-block")
+				.style("left", d3.event.pageX + 10 + "px")
+				.style("top", d3.event.pageY - 15 + "px")
+				.html("<strong>" + d.yValue + " </strong> <br/> Sales: " + d.xValue + "M" );
 				d3.select(this)
 				.attr("opacity", 0.6);
 			} else{

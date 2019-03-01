@@ -3,17 +3,21 @@ function sunBurst(data, displayData, columnName){
 	
 	//extract the relevant data from the dataset
 	var gamesData = [];
+	var rootName = " "
 	
 	if (typeof displayData.yValue !== 'undefined')
-		var rootName = displayData.yValue;
-	else 
+		rootName = displayData.yValue;
+	else {
 		if( columnName == "Name"){
-			var rootName = "Wii Sports";
-		} else if( columnName == "Publisher"){
-			var rootName = "Electronic Arts";
-		} else if( columnName == "Developer"){
-			var rootName = "Ubisoft";
+			rootName = "Wii Sports";
+		}else if( columnName == "Publisher"){
+			rootName = "Electronic Arts";
+		}else if( columnName == "Developer"){
+			rootName = "Ubisoft";
+		}else if(columnName == "Platform"){
+			rootName = "XOne";
 		}
+	}	
 		
 	for (var i = 0; i < data.length; i++){
 		var row = data[i];
@@ -23,7 +27,6 @@ function sunBurst(data, displayData, columnName){
 			
 	//creates an hierarchy data
 	var nodeData = createHierarchy(gamesData, rootName);
-	
 	
 	//sets the height and width of the chart
 	var marginTop = 20;
@@ -182,6 +185,44 @@ function sunBurst(data, displayData, columnName){
 					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
 						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});		
 			}
+			
+			var caseManage = platformArray.length;
+			
+		} else if(columnName == "Platform"){
+			
+			sortedData = gamesData;
+			
+			console.log(sortedData);
+			
+			var tempPlatform = sortedData[0].Platform;
+			var currNASales= 0;
+			var currJPSales= 0;
+			var currEUSales= 0;
+			var currOSales= 0;
+			
+			for( var i = 0; i < sortedData.length; i++){
+
+				if(tempPlatform == sortedData[i].Platform){
+					currNASales += +sortedData[i].NA_Sales;
+					currJPSales += +sortedData[i].EU_Sales;
+					currEUSales += +sortedData[i].JP_Sales;
+					currOSales += +sortedData[i].Other_Sales;
+				}else{
+					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});
+					currNASales = +sortedData[i].NA_Sales;
+					currJPSales = +sortedData[i].EU_Sales;
+					currEUSales = +sortedData[i].JP_Sales;
+					currOSales = +sortedData[i].Other_Sales;
+					tempPlatform = sortedData[i].Platform;	
+				}
+				//Last item
+				if( i == sortedData.length-1)
+					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});		
+			}
+			
+			console.log(platformArray);
 			
 			var caseManage = platformArray.length;
 		} 
