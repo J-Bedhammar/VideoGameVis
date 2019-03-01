@@ -18,7 +18,7 @@
 			<div class="row">
 				<div class="col-9" id="container-charts">
 					<div class="col">
-						<h3 class="graph-title">Brush</h3>
+						<h3 class="graph-title">Time Interval</h3>
 						<div id="brush"></div>
 					</div>
 					<div class="row" >
@@ -32,14 +32,22 @@
 						</div>
 					</div>
 					<div class="col">
-						<h3 class="graph-title">Annual Sales</h3>
+						<h3 class="graph-title" id="annualSalesTitle">Annual Sales</h3>
 						<div id="annualSales"></div>
 					</div>
 				</div>
-				<div class="col"  id="options">
+				<div class="col-3"  id="options">
 					<h2 class="graph-title">Options</h2>
+					<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons">
+						<label class="btn btn-secondary active">
+							<input type="radio" name="options" id="top5" autocomplete="off" checked> Top 5
+						</label>
+						<label class="btn btn-secondary">
+							<input type="radio" name="options" id="bot5" autocomplete="off"> Bot 5
+						</label>
+					</div>
 					<div class="form-group">
-						<label for="category">Show Top 5:</label>
+						<label for="category">Category:</label>
 						<select class="form-control" id="category" onchange="main(true)">
 							<option>Game</option>
 							<option>Publisher</option>
@@ -49,8 +57,21 @@
 						<label for="sumAnnualSales">Annual Sales:</label>
 						<select class="form-control" id="sumAnnualSales" onchange="main(true)">
 							<option>Individual Game Sales</option>
-							<option>Annual Sum</option>
+							<option>Sales Per Year</option>
+							<option>Releases Per Year</option>
 						</select>
+						<label for="sumAnnualSales">Sort By:</label>
+						<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons">
+							<label class="btn btn-secondary active">
+								<input type="radio" name="options" id="salesButton" autocomplete="off" checked> Sales
+							</label>
+							<label class="btn btn-secondary">
+								<input type="radio" name="options" id="releaseButton" autocomplete="off"> Releases
+							</label>
+							<label class="btn btn-secondary">
+								<input type="radio" name="options" id="scoreButton" autocomplete="off"> Score
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>
