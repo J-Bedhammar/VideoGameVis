@@ -1,5 +1,5 @@
 
-function annualSales(data, columnName, itemName, sumSales){
+function annualSales(data, columnName, itemName, sumYear){
 	
 	var salesArray = [];
 	var nanRemoved = [];
@@ -34,7 +34,7 @@ function annualSales(data, columnName, itemName, sumSales){
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	
 	// Sum the annual sales if summed is true
-	if(sumSales){
+	if(sumYear){
 		salesArray = annualSums(salesArray);
 		whichArray = salesArray;
 	}
@@ -113,9 +113,8 @@ function annualSales(data, columnName, itemName, sumSales){
 	
 	// Sales Information div
 	var infoDiv = d3.select("body").append("div")	
-    .attr("class", "salesInfo")
-	.style("display", "none");
-	
+		.attr("class", "salesInfo")
+		.style("display", "none");
 	
 	// Add the circles and mouseover information
 	svg.selectAll("dot")
@@ -136,7 +135,7 @@ function annualSales(data, columnName, itemName, sumSales){
 				.style("display", "inline-block")
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 40) + "px");
-			if (sumSales)
+			if (sumYear)
 				infoDiv.html("Year: " + d.year + "</br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M");
             })
 		.on("mouseout", function(d){

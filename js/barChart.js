@@ -111,10 +111,18 @@ function barChart(data, columnName, sumYear){
 		
 	function updateCharts(displayData, itemName){
 		
+		var title = d3.select("#annualSalesTitle")
+		if( itemName != "")
+			title.html("Annual Sales: " + itemName);
+		else
+			title.html("Annual Sales: None")
+		
 		d3.select("#donut > *").remove();
 		d3.select("#annualSales > *").remove();
 		sunBurst(data, displayData);
 		annualSales(data, columnName, itemName, sumYear);
+		
+
 		
 	}
 }
