@@ -2,31 +2,33 @@
 function annualSales(data, columnName, itemName, sumSales){
 	
 	var salesArray = [];
+	var nanRemoved = [];
 	
 	//Extract year and global_sales depending on column and itemName. Ex: Publisher - Nintendo
 	for (var i = 0; i < data.length; i++){
 		var row = data[i];
-		if(itemName == "All" || itemName == ""){
+
+		// NaN removed, otherwise all data
+		if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
+			continue;
+		else
+			nanRemoved.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales});
+	
+		// Filtered array
+		if (row[columnName] == itemName){
 			if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
 				continue;
 			else
-				salesArray.push({name: row.Name, year: +row.Year_of_Release, sales: +row.Global_Sales});
-		}
-		else{
-			if (row[columnName] == itemName){
-				if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
-					continue;
-				else
-					salesArray.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales});
-			}
-		}
+				salesArray.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales});
+		}	
 	}
 	
-	if( salesArray.length == 1){
-		console.log("Well Shit")
-		// ADD FAKE NUMBERS?
-	}
-		
+	// Switch between salesArray and nanRemoved depending on Sum/Individual setting
+	var whichArray = nanRemoved;
+	
+	// Show all data, but not NaN years
+	if(itemName == "All" || itemName == "")
+		salesArray = nanRemoved;
 	
 	// Sort data in ascending order after year
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
@@ -34,9 +36,16 @@ function annualSales(data, columnName, itemName, sumSales){
 	// Sum the annual sales if summed is true
 	if(sumSales){
 		salesArray = annualSums(salesArray);
+		whichArray = salesArray;
 	}
 	
-	//console.log(salesArray);
+	// Scatter plot circle size and array switch
+	var circleRadius = 2;
+	
+	if(salesArray.length == 1){
+		circleRadius = 3;
+		whichArray = nanRemoved;
+	}
 	
 	// Creating margins and figure sizes
     var margin = { top: 20, right: 50, bottom: 30, left: 50 },
@@ -66,14 +75,14 @@ function annualSales(data, columnName, itemName, sumSales){
 		.x(function(d) { return xScale(d.year)}) //console.log(xScale(d.year));
 		.y(function(d) { return yScale(d.sales)});
 	
-	xScale.domain(d3.extent(salesArray, function(d) { return d.year }));
-	yScale.domain(d3.extent(salesArray, function(d) { return d.sales }));
-	xTime.domain(d3.extent(salesArray, function(d) { return parseDate(d.year) }));
+	xScale.domain(d3.extent(nanRemoved, function(d) { return d.year }));
+	yScale.domain(d3.extent(whichArray, function(d) { return d.sales }));
+	xTime.domain(d3.extent(nanRemoved, function(d) { return parseDate(d.year) }));
 	
-	this.changeXScale = function (newScale) {
+	/*this.changeXScale = function (newScale) {
 		xScale = newScale;
-	}
-	
+	}*/
+
 	
 	// Append the axes
     g.append("g")
@@ -101,20 +110,6 @@ function annualSales(data, columnName, itemName, sumSales){
 		.attr("stroke-width", 2)
 		.attr("d", line);
 	
-	//"Legend"
-	/*var dot_year = g.append("g")
-		.append("text")
-		.attr("fill", "#000")
-		.attr("x", width-100)
-		.attr("textAlign", "center")
-		.attr("y", 20);
-
-	var dot_sales = g.append("g")
-		.append("text")
-		.attr("fill", "#000")
-		.attr("x", width-100)
-		.attr("y", 40);
-	*/	
 	
 	// Sales Information div
 	var infoDiv = d3.select("body").append("div")	
@@ -127,7 +122,7 @@ function annualSales(data, columnName, itemName, sumSales){
 		.data(salesArray)
 		.enter().append("circle")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-		.attr("r", 2)
+		.attr("r", circleRadius)
 		.attr("cx", function(d) { return xScale(d.year); })
 		.attr("cy", function(d) { return yScale(d.sales); })
 		.on("mouseover", function(d) {		
@@ -137,18 +132,18 @@ function annualSales(data, columnName, itemName, sumSales){
 				.attr("r", 10);
 			/*dot_year.text( "Year: " + d.year);
 			dot_sales.text("Sales: " + d.sales + "M");*/	
-			infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br>Global Sales: "  + d.sales + "M")
+			infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M")
 				.style("display", "inline-block")
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 40) + "px");
 			if (sumSales)
-				infoDiv.html("Year: " + d.year + "</br>Global Sales: "  + d.sales + "M");
+				infoDiv.html("Year: " + d.year + "</br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M");
             })
 		.on("mouseout", function(d){
 			d3.select(this)
 				.transition(200)
 				.attr("fill", "black")
-				.attr("r", 2);
+				.attr("r", circleRadius);
 			/*dot_year.text("");
 			dot_sales.text("");*/
 			infoDiv.style("display", "none");

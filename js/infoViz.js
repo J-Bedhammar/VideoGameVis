@@ -7,11 +7,11 @@ function infoViz(data, update){
 	
 	var annualSaleSetting = $("#sumAnnualSales").val();
 	var columnName = $("#category").val();
-	var itemName = "Nintendo";
+	var itemName = "Wii";
 	
 	if(columnName == "Game"){
 		columnName = "Name";
-		itemName = "Grand Theft Auto V"
+		itemName = "Wii Sports"
 	}
 
 	
