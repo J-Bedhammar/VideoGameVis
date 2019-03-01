@@ -75,6 +75,8 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting){
 		var selectedMin = Math.floor(xScale.domain()[0]);
 		var selectedMax = Math.floor(xScale.domain()[1]);
 		
+		d3.select("#minYear").attr("class", selectedMin);
+		d3.select("#maxYear").attr("class", selectedMax);
 		//console.log("Min: " + selectedMin + ", Max: " + selectedMax);
 		
 		//Extract data from the selected years
@@ -85,13 +87,14 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting){
 			}
 
 		}
+		var newAnnualSetting = document.getElementById('bar-chart').className;
 		
+		console.log("whut: "+ newAnnualSetting);
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
 	
-		annualSales(targetData, tempColumn, tempPublisher, annualSetting);
-
-		barChart(targetData, tempColumn, annualSetting);
+		annualSales(targetData, tempColumn, tempPublisher, newAnnualSetting);
+		barChart(targetData, tempColumn, newAnnualSetting);
 		
     }
 	

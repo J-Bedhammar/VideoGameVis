@@ -31,9 +31,21 @@ function infoViz(data, update, updateAnnual){
 	else if(updateAnnual){
 		
 		var newItemName = document.getElementsByClassName("item")[0].id;
+		var minYear = document.getElementById('minYear').className;
+		var maxYear = document.getElementById('maxYear').className;
+		var targetData = [];
+		
+		for (var i = 0; i < data.length; i++){
+			var row = data[i];
+			if (row.Year_of_Release >= minYear && row.Year_of_Release <= maxYear ){ // || isNaN(row.Year_of_Release)
+				targetData.push(row);
+			}
+		}
+		
 		d3.select("#bar-chart").attr("class", annualSetting);
+		
 		d3.select("#annualSales > *").remove();
-		annualSales(data, columnName, newItemName, annualSetting);
+		annualSales(targetData, columnName, newItemName, annualSetting);
 		
 		var title = d3.select("#annualSalesTitle")
 		if(annualSetting == "sum")
