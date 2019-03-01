@@ -90,6 +90,7 @@ function brushChart(data, tempColumn, tempPublisher, sumYear){
 		d3.select("#annualSales > *").remove();
 	
 		annualSales(targetData, tempColumn, tempPublisher, sumYear);
+
 		barChart(targetData, tempColumn, sumYear);
 		
     }

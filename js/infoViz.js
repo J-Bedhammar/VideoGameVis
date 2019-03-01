@@ -15,9 +15,9 @@ function infoViz(data, update){
 	}
 
 
-	
 	if(!update){
 		var sumYear = false;
+
 		barChart(data, columnName, sumYear);
 		sunBurst(data, data[0]);
 		annualSales(data, columnName, itemName, sumYear);
