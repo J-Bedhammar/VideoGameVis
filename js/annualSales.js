@@ -22,6 +22,12 @@ function annualSales(data, columnName, itemName, sumSales){
 		}
 	}
 	
+	if( salesArray.length == 1){
+		console.log("Well Shit")
+		// ADD FAKE NUMBERS?
+	}
+		
+	
 	// Sort data in ascending order after year
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	
@@ -68,6 +74,7 @@ function annualSales(data, columnName, itemName, sumSales){
 		xScale = newScale;
 	}
 	
+	
 	// Append the axes
     g.append("g")
 		.attr("class","axis axis--x")
@@ -82,7 +89,7 @@ function annualSales(data, columnName, itemName, sumSales){
 		.attr("y", 6)
 		.attr("dy", "0.71em")
 		.attr("text-anchor", "end")
-		.text("Price (Mn)");
+		.text("Units (Million)");
 
 	// Append a path
 	g.append("path")
@@ -129,11 +136,13 @@ function annualSales(data, columnName, itemName, sumSales){
 				.attr("fill", "red")
 				.attr("r", 10);
 			/*dot_year.text( "Year: " + d.year);
-			dot_sales.text("Sales: " + d.sales + "M");*/
-			infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br> Sales: "  + d.sales + "M")
+			dot_sales.text("Sales: " + d.sales + "M");*/	
+			infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br>Global Sales: "  + d.sales + "M")
 				.style("display", "inline-block")
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 40) + "px");
+			if (sumSales)
+				infoDiv.html("Year: " + d.year + "</br>Global Sales: "  + d.sales + "M");
             })
 		.on("mouseout", function(d){
 			d3.select(this)

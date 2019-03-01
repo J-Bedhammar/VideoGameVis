@@ -32,7 +32,7 @@ function infoViz(data, update){
 		d3.select("#annualSales > *").remove();
 		
 		
-		if(annualSaleSetting == "Total Sum")
+		if(annualSaleSetting == "Annual Sum")
 			sumYear = true;
 		
 		barChart(data);
