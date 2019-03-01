@@ -9,7 +9,7 @@ function sunBurst(data, displayData){
 	for (var i = 0; i < data.length; i++){
 		var row = data[i];
 		if(row.Name == displayData.Name)
-			gamesData.push(data[i]);
+			gamesData.push(row);
 	}
 	
 	var nodeData = createHierarchy(gamesData, displayData);
@@ -90,40 +90,134 @@ function sunBurst(data, displayData){
 	
 	function createHierarchy(gamesData, displayData){
 		
-		var nodeData = {
-        "name": displayData.Name, "children": [{
-            "name": gamesData[0].Platform,
-            "children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
-				{"name": "Sales JP", "size": gamesData[0].JP_Sales},
-				{"name": "Sales other", "size": gamesData[0].Other_Sales}]
-        }]}; /*, {
-            "name": "XBOX360",
-            "children": [{"name": "Sales EU", "size": gamesData[1].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[1].NA_Sales}, 
-				{"name": "Sales JP", "size": gamesData[1].JP_Sales},
-				{"name": "Sales other", "size": gamesData[1].Other_Sales}]
-        }, {
-            "name": "PS4",
-            "children": [{"name": "Sales EU", "size": gamesData[2].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[2].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[2].JP_Sales},
-				{"name": "Sales other", "size": gamesData[2].Other_Sales}]
-        }, {
-            "name": "XBOXONE",
-            "children": [{"name": "Sales EU", "size": gamesData[3].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[3].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[3].JP_Sales},
-				{"name": "Sales other", "size": gamesData[3].Other_Sales}]
-        }, {
-            "name": "PC",
-            "children": [{"name": "Sales EU", "size": gamesData[4].EU_Sales}, 
-				{"name": "Sales NA", "size": gamesData[4].NA_Sales},
-				{"name": "Sales JP", "size": gamesData[4].JP_Sales},
-				{"name": "Sales other", "size": gamesData[4].Other_Sales}]
-        }]}; */
+		switch(gamesData.length){
+			
+			case 1:
+			
+				var nodeData = {
+				"name": displayData.Name, "children": [{
+					"name": gamesData[0].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[0].JP_Sales},
+						{"name": "Sales other", "size": gamesData[0].Other_Sales}]
+				}]}; 
+				
+				break;
+			
+			case 2:
+				
+				var nodeData = {
+				"name": displayData.Name, "children": [{
+					"name": gamesData[0].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[0].JP_Sales},
+						{"name": "Sales other", "size": gamesData[0].Other_Sales}]
+				}, {
+					"name": gamesData[1].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[1].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[1].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[1].JP_Sales},
+						{"name": "Sales other", "size": gamesData[1].Other_Sales}]
+				}]};
+				
+				break;
+			
+			case 3:
+			
+				var nodeData = {
+				"name": displayData.Name, "children": [{
+					"name": gamesData[0].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[0].JP_Sales},
+						{"name": "Sales other", "size": gamesData[0].Other_Sales}]
+				}, {
+					"name": gamesData[1].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[1].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[1].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[1].JP_Sales},
+						{"name": "Sales other", "size": gamesData[1].Other_Sales}]
+				}, {
+					"name": gamesData[2].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[2].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[2].NA_Sales},
+						{"name": "Sales JP", "size": gamesData[2].JP_Sales},
+						{"name": "Sales other", "size": gamesData[2].Other_Sales}]
+				}]};
+				
+				break;
+				
+			case 4:
+				
+				var nodeData = {
+				"name": displayData.Name, "children": [{
+					"name": gamesData[0].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[0].JP_Sales},
+						{"name": "Sales other", "size": gamesData[0].Other_Sales}]
+				}, {
+					"name": gamesData[1].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[1].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[1].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[1].JP_Sales},
+						{"name": "Sales other", "size": gamesData[1].Other_Sales}]
+				}, {
+					"name": gamesData[2].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[2].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[2].NA_Sales},
+						{"name": "Sales JP", "size": gamesData[2].JP_Sales},
+						{"name": "Sales other", "size": gamesData[2].Other_Sales}]
+				}, {
+					"name": gamesData[3].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[3].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[3].NA_Sales},
+						{"name": "Sales JP", "size": gamesData[3].JP_Sales},
+						{"name": "Sales other", "size": gamesData[3].Other_Sales}]
+				}]};
+				
+				break;
+			
+			default:
 		
-	return nodeData;
+				var nodeData = {
+				"name": displayData.Name, "children": [{
+					"name": gamesData[0].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[0].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[0].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[0].JP_Sales},
+						{"name": "Sales other", "size": gamesData[0].Other_Sales}]
+				}, {
+					"name": gamesData[1].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[1].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[1].NA_Sales}, 
+						{"name": "Sales JP", "size": gamesData[1].JP_Sales},
+						{"name": "Sales other", "size": gamesData[1].Other_Sales}]
+				}, {
+					"name": gamesData[2].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[2].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[2].NA_Sales},
+						{"name": "Sales JP", "size": gamesData[2].JP_Sales},
+						{"name": "Sales other", "size": gamesData[2].Other_Sales}]
+				}, {
+					"name": gamesData[3].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[3].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[3].NA_Sales},
+						{"name": "Sales JP", "size": gamesData[3].JP_Sales},
+						{"name": "Sales other", "size": gamesData[3].Other_Sales}]
+				}, {
+					"name": gamesData[4].Platform,
+					"children": [{"name": "Sales EU", "size": gamesData[4].EU_Sales}, 
+						{"name": "Sales NA", "size": gamesData[4].NA_Sales},
+						{"name": "Sales JP", "size": gamesData[4].JP_Sales},
+						{"name": "Sales other", "size": gamesData[4].Other_Sales}]
+				}]}; 
+
+		}
+		
+		return nodeData;
 	}
 	
 }
