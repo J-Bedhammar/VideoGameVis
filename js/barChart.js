@@ -159,10 +159,10 @@ function barChart(data, columnName, annualSetting){
 		.on("click", function(d){
 			// need to recalculate the number, because it is sorted lowest to highest
 			var num = 4-d.nr;
-			var row = top5[num];
-			var itemName = row[columnName];
 			var displayData = top5[num];
-
+			
+			var itemName = displayData[columnName];
+			
 			d3.selectAll('.bar')
 				.attr("fill", function(d, i) { return barColor(i)} );
 			d3.select(this)
@@ -192,16 +192,20 @@ function barChart(data, columnName, annualSetting){
 	function updateCharts(displayData, itemName){
 		
 		var title = d3.select("#annualSalesTitle")
-		if( itemName != "")
+		if( itemName != ""){
 			title.html("Annual Sales: " + itemName);
+			d3.select(".item").attr("id", itemName);
+		}
 		else
 			title.html("Annual Sales: None")
 		
+		var newAnnualSetting = document.getElementById('bar-chart').className;
+		
 		d3.select("#donut > *").remove();
 		d3.select("#annualSales > *").remove();
-
+		
 		sunBurst(data, displayData, columnName);
-		annualSales(data, columnName, itemName, annualSetting);
+		annualSales(data, columnName, itemName, newAnnualSetting);
 
 		
 

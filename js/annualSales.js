@@ -51,6 +51,9 @@ function annualSales(data, columnName, itemName, annualSetting){
 	if(salesArray.length == 1){
 		circleRadius = 3;
 		whichArray = nanRemoved;
+		
+		if(annualSetting == "releases")
+			whichArray = nanRemoved;
 	}
 	
 	// Creating margins and figure sizes
@@ -82,9 +85,14 @@ function annualSales(data, columnName, itemName, annualSetting){
 		.y(function(d) { return yScale(d.sales)});
 	
 	xScale.domain(d3.extent(nanRemoved, function(d) { return d.year }));
-	yScale.domain(d3.extent(salesArray, function(d) { return d.sales }));
+	yScale.domain(d3.extent(whichArray, function(d) { return d.sales }));
 	xTime.domain(d3.extent(nanRemoved, function(d) { return parseDate(d.year) }));
 	
+	if(annualSetting == "releases"){
+		var maxReleases = d3.max(salesArray, function (d) { return d.sales});
+		yScale.domain([0, maxReleases]);
+	}
+		
 	/*this.changeXScale = function (newScale) {
 		xScale = newScale;
 	}*/
@@ -96,6 +104,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 		.attr("transform", "translate(0, " + height + ")")
 		.call(d3.axisBottom(xTime));
 		
+	
 
 	// Append text depending on setting
 	if(annualSetting == "releases"){
