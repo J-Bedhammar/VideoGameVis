@@ -7,16 +7,17 @@ function infoViz(data, update){
 	
 	var annualSaleSetting = $("#sumAnnualSales").val();
 	var columnName = $("#category").val();
-	var itemName = "Nintendo";
+	var itemName = "Wii";
 	
 	if(columnName == "Game"){
 		columnName = "Name";
-		itemName = "Grand Theft Auto V"
+		itemName = "Wii Sports"
 	}
 
 	if(!update){
 		var sumYear = false;
-		barChart(data, columnName);
+
+		barChart(data, columnName, sumYear);
 		sunBurst(data, data[0]);
 		annualSales(data, columnName, itemName, sumYear);
 		brushChart(data, columnName, itemName, sumYear);
@@ -34,7 +35,7 @@ function infoViz(data, update){
 		if(annualSaleSetting == "Annual Sum")
 			sumYear = true;
 		
-		barChart(data, columnName);
+		barChart(data, columnName, sumYear);
 		sunBurst(data, data[0]);
 		annualSales(data, columnName, itemName, sumYear);
 		brushChart(data, columnName, itemName, sumYear);

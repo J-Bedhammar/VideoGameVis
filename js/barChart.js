@@ -1,5 +1,6 @@
 
-function barChart(data, columnName){
+function barChart(data, columnName, sumYear){
+
 	
 	
 	//extracts the top 5 values from the data
@@ -158,10 +159,14 @@ function barChart(data, columnName){
 			.attr("opacity", 1.0);
 		})
 		.on("click", function(d){
-			displayData = data[d.nr];
+			var row = data[d.nr];
+			var itemName = row[columnName];
+			var displayData = data[d.nr];
+			d3.selectAll('.bar')
+				.attr("fill", function(d, i) { return barColor(i)} );
 			d3.select(this)
-			.attr("fill", "#ffff00");
-			updateCharts(displayData);
+				.attr("fill", "#009900");
+			updateCharts(displayData, itemName);
 		});
 	
 	var xAxis = d3.axisTop(x);
@@ -181,10 +186,12 @@ function barChart(data, columnName){
 	svg.append("g")
 		.call(yAxis);
 		
-	function updateCharts(displayData){
+	function updateCharts(displayData, itemName){
 		
 		d3.select("#donut > *").remove();
+		d3.select("#annualSales > *").remove();
 		sunBurst(data, displayData);
+		annualSales(data, columnName, itemName, sumYear);
 		
 	}
 }
