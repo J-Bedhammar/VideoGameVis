@@ -1,9 +1,15 @@
 /* FONTS */
 .graph-title{
 	text-align: center;
-	font-size: 1.5rem;
+	font-size: 1.25rem;
+	color: #545454;
+	margin-top: 0.5rem;
 }
 
+label{
+	margin-top: 0.75rem;
+	margin-bottom: 0.25rem;
+}
 
 /* ID */
 #background{
@@ -71,6 +77,11 @@
 /* BUTTONS */
 .buttonContainer{
 	width: 100%;
+	margin-top: 0;
+}
+
+.btn{
+	margin-top: 0;
 }
 
 .btn:focus,.btn:active:focus,.btn.active:focus,
