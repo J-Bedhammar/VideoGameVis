@@ -1,8 +1,6 @@
 
 function barChart(data, columnName, annualSetting){
 
-	console.log(data[1].Developer);
-	
 	//extracts the top 5 values from the data
 	var top5 = [];
 	var axisText;
@@ -199,6 +197,11 @@ function barChart(data, columnName, annualSetting){
 			var displayData = top5[num];
 			
 			var itemName = displayData[columnName];
+			
+			if(columnName == "Publisher")
+				itemName = displayData.yValue;
+			
+			console.log(displayData);
 			
 			d3.selectAll('.bar')
 				.attr("fill", function(d, i) { return barColor(i)} );

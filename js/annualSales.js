@@ -33,6 +33,9 @@ function annualSales(data, columnName, itemName, annualSetting){
 	// Sort data in ascending order after year
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	
+	if(columnName == "Publisher")
+		whichArray = salesArray;
+	
 	// Sum the annual sales
 	if(annualSetting == "sum"){
 		salesArray = annualSums(salesArray);

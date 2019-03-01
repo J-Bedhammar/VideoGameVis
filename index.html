@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" />
 	</head>
 	
-	<body id="background" onload="main(false)">
+	<body id="background" onload="main(true,false)">
 		<div class="card-body">
 			<div class="card-header">
 				<h2>Video Game Sales and Ratings</h2>
@@ -38,7 +38,8 @@
 					</div>
 				</div>
 				<div class="col-3"  id="options">
-					<h2 class="graph-title">Options</h2>
+					<h2 class="graph-title" id="optionTitle">Options</h2>
+					<label for="category">Show:</label>
 					<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons">
 						<label class="btn btn-secondary active">
 							<input type="radio" name="options" id="top5" autocomplete="off" checked> Top 5

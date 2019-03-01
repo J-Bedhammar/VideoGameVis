@@ -19,7 +19,11 @@ label{
 
 #options{
 	background-color: #800000;
-	color: white;
+	color: white !important;
+}
+
+#optionTitle{
+	color: white !important;
 }
 
 #annualSales{
