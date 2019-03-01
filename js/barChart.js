@@ -16,7 +16,7 @@ function barChart(data, columnName, annualSetting){
 				top5[i].xValue = data[i].Global_Sales;
 		}
 		
-		//sorts the top5 data, highest value to lowest value
+		//sorts the top5 data, lowest value to highest value
 		top5.sort(function(a, b) { return a.Global_Sales - b.Global_Sales; });
 		
 		//converts the sales to numbers
@@ -101,12 +101,12 @@ function barChart(data, columnName, annualSetting){
 	//shorten the names of the games
 	names.domain(top5.map(function(d) { 
 		if(columnName == "Name"){
-			if( d.xValue.length > 20)
-				return d.yValue.substring(0,15) + "... (" + d.Platform + ")";
+			if( d.yValue.length > 23)
+				return d.yValue.substring(0,16) + "... (" + d.Platform + ")";
 			else
 				return d.yValue + " (" +  d.Platform + ")";
 		} else{
-			if( d.xValue.length > 23)
+			if( d.yValue.length > 23)
 				return d.yValue.substring(0,20) + "...";
 			else
 				return d.yValue;
@@ -157,23 +157,26 @@ function barChart(data, columnName, annualSetting){
 			.attr("opacity", 1.0);
 		})
 		.on("click", function(d){
-			var row = data[d.nr];
+			// need to recalculate the number, because it is sorted lowest to highest
+			var num = 4-d.nr;
+			var row = top5[num];
 			var itemName = row[columnName];
-			var displayData = data[d.nr];
-			console.log(displayData)
+			var displayData = top5[num];
+
 			d3.selectAll('.bar')
 				.attr("fill", function(d, i) { return barColor(i)} );
 			d3.select(this)
 				.attr("fill", "#009900");
+			
 			updateCharts(displayData, itemName);
+			
 		});
 	
-	var xAxis = d3.axisTop(x);
+	var xAxis = d3.axisTop(x).ticks(10, "s");
 	var yAxis = d3.axisLeft(names);
 	
 	//creates axes for the bar chart 	
 	svg.append("g")
-		.attr("class", "axis")
 		.call(xAxis)
 		.append("text")
 		.attr("x", 370)
@@ -185,6 +188,7 @@ function barChart(data, columnName, annualSetting){
 	svg.append("g")
 		.call(yAxis);
 		
+		
 	function updateCharts(displayData, itemName){
 		
 		var title = d3.select("#annualSalesTitle")
@@ -195,8 +199,10 @@ function barChart(data, columnName, annualSetting){
 		
 		d3.select("#donut > *").remove();
 		d3.select("#annualSales > *").remove();
-		sunBurst(data, displayData);
+
+		sunBurst(data, displayData, columnName);
 		annualSales(data, columnName, itemName, annualSetting);
+
 		
 
 		

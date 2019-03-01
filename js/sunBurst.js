@@ -1,5 +1,5 @@
 
-function sunBurst(data, displayData){
+function sunBurst(data, displayData, columnName){
 	
 	//extract the relevant data from the dataset
 	var gamesData = [];

@@ -19,9 +19,10 @@ function infoViz(data, update){
 		var annualSetting = false;
 
 		barChart(data, columnName, annualSetting);
-		sunBurst(data, data[0]);
+		sunBurst(data, data[0], columnName);
 		annualSales(data, columnName, itemName, annualSetting);
 		brushChart(data, columnName, itemName, annualSetting);
+
 	}
 	else{
 		var annualSetting = false;
@@ -38,9 +39,10 @@ function infoViz(data, update){
 			annualSetting = "releases";
 	
 		barChart(data, columnName, annualSetting);
-		sunBurst(data, data[0]);
+		sunBurst(data, data[0],columnName);
 		annualSales(data, columnName, itemName, annualSetting);
 		brushChart(data, columnName, itemName, annualSetting);
+
 	}
 
 	
