@@ -29,11 +29,19 @@ function infoViz(data, update, updateAnnual){
 		brushChart(data, columnName, newItemName, annualSetting);
 	}
 	else if(updateAnnual){
-		console.log(annualSetting);
+		
 		var newItemName = document.getElementsByClassName("item")[0].id;
 		d3.select("#bar-chart").attr("class", annualSetting);
 		d3.select("#annualSales > *").remove();
 		annualSales(data, columnName, newItemName, annualSetting);
+		
+		var title = d3.select("#annualSalesTitle")
+		if(annualSetting == "sum")
+			title.html("Sales: " + newItemName);
+		else if(annualSetting == "releases")
+			title.html("Releases: " + newItemName);
+		else
+			title.html("Individual Sales: " + newItemName);
 	}
 	else{
 		console.log("Update")

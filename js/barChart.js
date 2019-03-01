@@ -227,16 +227,21 @@ function barChart(data, columnName, annualSetting){
 		
 		
 	function updateCharts(displayData, itemName){
-		
+		var newAnnualSetting = document.getElementById('bar-chart').className;
 		var title = d3.select("#annualSalesTitle")
+		
 		if( itemName != ""){
-			title.html("Annual Sales: " + itemName);
+			if(newAnnualSetting == "sum")
+				title.html("Sales: " + itemName);
+			else if(newAnnualSetting == "releases")
+				title.html("Releases: " + itemName);
+			else
+				title.html("Individual Sales: " + itemName);
+		
 			d3.select(".item").attr("id", itemName);
 		}
 		else
 			title.html("Annual Sales: None")
-		
-		var newAnnualSetting = document.getElementById('bar-chart').className;
 		
 		d3.select("#donut > *").remove();
 		d3.select("#annualSales > *").remove();
