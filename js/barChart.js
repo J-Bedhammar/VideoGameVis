@@ -1,7 +1,7 @@
 
 function barChart(data, columnName, annualSetting){
 
-	
+	console.log(data[1].Developer);
 	
 	//extracts the top 5 values from the data
 	var top5 = [];
@@ -50,8 +50,7 @@ function barChart(data, columnName, annualSetting){
 			}
 			//Last item
 			if( i == sortedData.length-1)
-				publisherArray.push( { xValue: currGames, yValue: tempPublisher});
-			
+				publisherArray.push( { xValue: currGames, yValue: tempPublisher});			
 		}
 		
 		publisherArray.sort(function(a, b) { return b.xValue - a.xValue; });
@@ -66,6 +65,44 @@ function barChart(data, columnName, annualSetting){
 		
 		axisText = "Units (K)";
 		
+	} else if( columnName == "Developer"){
+		
+		sortedData = data;
+		sortedData.sort(function(a, b){
+			if(a.Developer < b.Developer) { return -1; }
+			if(a.Developer > b.Developer) { return 1; }
+			return 0;
+		});
+			
+		var tempDeveloper = sortedData[0].Developer;
+		var currGames= 0;
+		var developerArray = [];
+		
+		for( var i = 0; i < sortedData.length; i++){
+
+		if(tempDeveloper == sortedData[i].Developer && sortedData[i].Developer != [])
+				currGames += 1;
+			else{
+				developerArray.push( { xValue: currGames, yValue: tempDeveloper});
+				currGames = 1;
+				tempDeveloper = sortedData[i].Developer;				
+			}
+			//Last item
+			if( i == sortedData.length-1)
+				developerArray.push( { xValue: currGames, yValue: tempDeveloper});			
+		}
+		
+		developerArray.sort(function(a, b) { return b.xValue - a.xValue; });
+		
+		for ( i = 0; i<=4; i++){
+			if( data[i] != null)
+				top5.push(developerArray[i]);
+				top5[i].nr = i;
+		}
+		
+		top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		
+		axisText = "Units (K)";
 	}
 	
 	
