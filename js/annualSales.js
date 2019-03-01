@@ -1,5 +1,5 @@
 
-function annualSales(data, columnName, itemName, sumYear){
+function annualSales(data, columnName, itemName, annualSetting){
 	
 	var salesArray = [];
 	var nanRemoved = [];
@@ -33,9 +33,15 @@ function annualSales(data, columnName, itemName, sumYear){
 	// Sort data in ascending order after year
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	
-	// Sum the annual sales if summed is true
-	if(sumYear){
+	// Sum the annual sales
+	if(annualSetting == "sum"){
 		salesArray = annualSums(salesArray);
+		whichArray = salesArray;
+	}
+	
+	// Show annual number of releases 
+	if(annualSetting == "releases"){
+		salesArray = annualReleases(salesArray);
 		whichArray = salesArray;
 	}
 	
@@ -76,7 +82,7 @@ function annualSales(data, columnName, itemName, sumYear){
 		.y(function(d) { return yScale(d.sales)});
 	
 	xScale.domain(d3.extent(nanRemoved, function(d) { return d.year }));
-	yScale.domain(d3.extent(whichArray, function(d) { return d.sales }));
+	yScale.domain(d3.extent(salesArray, function(d) { return d.sales }));
 	xTime.domain(d3.extent(nanRemoved, function(d) { return parseDate(d.year) }));
 	
 	/*this.changeXScale = function (newScale) {
@@ -90,16 +96,30 @@ function annualSales(data, columnName, itemName, sumYear){
 		.attr("transform", "translate(0, " + height + ")")
 		.call(d3.axisBottom(xTime));
 		
-	g.append("g")
-		.call(d3.axisLeft(yScale))
-		.append("text")
-		.attr("fill", "#000")
-		.attr("transform", "rotate(-90)")
-		.attr("y", 6)
-		.attr("dy", "0.71em")
-		.attr("text-anchor", "end")
-		.text("Units (Million)");
 
+	// Append text depending on setting
+	if(annualSetting == "releases"){
+		g.append("g")
+			.call(d3.axisLeft(yScale))
+			.append("text")
+			.attr("fill", "#000")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", "0.71em")
+			.attr("text-anchor", "end")
+			.text("Units");
+	} else{
+		g.append("g")
+			.call(d3.axisLeft(yScale))
+			.append("text")
+			.attr("fill", "#000")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", "0.71em")
+			.attr("text-anchor", "end")
+			.text("Units (Million)");
+	}
+	
 	// Append a path
 	g.append("path")
 		.datum(salesArray)
@@ -116,6 +136,7 @@ function annualSales(data, columnName, itemName, sumYear){
 		.attr("class", "salesInfo")
 		.style("display", "none");
 	
+	
 	// Add the circles and mouseover information
 	svg.selectAll("dot")
 		.data(salesArray)
@@ -129,15 +150,15 @@ function annualSales(data, columnName, itemName, sumYear){
 				.transition(200)
 				.attr("fill", "red")
 				.attr("r", 10);
-			/*dot_year.text( "Year: " + d.year);
-			dot_sales.text("Sales: " + d.sales + "M");*/	
 			infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M")
 				.style("display", "inline-block")
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 40) + "px");
-			if (sumYear)
+			if (annualSetting == "sum")
 				infoDiv.html("Year: " + d.year + "</br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M");
-            })
+            if (annualSetting == "releases")
+				infoDiv.html("Year: " + d.year + "</br>Releases: "  + d.sales);
+			})
 		.on("mouseout", function(d){
 			d3.select(this)
 				.transition(200)
@@ -152,32 +173,57 @@ function annualSales(data, columnName, itemName, sumYear){
 	// END OF ANNUAL SALES
 }
 
-
+// Show annual sum
 function annualSums(salesArray){
-		var summedSales = [];
-		var tempYear = salesArray[0].year;
-		var currYearSales = 0;
+	var summedSales = [];
+	var tempYear = salesArray[0].year;
+	var currYearSales = 0;
+	
+	//console.log(salesArray)
+	
+	for (var i = 0; i < salesArray.length; i++){
 		
-		//console.log(salesArray)
-		
-		for (var i = 0; i < salesArray.length; i++){
-			
-			if(tempYear == salesArray[i].year)
-				currYearSales += salesArray[i].sales;
-			else{
-				summedSales.push( { sales: currYearSales, year: tempYear});
-				currYearSales = salesArray[i].sales;
-				tempYear = salesArray[i].year;				
-			}
-			//Last item
-			if( i == salesArray.length-1)
-				summedSales.push( { sales: currYearSales, year: salesArray[i].year});
-			
+		if(tempYear == salesArray[i].year)
+			currYearSales += salesArray[i].sales;
+		else{
+			summedSales.push( { sales: currYearSales, year: tempYear});
+			currYearSales = salesArray[i].sales;
+			tempYear = salesArray[i].year;				
 		}
+		//Last item
+		if( i == salesArray.length-1)
+			summedSales.push( { sales: currYearSales, year: salesArray[i].year});
 		
-		//console.log(summedSales);
-		return summedSales;
 	}
+		
+	//console.log(summedSales);
+	return summedSales;
+}
+
+// Show annual releases
+function annualReleases(salesArray){
+	var releaseArray = [];
+	var tempYear = salesArray[0].year;
+	var currReleases = 0;
+
+	
+	for (var i = 0; i < salesArray.length; i++){
+		
+		if(tempYear == salesArray[i].year)
+			currReleases += 1;
+		else{
+			releaseArray.push( { sales: currReleases, year: tempYear});
+			currReleases = 1;
+			tempYear = salesArray[i].year;				
+		}
+		//Last item
+		if( i == salesArray.length-1)
+			releaseArray.push( { sales: currReleases, year: salesArray[i].year});
+		
+	}
+
+	return releaseArray;
+}
 
 
 

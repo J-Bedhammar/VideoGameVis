@@ -5,7 +5,7 @@ function infoViz(data, update){
 	//console.log("infoViz()");
 	//console.log(data);
 	
-	var annualSaleSetting = $("#sumAnnualSales").val();
+	var annualSaleValue = $("#sumAnnualSales").val();
 	var columnName = $("#category").val();
 	var itemName = "";
 	
@@ -16,15 +16,16 @@ function infoViz(data, update){
 
 
 	if(!update){
-		var sumYear = false;
+		var annualSetting = false;
 
-		barChart(data, columnName, sumYear);
+		barChart(data, columnName, annualSetting);
 		sunBurst(data, data[0], columnName);
-		annualSales(data, columnName, itemName, sumYear);
-		brushChart(data, columnName, itemName, sumYear);
+		annualSales(data, columnName, itemName, annualSetting);
+		brushChart(data, columnName, itemName, annualSetting);
+
 	}
 	else{
-		var sumYear = false;
+		var annualSetting = false;
 		
 		console.log("Update")
 		d3.select("#brush > *").remove();
@@ -32,13 +33,16 @@ function infoViz(data, update){
 		d3.select("#donut > *").remove();
 		d3.select("#annualSales > *").remove();
 		
-		if(annualSaleSetting == "Annual Sum")
-			sumYear = true;
+		if(annualSaleValue == "Sales Per Year")
+			annualSetting = "sum";
+		if(annualSaleValue == "Releases Per Year")
+			annualSetting = "releases";
 	
-		barChart(data, columnName, sumYear);
+		barChart(data, columnName, annualSetting);
 		sunBurst(data, data[0],columnName);
-		annualSales(data, columnName, itemName, sumYear);
-		brushChart(data, columnName, itemName, sumYear);
+		annualSales(data, columnName, itemName, annualSetting);
+		brushChart(data, columnName, itemName, annualSetting);
+
 	}
 
 	

@@ -1,5 +1,5 @@
 
-function barChart(data, columnName, sumYear){
+function barChart(data, columnName, annualSetting){
 
 	
 	
@@ -157,10 +157,11 @@ function barChart(data, columnName, sumYear){
 		})
 		.on("click", function(d){
 			// need to recalculate the number, because it is sorted lowest to highest
-			var num = 4 -d.nr;
+			var num = 4-d.nr;
 			var row = top5[num];
 			var itemName = row[columnName];
 			var displayData = top5[num];
+
 			d3.selectAll('.bar')
 				.attr("fill", function(d, i) { return barColor(i)} );
 			d3.select(this)
@@ -197,8 +198,10 @@ function barChart(data, columnName, sumYear){
 		
 		d3.select("#donut > *").remove();
 		d3.select("#annualSales > *").remove();
+
 		sunBurst(data, displayData, columnName);
-		annualSales(data, columnName, itemName, sumYear);
+		annualSales(data, columnName, itemName, annualSetting);
+
 		
 
 		
