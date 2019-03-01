@@ -1,13 +1,11 @@
 
-function barChart(data, columnName, sumYear){
+function barChart(data, columnName, annualSetting){
 
 	
 	
 	//extracts the top 5 values from the data
 	var top5 = [];
 	var axisText;
-	
-	console.log(columnName);
 	
 	if( columnName == "Name"){
 		for ( i = 0; i<=4; i++){
@@ -162,6 +160,7 @@ function barChart(data, columnName, sumYear){
 			var row = data[d.nr];
 			var itemName = row[columnName];
 			var displayData = data[d.nr];
+			console.log(displayData)
 			d3.selectAll('.bar')
 				.attr("fill", function(d, i) { return barColor(i)} );
 			d3.select(this)
@@ -197,7 +196,7 @@ function barChart(data, columnName, sumYear){
 		d3.select("#donut > *").remove();
 		d3.select("#annualSales > *").remove();
 		sunBurst(data, displayData);
-		annualSales(data, columnName, itemName, sumYear);
+		annualSales(data, columnName, itemName, annualSetting);
 		
 
 		

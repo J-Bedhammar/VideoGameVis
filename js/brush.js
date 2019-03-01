@@ -1,5 +1,5 @@
 
-function brushChart(data, tempColumn, tempPublisher, sumYear){
+function brushChart(data, tempColumn, tempPublisher, annualSetting){
 
 	
 	// Creating margins and figure sizes
@@ -89,9 +89,9 @@ function brushChart(data, tempColumn, tempPublisher, sumYear){
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
 	
-		annualSales(targetData, tempColumn, tempPublisher, sumYear);
+		annualSales(targetData, tempColumn, tempPublisher, annualSetting);
 
-		barChart(targetData, tempColumn, sumYear);
+		barChart(targetData, tempColumn, annualSetting);
 		
     }
 	
