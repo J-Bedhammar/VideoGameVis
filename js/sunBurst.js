@@ -7,7 +7,13 @@ function sunBurst(data, displayData, columnName){
 	if (typeof displayData.yValue !== 'undefined')
 		var rootName = displayData.yValue;
 	else 
-		var rootName = "Electronic Arts";
+		if( columnName == "Name"){
+			var rootName = "Wii Sports";
+		} else if( columnName == "Publisher"){
+			var rootName = "Electronic Arts";
+		} else if( columnName == "Developer"){
+			var rootName = "Ubisoft";
+		}
 		
 	for (var i = 0; i < data.length; i++){
 		var row = data[i];
@@ -142,7 +148,42 @@ function sunBurst(data, displayData, columnName){
 			
 		} else if(columnName == "Developer"){
 			
-			var caseManage = gamesData.length;
+			sortedData = gamesData;
+			sortedData.sort(function(a, b){
+				if(a.Platform < b.Platform) { return -1; }
+				if(a.Platform > b.Platform) { return 1; }
+			return 0;
+			});
+			
+			var tempPlatform = sortedData[0].Platform;
+			var currNASales= 0;
+			var currJPSales= 0;
+			var currEUSales= 0;
+			var currOSales= 0;
+			
+			for( var i = 0; i < sortedData.length; i++){
+
+				if(tempPlatform == sortedData[i].Platform){
+					currNASales += sortedData[i].NA_Sales;
+					currJPSales += sortedData[i].EU_Sales;
+					currEUSales += sortedData[i].JP_Sales;
+					currOSales += sortedData[i].Other_Sales;
+				}else{
+					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});
+					currNASales = sortedData[i].NA_Sales;
+					currJPSales = sortedData[i].EU_Sales;
+					currEUSales = sortedData[i].JP_Sales;
+					currOSales = sortedData[i].Other_Sales;
+					tempPlatform = sortedData[i].Platform;	
+				}
+				//Last item
+				if( i == sortedData.length)
+					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});		
+			}
+			
+			var caseManage = platformArray.length;
 		} 
 		
 		
