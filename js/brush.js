@@ -91,7 +91,7 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting){
 	
 		annualSales(targetData, tempColumn, tempPublisher, annualSetting);
 
-		barChart(targetData, tempColumn, annualSetting);
+		barChart(targetData, tempColumn, annualSetting, show, sortBy);
 		
     }
 	

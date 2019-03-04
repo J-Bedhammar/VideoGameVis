@@ -70,11 +70,11 @@ function sunBurst(data, displayData, columnName){
 		.style("display", "none")
 		.attr("class","salesInfo");
 		
-	//SKAPAR BUGGAR
-	/*var sunburstName = d3.select("#donut")
+	//name of game shown
+	var sunburstName = d3.select("#donut")
 		.append("div")
-		.html(nodeData.name)
-		.attr("class","sunburstName"); */
+		.html("NAME")
+		.attr("class","sunburstName"); 
 		
 	//put all the parts together
 	g.selectAll("path")

@@ -19,11 +19,14 @@ function infoViz(data, update, updateAnnual){
 		annualSetting = "sum";
 	if(annualSaleValue == "Releases Per Year")
 		annualSetting = "releases";
+	
+	var show = "top5";
+	var sortBy = "Sales";
 
 	
 	if(!update){
 		var annualSetting = "individual";
-		newItemName = barChart(data, columnName, annualSetting);
+		newItemName = barChart(data, columnName, annualSetting, show, sortBy);
 		sunBurst(data, data[0], columnName);
 		annualSales(data, columnName, newItemName, annualSetting);
 		brushChart(data, columnName, newItemName, annualSetting);
@@ -49,9 +52,10 @@ function infoViz(data, update, updateAnnual){
 		d3.select("#brush > *").remove();
 		d3.select("#bar-chart > *").remove();
 		d3.select("#donut > *").remove();
+		d3.select(".sunburstName > *").remove();
 		d3.select("#annualSales > *").remove();
 	
-		barChart(data, itemName, annualSetting);
+		barChart(data, itemName, annualSetting, show, sortBy);
 		sunBurst(data, data[0],columnName);
 		annualSales(data, columnName, itemName, annualSetting);
 		brushChart(data, columnName, itemName, annualSetting);
