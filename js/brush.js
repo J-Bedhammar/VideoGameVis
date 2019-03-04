@@ -93,9 +93,9 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting){
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
 	
+
 		annualSales(targetData, tempColumn, tempPublisher, newAnnualSetting);
-		barChart(targetData, tempColumn, newAnnualSetting);
-		
+		barChart(targetData, tempColumn, annualSetting, show, sortBy);
     }
 	
 	// END OF BRUSH
