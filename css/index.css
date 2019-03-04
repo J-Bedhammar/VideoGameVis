@@ -75,7 +75,7 @@ label{
 }
 
 .sunburstName{
-	text-align: center;
+	color: red !important;
 }
 
 /* BUTTONS */

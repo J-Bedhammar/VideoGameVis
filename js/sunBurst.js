@@ -42,11 +42,12 @@ function sunBurst(data, displayData, columnName){
 	// decides where to put the graph and creates a svg element
 	var g = d3.select("#donut")
 		.append("svg")
+		.attr("position", "absolute")
 		.attr("width", width)
 		.attr("height", height*2)
 		.append("g")
 		.attr("transform", "translate(" + width/2 + "," + height + ")");
-	
+		
 	//sets the data structure
 	var partition  = d3.partition()
 		.size([2 * Math.PI, radius]);
@@ -61,8 +62,8 @@ function sunBurst(data, displayData, columnName){
 	var arc = d3.arc()
 		.startAngle(function(d) { return d.x0; })
 		.endAngle(function(d) { return d.x1; })
-		.innerRadius(function(d) {return d.y0 + 40 ;})
-		.outerRadius(function(d) {return d.y1 + 40 ;});
+		.innerRadius(function(d) {return d.y0 + 35 ;})
+		.outerRadius(function(d) {return d.y1 + 35 ;});
 		
 	//creates the mouseover tooltip
 	var tooltip = d3.select("body")
@@ -70,11 +71,10 @@ function sunBurst(data, displayData, columnName){
 		.style("display", "none")
 		.attr("class","salesInfo");
 		
-	//name of game shown
-	var sunburstName = d3.select("#donut")
-		.append("div")
-		.html("NAME")
-		.attr("class","sunburstName"); 
+	
+	// Name
+	d3.select("#donutTitle").html(rootName);
+
 		
 	//put all the parts together
 	g.selectAll("path")

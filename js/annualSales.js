@@ -12,14 +12,14 @@ function annualSales(data, columnName, itemName, annualSetting){
 		if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
 			continue;
 		else
-			nanRemoved.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales});
+			nanRemoved.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales, score: +row.Critic_Score});
 	
 		// Filtered array
 		if (row[columnName] == itemName){
 			if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
 				continue;
 			else
-				salesArray.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales});
+				salesArray.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales, score: +row.Critic_Score});
 		}	
 	}
 	
@@ -48,6 +48,11 @@ function annualSales(data, columnName, itemName, annualSetting){
 		whichArray = salesArray;
 	}
 	
+	if(annualSetting == "score"){
+		salesArray = annualScores(salesArray);
+		whichArray = salesArray;
+	}
+	
 	// Scatter plot circle size and array switch
 	var circleRadius = 2;
 	
@@ -55,7 +60,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 		circleRadius = 3;
 		whichArray = nanRemoved;
 		
-		if(annualSetting == "releases")
+		if(annualSetting == "releases" || annualSetting == "score")
 			whichArray = nanRemoved;
 	}
 	
@@ -91,7 +96,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 	yScale.domain(d3.extent(whichArray, function(d) { return d.sales }));
 	xTime.domain(d3.extent(nanRemoved, function(d) { return parseDate(d.year) }));
 	
-	if(annualSetting == "releases"){
+	if(annualSetting == "releases" || annualSetting == "score"){
 		var maxReleases = d3.max(salesArray, function (d) { return d.sales});
 		yScale.domain([0, maxReleases]);
 	}
@@ -107,8 +112,6 @@ function annualSales(data, columnName, itemName, annualSetting){
 		.attr("transform", "translate(0, " + height + ")")
 		.call(d3.axisBottom(xTime));
 		
-	
-
 	// Append text depending on setting
 	if(annualSetting == "releases"){
 		g.append("g")
@@ -120,6 +123,16 @@ function annualSales(data, columnName, itemName, annualSetting){
 			.attr("dy", "0.71em")
 			.attr("text-anchor", "end")
 			.text("Units");
+	} else if (annualSetting == "score"){
+		g.append("g")
+			.call(d3.axisLeft(yScale))
+			.append("text")
+			.attr("fill", "#000")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", "0.71em")
+			.attr("text-anchor", "end")
+			.text("Metacritic");
 	} else{
 		g.append("g")
 			.call(d3.axisLeft(yScale))
@@ -170,6 +183,8 @@ function annualSales(data, columnName, itemName, annualSetting){
 				infoDiv.html("Year: " + d.year + "</br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M");
             if (annualSetting == "releases")
 				infoDiv.html("Year: " + d.year + "</br>Releases: "  + d.sales);
+			if (annualSetting == "score")
+				infoDiv.html("Year: " + d.year + "</br>Average Score: "  + parseFloat(d.sales).toFixed(2));
 			})
 		.on("mouseout", function(d){
 			d3.select(this)
@@ -226,7 +241,7 @@ function annualReleases(salesArray){
 		else{
 			releaseArray.push( { sales: currReleases, year: tempYear});
 			currReleases = 1;
-			tempYear = salesArray[i].year;				
+			tempYear = salesArray[i].year;		
 		}
 		//Last item
 		if( i == salesArray.length-1)
@@ -237,5 +252,35 @@ function annualReleases(salesArray){
 	return releaseArray;
 }
 
+// Show annual score
+function annualScores(salesArray){
+	var scoreArray = [];
+	var tempYear = salesArray[0].year;
+	var currYearScores = 0;
+	var currReleases = 0;
+	
+	//console.log(salesArray)
+	
+	for (var i = 0; i < salesArray.length; i++){
+		
+		if(tempYear == salesArray[i].year){
+			currYearScores += salesArray[i].score;
+			currReleases += 1;
+		}
+		else{
+			scoreArray.push( { sales: (currYearScores/currReleases), year: tempYear});
+			currYearScores = salesArray[i].score;
+			currReleases = 1;
+			tempYear = salesArray[i].year;				
+		}
+		//Last item
+		if( i == salesArray.length-1)
+			scoreArray.push( { sales: (currYearScores/currReleases), year: salesArray[i].year});
+		
+	}
+		
+	//console.log(summedSales);
+	return scoreArray;
+}
 
 
