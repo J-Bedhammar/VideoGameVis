@@ -7,53 +7,74 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	
 	if( columnName == "Name"){
 		
-		if(show == "Top5"){
-			for ( i = 0; i<=4; i++){
-				top5.push(data[i]);
-				top5[i].nr = i;
-				top5[i].yValue = data[i].Name;
-				if(sortBy == "Sales"){
-					top5[i].xValue = data[i].Global_Sales;
-					axisText = "Units (M)";
-				} else if (sortBy == "Score"){
-					if(!isNaN(data[i].Critic_Score))
-						top5[i].xValue = data[i].Critic_Score;
-					axisText = "Score";
-				}
-			}
-			
-			//sorts the top5 data, lowest value to highest value if sortBy is top5
-			top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		sortedData = data;
 		
-		}else { //bot5
-			counter = 0;
-			
-			for ( i = (data.length-1); i>=(data.length-5); i--){
-				top5.push(data[i]);
-				top5[counter].nr = counter;
-				top5[counter].yValue = data[i].Name;
-				if(sortBy == "Sales")
-					top5[counter].xValue = data[i].Global_Sales;
-				else{
-					if(!isNaN(data[i].Critic_Score))
-						top5[counter].xValue = data[i].Critic_Score;
-				}
-				
-				counter++;
-				
-			}			
-
-			
-			//sorts the top5 data, heighest value to lowest value if sortBy is top5
-			top5.sort(function(a, b) { return b.xValue - a.xValue; });
+		
+		if(sortBy == "Sales")
+			if(show == "Top5"){
+				sortedData.sort(function(a, b){
+					if(+a.Global_Sales < +b.Global_Sales) { return 1; }
+					if(+a.Global_Sales > +b.Global_Sales) { return -1; }
+					return 0;
+				});
+			} else {
+				sortedData.sort(function(a, b){
+					if(+a.Global_Sales < +b.Global_Sales) { return -1; }
+					if(+a.Global_Sales > +b.Global_Sales) { return 1; }
+					return 0;
+				});
+			}
+		else{
+			if(show == "Top5"){
+				sortedData.sort(function(a, b){
+					if(+a.Critic_Score < +b.Critic_Score) { return 1; }
+					if(+a.Critic_Score > +b.Critic_Score) { return -1; }
+					return 0;
+				});
+			} else {
+				sortedData.sort(function(a, b){
+					if(+a.Critic_Score < +b.Critic_Score) { return -1; }
+					if(+a.Critic_Score > +b.Critic_Score) { return 1; }
+					return 0;
+				});
+			}
 		}
 		
-		//converts the sales to numbers
-		top5.forEach(function(d) {
-			d.xValue = + d.xValue;
-		});
+		var counter = 0;
 		
-		axisText = "Units (M)";
+		for ( i = 0; i<=sortedData.length; i++){
+			
+			//if score is zero, ignore it
+			if( sortBy == "Score" && +sortedData[i].Critic_Score == 0){
+				continue;
+			}
+			
+			top5.push(data[i]);
+			top5[counter].nr = counter;
+			top5[counter].yValue = data[i].Name;
+			if(sortBy == "Sales"){
+				top5[counter].xValue = data[i].Global_Sales;
+				axisText = "Units (M)";
+			} else if (sortBy == "Score"){
+				if(!isNaN(data[counter].Critic_Score))
+					top5[counter].xValue = data[i].Critic_Score;
+				axisText = "Score";
+			}
+			
+			//if it has five elements
+			if ( counter == 4)
+				break;
+			
+			counter ++;
+		}
+			
+			//sorts the top5 data, lowest value to highest value if sortBy is top5
+		top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		
+		//converts the sales to numbers
+		/*top5.forEach(function(d) {
+			d.xValue = + d.xValue;
+		}); */
 		
 	} else if( columnName == "Publisher"){
 		
@@ -104,7 +125,14 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				publisherArray.sort(function(a, b) { return a.score - b.score; });
 		}
 		
+		
+		var counter = 0;
+		
 		for ( i = 0; i<=4; i++){
+			
+			if( sortBy == "Score" && +publisherArray[i].score == 0)
+				continue;
+				
 			top5.push(publisherArray[i]);
 			top5[i].nr = i;
 			top5[i].yValue = publisherArray[i].publisher;
@@ -118,6 +146,12 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				top5[i].xValue = publisherArray[i].score;
 				axisText = " Score";
 			}		
+			
+			//if it has five elements
+			if ( counter == 4)
+				break;
+			
+			counter ++;
 		}
 		
 		top5.sort(function(a, b) { return a.xValue - b.xValue; });
@@ -173,8 +207,13 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				developerArray.sort(function(a, b) { return a.score - b.score; });
 		}
 		
-		
-		for ( i = 0; i<=4; i++){
+		var counter = 0;
+		for ( i = 0; i<=developerArray.length; i++){
+			
+			if( sortBy == "Score" && +developerArray[i].score == 0){
+				continue;
+			}
+			
 			top5.push(developerArray[i]);
 			top5[i].nr = i;
 			top5[i].yValue = developerArray[i].developer;
@@ -188,6 +227,12 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				top5[i].xValue = developerArray[i].score;
 				axisText = "Score";
 			}
+			
+			//if it has five elements
+			if ( counter == 4)
+				break;
+			
+			counter ++;
 		}
 		
 		top5.sort(function(a, b) { return a.xValue - b.xValue; });
@@ -248,6 +293,9 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		}
 		
 		for ( i = 0; i<=4; i++){
+			if( sortBy == "Score" && publisherArray[i].score == 0)
+				continue;
+			
 			top5[i].nr = i;
 			top5[i].yValue = platformArray[i].platform;
 			if( sortBy == "Sales"){
@@ -361,10 +409,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		})
 		.on("click", function(d){
 			// need to recalculate the number, because it is sorted lowest to highest
-			if (sortBy == "top5")
-				var num = 4-d.nr;
-			else
-				var num = d.nr;
+			var num = 4-d.nr;
 			
 			var displayData = top5[num];
 			var itemName = displayData.yValue;
