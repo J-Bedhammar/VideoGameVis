@@ -45,7 +45,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		for ( i = 0; i<=sortedData.length; i++){
 			
 			//if score is zero, ignore it
-			if( sortBy == "Score" && +sortedData[i].Critic_Score == 0){
+			if( sortBy == "Score" && (+sortedData[i].Critic_Score == 0 || isNaN(+sortedData[i].Critic_Score))){
 				continue;
 			}
 			
@@ -65,7 +65,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			if ( counter == 4)
 				break;
 			
-			counter ++;
+			counter++;
 		}
 			
 			//sorts the top5 data, lowest value to highest value if sortBy is top5
@@ -89,6 +89,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		var currGames= 0;
 		var publisherSales = 0;
 		var publisherScore = 0;
+		var scoreCounter = 0;
 		var publisherArray = [];
 		
 		for( var i = 0; i < sortedData.length; i++){
@@ -97,16 +98,32 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				publisherSales += +sortedData[i].Global_Sales;
 				publisherScore += +sortedData[i].Critic_Score;
 				currGames += 1;
-			}else{
-				publisherArray.push( { nrOfGames: currGames, publisher: tempPublisher, score: (publisherScore/currGames), sales: publisherSales });
+				
+				//check if it has any critic score
+				if(+sortedData[i].Critic_Score != 0 && !isNaN(+sortedData[i].Critic_Score))
+					scoreCounter += 1;
+				
+			}else{ 
+				//set scoreCounter to 1 if it is 0, because publisher is divided by scoreCounter later.
+				if( scoreCounter == 0)
+					scoreCounter = 1;
+				
+				publisherArray.push( { nrOfGames: currGames, publisher: tempPublisher, score: (publisherScore/scoreCounter), sales: publisherSales });
 				currGames = 1;
 				publisherSales = +sortedData[i].Global_Sales;
 				publisherScore = +sortedData[i].Critic_Score;
+				
+				//check if it has any critic score
+				if(+sortedData[i].Critic_Score != 0 && !isNaN(+sortedData[i].Critic_Score))
+					scoreCounter = 1;
+				else
+					scoreCounter = 0;
+				
 				tempPublisher = sortedData[i].Publisher;				
 			}
 			//Last item
 			if( i == sortedData.length-1)
-				publisherArray.push( { nrOfGames: currGames, publisher: tempPublisher, score: (publisherScore/currGames), sales: publisherSales });		
+				publisherArray.push( { nrOfGames: currGames, publisher: tempPublisher, score: (publisherScore/scoreCounter), sales: publisherSales });		
 		}
 		
 		if( show == "Top5"){
@@ -128,22 +145,22 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		var counter = 0;
 		
-		for ( i = 0; i<=4; i++){
+		for ( i = 0; i<=publisherArray.length; i++){
 			
-			if( sortBy == "Score" && +publisherArray[i].score == 0)
+			if( sortBy == "Score" && (+publisherArray[i].score == 0 || isNaN(+publisherArray[i].score)))
 				continue;
 				
 			top5.push(publisherArray[i]);
-			top5[i].nr = i;
-			top5[i].yValue = publisherArray[i].publisher;
+			top5[counter].nr = counter;
+			top5[counter].yValue = publisherArray[i].publisher;
 			if( sortBy == "Sales"){
-				top5[i].xValue = publisherArray[i].sales;
+				top5[counter].xValue = publisherArray[i].sales;
 				axisText = "Units (M)";
 			}else if(sortBy == "Releases"){
-				top5[i].xValue = publisherArray[i].nrOfGames;
+				top5[counter].xValue = publisherArray[i].nrOfGames;
 				axisText = "Units (K)";
 			}else {
-				top5[i].xValue = publisherArray[i].score;
+				top5[counter].xValue = publisherArray[i].score;
 				axisText = " Score";
 			}		
 			
@@ -151,7 +168,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			if ( counter == 4)
 				break;
 			
-			counter ++;
+			counter++;
 		}
 		
 		top5.sort(function(a, b) { return a.xValue - b.xValue; });
@@ -169,6 +186,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		var developerScore = 0;
 		var developerSales = 0;
 		var currGames= 0;
+		var scoreCounter = 0;
 		var developerArray = [];
 		
 		for( var i = 0; i < sortedData.length; i++){
@@ -177,17 +195,30 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				currGames += 1;
 				developerSales += +sortedData[i].Global_Sales;
 				developerScore += +sortedData[i].Critic_Score;
+				
+				if(+sortedData[i].Critic_Score != 0 && !isNaN(+sortedData[i].Critic_Score))
+					scoreCounter += 1;
+				
 			}else{
-				developerArray.push( { nrOfGames: currGames, developer: tempDeveloper, score: (developerScore/currGames), sales: developerSales } );
+				
+				if( scoreCounter == 0)
+					scoreCounter = 1;
+				
+				developerArray.push( { nrOfGames: currGames, developer: tempDeveloper, score: (developerScore/scoreCounter), sales: developerSales } );
 				currGames = 1;
 				developerSales = +sortedData[i].Global_Sales;
 				developerScore = +sortedData[i].Critic_Score;
+				
+				if(+sortedData[i].Critic_Score != 0 && !isNaN(+sortedData[i].Critic_Score))
+					scoreCounter = 1;
+				else
+					scoreCounter = 0;
+				
 				tempDeveloper = sortedData[i].Developer;				
 			}
 			//Last item
 			if( i == sortedData.length-1){
-				console.log("Push last item")
-				developerArray.push( { nrOfGames: currGames, developer: tempDeveloper, score: (developerScore/currGames), sales: developerSales } );		
+				developerArray.push( { nrOfGames: currGames, developer: tempDeveloper, score: (developerScore/scoreCounter), sales: developerSales } );		
 			}
 		}
 		
@@ -207,24 +238,25 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				developerArray.sort(function(a, b) { return a.score - b.score; });
 		}
 		
+		
 		var counter = 0;
 		for ( i = 0; i<=developerArray.length; i++){
 			
-			if( sortBy == "Score" && +developerArray[i].score == 0){
+			if( sortBy == "Score" && (+developerArray[i].score == 0|| isNaN(+developerArray[i].score))){
 				continue;
 			}
 			
 			top5.push(developerArray[i]);
-			top5[i].nr = i;
-			top5[i].yValue = developerArray[i].developer;
+			top5[counter].nr = counter;
+			top5[counter].yValue = developerArray[i].developer;
 			if( sortBy == "Sales"){
-				top5[i].xValue = developerArray[i].sales;
+				top5[counter].xValue = developerArray[i].sales;
 				axisText = "Units (M)";
 			}else if( sortBy == "Releases"){
-				top5[i].xValue = developerArray[i].nrOfGames;
+				top5[counter].xValue = developerArray[i].nrOfGames;
 				axisText = "Units (K)";
 			}else {
-				top5[i].xValue = developerArray[i].score;
+				top5[counter].xValue = developerArray[i].score;
 				axisText = "Score";
 			}
 			
@@ -232,8 +264,10 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			if ( counter == 4)
 				break;
 			
-			counter ++;
+			counter++;
 		}
+		
+		console.log(top5);
 		
 		top5.sort(function(a, b) { return a.xValue - b.xValue; });
 		
@@ -254,6 +288,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		var tempPlatform = sortedData[0].Platform;
 		var currGames = 0;
+		var scoreCounter = 0;
 		var platformScore = 0;
 		var platformSales= 0;
 		var platformArray = [];
@@ -264,16 +299,29 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				platformSales += +sortedData[i].Global_Sales;
 				platformScore += +sortedData[i].Critic_Score;
 				currGames += 1;
+				
+				if(+sortedData[i].Critic_Score != 0 && !isNaN(+sortedData[i].Critic_Score))
+					scoreCounter += 1;
+				
+				
 			}else{
-				platformArray.push( { nrOfGames: currGames, platform: tempPlatform, score: (platformScore/currGames), sales: platformSales});
+				if( scoreCounter == 0)
+					scoreCounter = 1;
+				
+				platformArray.push( { nrOfGames: currGames, platform: tempPlatform, score: (platformScore/scoreCounter), sales: platformSales});
 				platformSales = +sortedData[i].Global_Sales;
 				platformScore = +sortedData[i].Critic_Score;	
 				currGames = 1;
 				tempPlatform = sortedData[i].Platform;
+				
+				if(+sortedData[i].Critic_Score != 0 && !isNaN(+sortedData[i].Critic_Score))
+					scoreCounter = 1;
+				else
+					scoreCounter = 0;
 			}
 			//Last item
 			if( i == sortedData.length-1)
-				platformArray.push( { nrOfGames: currGames, platform: tempPlatform, score: (platformScore/currGames), sales: platformSales});		
+				platformArray.push( { nrOfGames: currGames, platform: tempPlatform, score: (platformScore/scoreCounter), sales: platformSales});		
 		}
 		
 		if( show == "Top5"){
@@ -292,25 +340,33 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				platformArray.sort(function(a, b) { return a.score - b.score; });
 		}
 		
-		for ( i = 0; i<=4; i++){
-			if( sortBy == "Score" && publisherArray[i].score == 0)
+		var counter = 0;
+		for ( i = 0; i<=platformArray.length; i++){
+			if( sortBy == "Score" && (+platformArray[i].score == 0 || isNaN(+platformArray[i].score)))
 				continue;
 			
-			top5[i].nr = i;
-			top5[i].yValue = platformArray[i].platform;
+			top5.push(platformArray[i]);
+			top5[counter].nr = counter;
+			top5[counter].yValue = platformArray[i].platform;
 			if( sortBy == "Sales"){
-				top5[i].xValue = platformArray[i].sales;
+				top5[counter].xValue = platformArray[i].sales;
 				axisText = "Units (M)";
 			} else if( sortBy == "Releases"){
-				top5[i].xValue = platformArray[i].nrOfGames;
+				top5[counter].xValue = platformArray[i].nrOfGames;
 				axisText = "Units (k)";
 			} else {
-				top5[i].xValue = platformArray[i].score;
+				top5[counter].xValue = platformArray[i].score;
 				axisText = "Score";
 			}
+			
+			//if it has five elements
+			if ( counter == 4)
+				break;
+			
+			counter ++;
 		}
 		
-		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		top5.sort(function(a, b) { return a.xValue - b.xValue; });
 	
 	}
 	
