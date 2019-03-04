@@ -1,3 +1,19 @@
+// Button inputs
+$('input[type=radio][name=show]').change(function() {
+	var showSetting = this.value;
+	
+	d3.select("#bar-chart > *").remove();
+	barChart(data, itemName, annualSetting, );
+});
+
+$('input[type=radio][name=sortBy]').change(function() {
+    var sortSetting = this.value;
+	
+	d3.select("#bar-chart > *").remove();
+	barChart(data, itemName, annualSetting, );
+});
+
+
 
 function infoViz(data, update, updateAnnual){
 	
@@ -7,6 +23,10 @@ function infoViz(data, update, updateAnnual){
 	var annualSetting = "individual";
 	
 	var annualSaleValue = $("#sumAnnualSales").val();
+	var showSetting = $('input[type=radio][name=show]').val();
+	var sortSetting = $('input[type=radio][name=show]').val();
+	
+	//console.log(buttonActive);
 	var columnName = $("#category").val();
 	var itemName = "";
 

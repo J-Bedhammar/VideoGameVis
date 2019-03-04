@@ -42,12 +42,12 @@
 				<div class="col-3"  id="options">
 					<h2 class="graph-title" id="optionTitle">Options</h2>
 					<label for="category">Show:</label>
-					<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons">
-						<label class="btn btn-secondary active">
-							<input type="radio" name="options" id="top5" autocomplete="off" checked> Top 5
+					<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons" >
+						<label class="btn btn-secondary active" id="show">
+							<input type="radio" name="show" value="top5" autocomplete="off" > Top 5
 						</label>
 						<label class="btn btn-secondary">
-							<input type="radio" name="options" id="bot5" autocomplete="off"> Bot 5
+							<input type="radio" name="show" value="bot5" autocomplete="off" > Bot 5
 						</label>
 					</div>
 					<div class="form-group">
@@ -59,15 +59,15 @@
 							<option>Platform</option>
 						</select>
 						<label for="sumAnnualSales">Sort By:</label>
-						<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons">
+						<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons" >
 							<label class="btn btn-secondary active">
-								<input type="radio" name="options" id="salesButton" autocomplete="off" checked> Sales
+								<input type="radio" name="sortBy" value="sales" autocomplete="off"> Sales
 							</label>
 							<label class="btn btn-secondary">
-								<input type="radio" name="options" id="releaseButton" autocomplete="off"> Releases
+								<input type="radio" name="sortBy" value="release" autocomplete="off"> Releases
 							</label>
 							<label class="btn btn-secondary">
-								<input type="radio" name="options" id="scoreButton" autocomplete="off"> Score
+								<input type="radio" name="sortBy" value="score" autocomplete="off" checked> Score
 							</label>
 						</div>
 						<label for="sumAnnualSales">Annual Data:</label>
