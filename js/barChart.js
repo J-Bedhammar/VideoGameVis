@@ -8,7 +8,6 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	if( columnName == "Name"){
 		
 		if(show == "Top5"){
-		
 			for ( i = 0; i<=4; i++){
 				top5.push(data[i]);
 				top5[i].nr = i;
@@ -17,7 +16,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 					top5[i].xValue = data[i].Global_Sales;
 					axisText = "Units (M)";
 				} else if (sortBy == "Score"){
-					if(data[i].Critic_Score != [])
+					if(!isNaN(data[i].Critic_Score))
 						top5[i].xValue = data[i].Critic_Score;
 					axisText = "Score";
 				}
@@ -27,18 +26,23 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			top5.sort(function(a, b) { return a.xValue - b.xValue; });
 		
 		}else { //bot5
-						
-			for ( i = (data.legth-1); i>=(data.length-5); i--){
-				if( data[i] != null)
-					top5.push(data[i]);
-					top5[i].nr = i;
-					top5[i].yValue = data[i].Name;
-					if(sortBy == "Sales")
-						top5[i].xValue = data[i].Global_Sales;
-					else (sortBy == "Score")
-						if(data[i].Critic_Score != [])
-							top5[i].xValue = data[i].Critic_Score;
+			counter = 0;
+			
+			for ( i = (data.length-1); i>=(data.length-5); i--){
+				top5.push(data[i]);
+				top5[counter].nr = counter;
+				top5[counter].yValue = data[i].Name;
+				if(sortBy == "Sales")
+					top5[counter].xValue = data[i].Global_Sales;
+				else{
+					if(!isNaN(data[i].Critic_Score))
+						top5[counter].xValue = data[i].Critic_Score;
+				}
+				
+				counter++;
+				
 			}			
+
 			
 			//sorts the top5 data, heighest value to lowest value if sortBy is top5
 			top5.sort(function(a, b) { return b.xValue - a.xValue; });
@@ -67,7 +71,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		var publisherArray = [];
 		
 		for( var i = 0; i < sortedData.length; i++){
-
+			
 			if(tempPublisher == sortedData[i].Publisher){
 				publisherSales += +sortedData[i].Global_Sales;
 				publisherScore += +sortedData[i].Critic_Score;
@@ -101,6 +105,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		}
 		
 		for ( i = 0; i<=4; i++){
+			top5.push(publisherArray[i]);
 			top5[i].nr = i;
 			top5[i].yValue = publisherArray[i].publisher;
 			if( sortBy == "Sales"){
@@ -115,8 +120,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			}		
 		}
 		
-		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
-
+		top5.sort(function(a, b) { return a.xValue - b.xValue; });
 		
 	} else if( columnName == "Developer"){
 		
@@ -147,8 +151,10 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				tempDeveloper = sortedData[i].Developer;				
 			}
 			//Last item
-			if( i == sortedData.length-1)
+			if( i == sortedData.length-1){
+				console.log("Push last item")
 				developerArray.push( { nrOfGames: currGames, developer: tempDeveloper, score: (developerScore/currGames), sales: developerSales } );		
+			}
 		}
 		
 		if( show == "Top5"){
@@ -169,6 +175,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		
 		for ( i = 0; i<=4; i++){
+			top5.push(developerArray[i]);
 			top5[i].nr = i;
 			top5[i].yValue = developerArray[i].developer;
 			if( sortBy == "Sales"){
@@ -183,7 +190,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			}
 		}
 		
-		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		top5.sort(function(a, b) { return a.xValue - b.xValue; });
 		
 		
 		
@@ -360,13 +367,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				var num = d.nr;
 			
 			var displayData = top5[num];
-			
-			var itemName = displayData[columnName];
-			
-			if(columnName == "Publisher")
-				itemName = displayData.yValue;
-			
-			console.log(displayData);
+			var itemName = displayData.yValue;
 			
 			d3.selectAll('.bar')
 				.attr("fill", function(d, i) { return barColor(i)} );
@@ -408,8 +409,9 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 			d3.select(".item").attr("id", itemName);
 		}
-		else 
+		else{
 			title.html("Annual Sales: None")
+		}
 		
 		d3.select("#donut > *").remove();
 		d3.select(".sunburstName > *").remove();

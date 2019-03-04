@@ -1,19 +1,3 @@
-// Button inputs
-$('input[type=radio][name=show]').change(function() {
-	var showSetting = this.value;
-	
-	d3.select("#bar-chart > *").remove();
-	barChart(data, itemName, annualSetting, );
-});
-
-$('input[type=radio][name=sortBy]').change(function() {
-    var sortSetting = this.value;
-	
-	d3.select("#bar-chart > *").remove();
-	barChart(data, itemName, annualSetting, );
-});
-
-
 
 function infoViz(data, update, updateAnnual){
 	
@@ -23,8 +7,10 @@ function infoViz(data, update, updateAnnual){
 	var annualSetting = "individual";
 	
 	var annualSaleValue = $("#sumAnnualSales").val();
-	var showSetting = $('input[type=radio][name=show]').val();
-	var sortSetting = $('input[type=radio][name=show]').val();
+	var show = $('input[type=radio][name=show]:checked').val();
+	var sortBy = $('input[type=radio][name=sortBy]:checked').val();
+	
+	//console.log("Show:" + show + ", sort:" + sortBy);
 	
 	//console.log(buttonActive);
 	var columnName = $("#category").val();
@@ -33,25 +19,26 @@ function infoViz(data, update, updateAnnual){
 	if(columnName == "Game"){
 		columnName = "Name";
 		itemName = "";
+		document.getElementById("releaseButton").disabled = true;
+		//document.getElementById("releaseButton").attr("color", "red");
 	}
+	else
+		document.getElementById("releaseButton").disabled = false;
 	
 	if(annualSaleValue == "Sales Per Year")
 		annualSetting = "sum";
 	if(annualSaleValue == "Releases Per Year")
 		annualSetting = "releases";
-	
-	var show = "top5";
-	var sortBy = "Sales";
 
 	
-	if(!update){
+	if(!update){// Load page
 		var annualSetting = "individual";
 		newItemName = barChart(data, columnName, annualSetting, show, sortBy);
 		sunBurst(data, data[0], columnName);
 		annualSales(data, columnName, newItemName, annualSetting);
-		brushChart(data, columnName, newItemName, annualSetting);
+		brushChart(data, columnName, newItemName, annualSetting, show, sortBy);
 	}
-	else if(updateAnnual){
+	else if(updateAnnual){	// Annual Data
 		
 		var newItemName = document.getElementsByClassName("item")[0].id;
 		var minYear = document.getElementById('minYear').className;
@@ -78,7 +65,7 @@ function infoViz(data, update, updateAnnual){
 		else
 			title.html("Individual Sales: " + newItemName);
 	}
-	else{
+	else{ // Category
 		console.log("Update")
 		
 		d3.select("#brush > *").remove();
@@ -87,15 +74,29 @@ function infoViz(data, update, updateAnnual){
 		d3.select(".sunburstName > *").remove();
 		d3.select("#annualSales > *").remove();
 	
-		barChart(data, itemName, annualSetting, show, sortBy);
+		barChart(data, columnName, annualSetting, show, sortBy);
 		sunBurst(data, data[0],columnName);
 		annualSales(data, columnName, itemName, annualSetting);
-		brushChart(data, columnName, itemName, annualSetting);
+		brushChart(data, columnName, itemName, annualSetting, show, sortBy);
 
 	}
 
-	
-	
+	// Button inputs
+	$('input[type=radio][name=show]').change(function() {
+		var show = this.value;
+		var sortBy = $('input[type=radio][name=sortBy]:checked').val();
+		
+		d3.select("#bar-chart > *").remove();
+		barChart(data, columnName, annualSetting, show, sortBy );
+	});
+
+	$('input[type=radio][name=sortBy]').change(function() {
+		var sortBy = this.value;
+		var show = $('input[type=radio][name=show]:checked').val();
+		
+		d3.select("#bar-chart > *").remove();
+		barChart(data, columnName, annualSetting, show, sortBy );
+	});
 	// END OF infoViz
 	//console.log("DONE!");
 }

@@ -1,5 +1,5 @@
 
-function brushChart(data, tempColumn, tempPublisher, annualSetting){
+function brushChart(data, tempColumn, tempPublisher, annualSetting, show, sortBy){
 
 	
 	// Creating margins and figure sizes
@@ -89,13 +89,12 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting){
 		}
 		var newAnnualSetting = document.getElementById('bar-chart').className;
 		
-		console.log("whut: "+ newAnnualSetting);
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
 	
 
 		annualSales(targetData, tempColumn, tempPublisher, newAnnualSetting);
-		barChart(targetData, tempColumn, annualSetting, show, sortBy);
+		barChart(targetData, tempColumn, newAnnualSetting, show, sortBy);
     }
 	
 	// END OF BRUSH
