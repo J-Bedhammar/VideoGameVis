@@ -443,7 +443,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		.on("click", function(d){
 			// need to recalculate the number, because it is sorted lowest to highest
 			var num = 4-d.nr;
-			
+	
 			var displayData = top5[num];
 			var itemName = displayData.yValue;
 			
@@ -482,6 +482,8 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				title.html("Sales: " + itemName);
 			else if(newAnnualSetting == "releases")
 				title.html("Releases: " + itemName);
+			else if(newAnnualSetting == "score")
+				title.html("Average Score: " + itemName);
 			else
 				title.html("Individual Sales: " + itemName);
 		

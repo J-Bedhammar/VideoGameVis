@@ -20,15 +20,17 @@ function infoViz(data, update, updateAnnual){
 		columnName = "Name";
 		itemName = "";
 		document.getElementById("releaseButton").disabled = true;
-		//document.getElementById("releaseButton").attr("color", "red");
 	}
-	else
+	else{
 		document.getElementById("releaseButton").disabled = false;
+	}
 	
 	if(annualSaleValue == "Sales Per Year")
 		annualSetting = "sum";
 	if(annualSaleValue == "Releases Per Year")
 		annualSetting = "releases";
+	if(annualSaleValue == "Average Score Per Year")
+		annualSetting = "score";
 
 	
 	if(!update){// Load page
@@ -62,6 +64,8 @@ function infoViz(data, update, updateAnnual){
 			title.html("Sales: " + newItemName);
 		else if(annualSetting == "releases")
 			title.html("Releases: " + newItemName);
+		else if(annualSetting == "score")
+			title.html("Average Score: " + newItemName);
 		else
 			title.html("Individual Sales: " + newItemName);
 	}
