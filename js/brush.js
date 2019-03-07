@@ -90,7 +90,10 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting, show, sortBy
 		
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
-
+	
+		show = $('input[type=radio][name=show]:checked').val();
+		sortBy = $('input[type=radio][name=sortBy]:checked').val();
+		
 		annualSales(targetData, tempColumn, tempPublisher, newAnnualSetting);
 		barChart(targetData, tempColumn, newAnnualSetting, show, sortBy);
     }
