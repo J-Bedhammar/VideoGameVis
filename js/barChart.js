@@ -48,7 +48,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			if( sortBy == "Score" && (+sortedData[i].Critic_Score == 0 || isNaN(+sortedData[i].Critic_Score))){
 				continue;
 			}
-			
+		
 			top5.push(data[i]);
 			top5[counter].nr = counter;
 			top5[counter].yValue = data[i].Name;
@@ -56,8 +56,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				top5[counter].xValue = data[i].Global_Sales;
 				axisText = "Units (M)";
 			} else if (sortBy == "Score"){
-				if(!isNaN(data[counter].Critic_Score))
-					top5[counter].xValue = data[i].Critic_Score;
+				top5[counter].xValue = data[i].Critic_Score;
 				axisText = "Score";
 			}
 			
@@ -67,14 +66,12 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			
 			counter++;
 		}
-			
-			//sorts the top5 data, lowest value to highest value if sortBy is top5
-		top5.sort(function(a, b) { return a.xValue - b.xValue; });
 		
-		//converts the sales to numbers
-		/*top5.forEach(function(d) {
-			d.xValue = + d.xValue;
-		}); */
+		// sorts the data depending on top5 or bot5
+		if( show == "Top5")
+			top5.sort(function(a, b) { return b.nr - a.nr; });
+		else
+			top5.sort(function(a, b) { return a.nr - b.nr; });
 		
 	} else if( columnName == "Publisher"){
 		
@@ -171,7 +168,13 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			counter++;
 		}
 		
-		top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		
+		// sorts the data depending on top5 or bot5
+		if( show == "Top5")
+			top5.sort(function(a, b) { return b.nr - a.nr; });
+		else
+			top5.sort(function(a, b) { return a.nr - b.nr; });
 		
 	} else if( columnName == "Developer"){
 		
@@ -271,8 +274,12 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			counter++;
 		}
 		
-		top5.sort(function(a, b) { return a.xValue - b.xValue; });
-		
+		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		// sorts the data depending on top5 or bot5
+		if( show == "Top5")
+			top5.sort(function(a, b) { return b.nr - a.nr; });
+		else
+			top5.sort(function(a, b) { return a.nr - b.nr; });
 		
 	} else if ( columnName == "Platform"){
 		
@@ -367,7 +374,12 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			counter ++;
 		}
 		
-		top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
+		// sorts the data depending on top5 or bot5
+		if( show == "Top5")
+			top5.sort(function(a, b) { return b.nr - a.nr; });
+		else
+			top5.sort(function(a, b) { return a.nr - b.nr; });
 	
 	}
 	
@@ -454,7 +466,8 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			if( show == "Top5")
 				var num = 4-d.nr;
 			else
-				var num = d.nr;
+				var num = d.nr; 
+			//var num = 4-d.nr;
 	
 			var displayData = top5[num];
 			var itemName = displayData.yValue;
@@ -471,16 +484,18 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	var xAxis = d3.axisTop(x).ticks(10, "s");
 	var yAxis = d3.axisLeft(names);
 	
+	console.log(xAxis.length);
 	//creates axes for the bar chart 	
 	svg.append("g")
 		.call(xAxis)
-		.append("text")
-		.attr("x", 370)
-		.attr("dx", "0.71em")
+	.append("text")
+		.attr("x", containerWidth*9.5/14)
+		//.attr("y", 20)
+		//.attr("dx", "0.71em")
 		.attr("fill", "#000")
 		.attr("text-anchor", "end")
 		.text(axisText);
-		
+	
 	svg.append("g")
 		.call(yAxis);
 		
