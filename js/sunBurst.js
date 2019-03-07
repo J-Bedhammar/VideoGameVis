@@ -104,7 +104,7 @@ function sunBurst(data, displayData, columnName){
 			d3.select(this)
 			.attr('opacity', 0.6);
 			donutInfoTitle.text(d.data.name);
-			donutInfoNumbers.text(parseFloat(Math.round(d.value * 100) / 100).toFixed(2));
+			donutInfoNumbers.text(parseFloat(Math.round(d.value * 100) / 100).toFixed(2)+ " M");
 		})
 		.on("mouseout", function(d){ 
 			tooltip.style("display", "none");
