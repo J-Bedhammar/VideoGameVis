@@ -132,7 +132,6 @@ function sunBurst(data, displayData, columnName){
 					currEUSales += +sortedData[i].JP_Sales;
 					currOSales += +sortedData[i].Other_Sales;
 				}else{
-					console.log(sortedData[i].Platform + " " + tempPlatform);
 					platformArray.push( { Platform: tempPlatform, NA_Sales: currNASales,
 						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});
 					currNASales = +sortedData[i].NA_Sales;
@@ -140,7 +139,6 @@ function sunBurst(data, displayData, columnName){
 					currEUSales = +sortedData[i].JP_Sales;
 					currOSales = +sortedData[i].Other_Sales;
 					tempPlatform = sortedData[i].Platform;	
-					console.log("else (" +i +") " + tempPlatform);
 				}
 				//Last item
 				if( i == sortedData.length - 1){
@@ -150,8 +148,6 @@ function sunBurst(data, displayData, columnName){
 				}
 			}
 			
-			
-			console.log(platformArray);
 			var caseManage = platformArray.length;
 			
 		} else if(columnName == "Developer"){
