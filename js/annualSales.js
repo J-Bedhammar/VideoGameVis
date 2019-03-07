@@ -303,7 +303,7 @@ function annualScores(salesArray){
 		
 	}
 		
-	console.log(scoreArray);
+	//console.log(scoreArray);
 	return scoreArray;
 }
 
@@ -320,6 +320,6 @@ function individualScores(salesArray){
 		scoreArray.push( { name: salesArray[i].name, platform: salesArray[i].platform, sales: salesArray[i].score, year: salesArray[i].year});
 	}
 		
-	console.log(scoreArray);
+	//console.log(scoreArray);
 	return scoreArray;
 }
