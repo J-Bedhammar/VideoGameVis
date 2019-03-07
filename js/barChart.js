@@ -42,7 +42,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		var counter = 0;
 		
-		for ( i = 0; i<=sortedData.length; i++){
+		for ( i = 0; i< sortedData.length; i++){
 			
 			//if score is zero, ignore it
 			if( sortBy == "Score" && (+sortedData[i].Critic_Score == 0 || isNaN(+sortedData[i].Critic_Score))){
@@ -145,7 +145,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		var counter = 0;
 		
-		for ( i = 0; i<=publisherArray.length; i++){
+		for ( i = 0; i< publisherArray.length; i++){
 			
 			if( sortBy == "Score" && (+publisherArray[i].score == 0 || isNaN(+publisherArray[i].score)))
 				continue;
@@ -240,7 +240,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		
 		var counter = 0;
-		for ( i = 0; i<=developerArray.length; i++){
+		for ( i = 0; i< developerArray.length; i++){
 			
 			if( developerArray[i].developer == []){
 				continue;
@@ -342,7 +342,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		}
 		
 		var counter = 0;
-		for ( i = 0; i<=platformArray.length; i++){
+		for ( i = 0; i< platformArray.length; i++){
 			if( sortBy == "Score" && (+platformArray[i].score == 0 || isNaN(+platformArray[i].score)))
 				continue;
 			
