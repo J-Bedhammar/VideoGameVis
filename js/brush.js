@@ -1,5 +1,5 @@
 
-function brushChart(data, tempColumn, tempPublisher, annualSetting, show, sortBy){
+function brushChart(data, columnName, itemName, annualSetting, show, sortBy){
 	
 	// Creating margins and figure sizes
     var margin = { top: 10, right: 50, bottom: 30, left: 50 },
@@ -87,6 +87,12 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting, show, sortBy
 
 		}
 		var newAnnualSetting = document.getElementById('bar-chart').className;
+		var newItem = document.getElementsByClassName('item')[0].id;
+		var newColumn = document.getElementsByClassName('column')[0].id;
+		
+		if(newColumn == "")
+			newColumn = "Name";
+		
 		
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
@@ -94,8 +100,8 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting, show, sortBy
 		show = $('input[type=radio][name=show]:checked').val();
 		sortBy = $('input[type=radio][name=sortBy]:checked').val();
 		
-		annualSales(targetData, tempColumn, tempPublisher, newAnnualSetting);
-		barChart(targetData, tempColumn, newAnnualSetting, show, sortBy);
+		barChart(targetData, newColumn, newAnnualSetting, show, sortBy);
+		annualSales(targetData, newColumn, newItem, newAnnualSetting);
     }
 	
 	// END OF BRUSH

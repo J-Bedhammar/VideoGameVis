@@ -484,7 +484,6 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	var xAxis = d3.axisTop(x).ticks(10, "s");
 	var yAxis = d3.axisLeft(names);
 	
-	console.log(xAxis.length);
 	//creates axes for the bar chart 	
 	svg.append("g")
 		.call(xAxis)

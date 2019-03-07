@@ -10,10 +10,8 @@ function infoViz(data, update, updateAnnual){
 	var annualSaleValue = $("#sumAnnualSales").val();
 	var show = $('input[type=radio][name=show]:checked').val();
 	var sortBy = $('input[type=radio][name=sortBy]:checked').val();
-	
-	//console.log("Show:" + show + ", sort:" + sortBy);
-	
-	//console.log(buttonActive);
+
+
 	var columnName = $("#category").val();
 	var itemName = "";
 
@@ -67,16 +65,30 @@ function infoViz(data, update, updateAnnual){
 	}
 	else{ // Category
 		console.log("Update")
+		d3.select(".column").attr("id", columnName);
 		
 		d3.select("#bar-chart > *").remove();
 		d3.select("#donut > *").remove();
 		d3.select(".sunburstName > *").remove();
 		d3.select("#annualSales > *").remove();
-	
-		barChart(data, columnName, annualSetting, show, sortBy);
-		sunBurst(data, data[0],columnName);
-		annualSales(data, columnName, itemName, annualSetting);
-
+		
+		var targetData = updateData(data);
+		var title = d3.select("#annualSalesTitle");
+		d3.select(".item").attr("id", "");
+		
+		if(annualSetting == "sum")
+			title.html("Sales");
+		else if(annualSetting == "releases")
+			title.html("Releases");
+		else if(annualSetting == "score")
+			title.html("Average Score");
+		else
+			title.html("Individual Sales");
+		
+		
+		barChart(targetData, columnName, annualSetting, show, sortBy);
+		sunBurst(data, data[0], columnName);
+		annualSales(targetData, columnName, itemName, annualSetting); //All items in new category
 	}
 
 	// Button inputs
@@ -89,7 +101,10 @@ function infoViz(data, update, updateAnnual){
 		updateTitles(show, sortBy);
 		
 		d3.select("#bar-chart > *").remove();
+		d3.select("#donut > *").remove();
+		d3.select("#bar-chart > *").remove();
 		barChart(targetData, columnName, annualSetting, show, sortBy );
+		sunBurst(targetData, targetData[0], columnName);
 	});
 
 	$('input[type=radio][name=sortBy]').change(function() {
@@ -101,7 +116,10 @@ function infoViz(data, update, updateAnnual){
 		updateTitles(show, sortBy);
 		
 		d3.select("#bar-chart > *").remove();
+		d3.select("#donut > *").remove();
+		d3.select(".sunburstName > *").remove();
 		barChart(targetData, columnName, annualSetting, show, sortBy);
+		sunBurst(targetData, targetData[0], columnName);
 	});
 	// END OF infoViz
 	//console.log("DONE!");
