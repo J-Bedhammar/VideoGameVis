@@ -242,6 +242,10 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		var counter = 0;
 		for ( i = 0; i<=developerArray.length; i++){
 			
+			if( developerArray[i].developer == []){
+				continue;
+				console.log("noDev");
+			}
 			if( sortBy == "Score" && (+developerArray[i].score == 0|| isNaN(+developerArray[i].score))){
 				continue;
 			}
@@ -267,10 +271,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			counter++;
 		}
 		
-		console.log(top5);
-		
 		top5.sort(function(a, b) { return a.xValue - b.xValue; });
-		
 		
 		
 	} else if ( columnName == "Platform"){
@@ -335,7 +336,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			if( sortBy == "Sales")
 				platformArray.sort(function(a, b) { return a.sales - b.sales; });
 			else if( sortBy == "Releases")
-				platfromArray.sort(function(a, b) { return a.nrOfGames - b.nrOfGames; });
+				platformArray.sort(function(a, b) { return a.nrOfGames - b.nrOfGames; });
 			else
 				platformArray.sort(function(a, b) { return a.score - b.score; });
 		}
@@ -442,7 +443,10 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		})
 		.on("click", function(d){
 			// need to recalculate the number, because it is sorted lowest to highest
-			var num = 4-d.nr;
+			if( show == "Top5")
+				var num = 4-d.nr;
+			else
+				var num = d.nr;
 	
 			var displayData = top5[num];
 			var itemName = displayData.yValue;
@@ -503,11 +507,8 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	}
 	
 	function mouseover(d) {
-		console.log("mouseover");
 		if( columnName == "Name"){
-			console.log("Name");
 			if( sortBy == "Sales") {
-				console.log("Sales");
 				tooltip.style("display", "inline-block")
 				.style("left", d3.event.pageX + 10 + "px")
 				.style("top", d3.event.pageY - 15 + "px")
@@ -515,11 +516,10 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				d3.select(this)
 				.attr("opacity", 0.6);
 			}else {
-				console.log("Score");
 				tooltip.style("display", "inline-block")
 				.style("left", d3.event.pageX + 10 + "px")
 				.style("top", d3.event.pageY - 15 + "px")
-				.html("<strong>" + d.yValue + " (" + d.Platform + ") </strong> <br/> Critic Score: " + parseFloat(Math.round(d.xValue * 100) / 100).toFixed(2) + "M");
+				.html("<strong>" + d.yValue + " (" + d.Platform + ") </strong> <br/> Critic Score: " + d.xValue);
 				d3.select(this)
 				.attr("opacity", 0.6);
 			}

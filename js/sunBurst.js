@@ -11,7 +11,7 @@ function sunBurst(data, displayData, columnName){
 		if( columnName == "Name"){
 			rootName = "Wii Sports";
 		}else if( columnName == "Publisher"){
-			rootName = "Electronic Arts";
+			rootName = "Nintendo";
 		}else if( columnName == "Developer"){
 			rootName = "Ubisoft";
 		}else if(columnName == "Platform"){
@@ -110,15 +110,14 @@ function sunBurst(data, displayData, columnName){
 			platformArray = gamesData;
 			
 		} else if(columnName == "Publisher"){
-			
-			
+						
 			sortedData = gamesData;
 			sortedData.sort(function(a, b){
 				if(a.Platform < b.Platform) { return -1; }
 				if(a.Platform > b.Platform) { return 1; }
 			return 0;
 			});
-			
+						
 			var tempPlatform = sortedData[0].Platform;
 			var currNASales= 0;
 			var currJPSales= 0;
@@ -128,25 +127,31 @@ function sunBurst(data, displayData, columnName){
 			for( var i = 0; i < sortedData.length; i++){
 
 				if(tempPlatform == sortedData[i].Platform){
-					currNASales += sortedData[i].NA_Sales;
-					currJPSales += sortedData[i].EU_Sales;
-					currEUSales += sortedData[i].JP_Sales;
-					currOSales += sortedData[i].Other_Sales;
+					currNASales += +sortedData[i].NA_Sales;
+					currJPSales += +sortedData[i].EU_Sales;
+					currEUSales += +sortedData[i].JP_Sales;
+					currOSales += +sortedData[i].Other_Sales;
 				}else{
-					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+					console.log(sortedData[i].Platform + " " + tempPlatform);
+					platformArray.push( { Platform: tempPlatform, NA_Sales: currNASales,
 						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});
-					currNASales = sortedData[i].NA_Sales;
-					currJPSales = sortedData[i].EU_Sales;
-					currEUSales = sortedData[i].JP_Sales;
-					currOSales = sortedData[i].Other_Sales;
+					currNASales = +sortedData[i].NA_Sales;
+					currJPSales = +sortedData[i].EU_Sales;
+					currEUSales = +sortedData[i].JP_Sales;
+					currOSales = +sortedData[i].Other_Sales;
 					tempPlatform = sortedData[i].Platform;	
+					console.log("else (" +i +") " + tempPlatform);
 				}
 				//Last item
-				if( i == sortedData.length)
-					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
-						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});		
+				if( i == sortedData.length - 1){
+					platformArray.push( { Platform: tempPlatform, NA_Sales: currNASales,
+						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});
+					console.log("if (" +i +") " + tempPlatform);
+				}
 			}
 			
+			
+			console.log(platformArray);
 			var caseManage = platformArray.length;
 			
 		} else if(columnName == "Developer"){
@@ -167,22 +172,22 @@ function sunBurst(data, displayData, columnName){
 			for( var i = 0; i < sortedData.length; i++){
 
 				if(tempPlatform == sortedData[i].Platform){
-					currNASales += sortedData[i].NA_Sales;
-					currJPSales += sortedData[i].EU_Sales;
-					currEUSales += sortedData[i].JP_Sales;
-					currOSales += sortedData[i].Other_Sales;
+					currNASales += +sortedData[i].NA_Sales;
+					currJPSales += +sortedData[i].EU_Sales;
+					currEUSales += +sortedData[i].JP_Sales;
+					currOSales += +sortedData[i].Other_Sales;
 				}else{
-					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+					platformArray.push( { Platform: tempPlatform, NA_Sales: currNASales,
 						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});
-					currNASales = sortedData[i].NA_Sales;
-					currJPSales = sortedData[i].EU_Sales;
-					currEUSales = sortedData[i].JP_Sales;
-					currOSales = sortedData[i].Other_Sales;
+					currNASales = +sortedData[i].NA_Sales;
+					currJPSales = +sortedData[i].EU_Sales;
+					currEUSales = +sortedData[i].JP_Sales;
+					currOSales = +sortedData[i].Other_Sales;
 					tempPlatform = sortedData[i].Platform;	
 				}
 				//Last item
-				if( i == sortedData.length)
-					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+				if( i == sortedData.length - 1)
+					platformArray.push( { Platform: tempPlatform, NA_Sales: currNASales,
 						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});		
 			}
 			
@@ -191,8 +196,6 @@ function sunBurst(data, displayData, columnName){
 		} else if(columnName == "Platform"){
 			
 			sortedData = gamesData;
-			
-			console.log(sortedData);
 			
 			var tempPlatform = sortedData[0].Platform;
 			var currNASales= 0;
@@ -208,7 +211,7 @@ function sunBurst(data, displayData, columnName){
 					currEUSales += +sortedData[i].JP_Sales;
 					currOSales += +sortedData[i].Other_Sales;
 				}else{
-					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+					platformArray.push( { Platform: tempPlatform, NA_Sales: currNASales,
 						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});
 					currNASales = +sortedData[i].NA_Sales;
 					currJPSales = +sortedData[i].EU_Sales;
@@ -218,11 +221,9 @@ function sunBurst(data, displayData, columnName){
 				}
 				//Last item
 				if( i == sortedData.length-1)
-					platformArray.push( { Platform: sortedData[i].Platform, NA_Sales: currNASales,
+					platformArray.push( { Platform: tempPlatform, NA_Sales: currNASales,
 						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});		
 			}
-			
-			console.log(platformArray);
 			
 			var caseManage = platformArray.length;
 		} 
