@@ -57,7 +57,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				axisText = "Units (M)";
 			} else if (sortBy == "Score"){
 				top5[counter].xValue = data[i].Critic_Score;
-				axisText = "Score";
+				axisText = "Metacritic";
 			}
 			
 			//if it has five elements
@@ -158,7 +158,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				axisText = "Units (K)";
 			}else {
 				top5[counter].xValue = publisherArray[i].score;
-				axisText = " Score";
+				axisText = " Metacritic";
 			}		
 			
 			//if it has five elements
@@ -264,7 +264,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				axisText = "Units (K)";
 			}else {
 				top5[counter].xValue = developerArray[i].score;
-				axisText = "Score";
+				axisText = "Metacritic";
 			}
 			
 			//if it has five elements
@@ -364,7 +364,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				axisText = "Units (k)";
 			} else {
 				top5[counter].xValue = platformArray[i].score;
-				axisText = "Score";
+				axisText = "Metacritic";
 			}
 			
 			//if it has five elements
