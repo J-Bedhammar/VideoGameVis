@@ -106,11 +106,11 @@ function annualSales(data, columnName, itemName, annualSetting){
 	yScale.domain(d3.extent(whichArray, function(d) { return d.sales }));
 	xTime.domain(d3.extent(nanRemoved, function(d) { return parseDate(d.year) }));
 	
-	if(annualSetting == "releases" || annualSetting == "score" || annualSetting == "individualScores"){
+	if(annualSetting == "releases" ){
 		var maxReleases = d3.max(salesArray, function (d) { return d.sales});
 		yScale.domain([0, maxReleases]);
 	}
-	if(annualSetting == "individualScores"){
+	if(annualSetting == "score" || annualSetting == "individualScores"){
 		yScale.domain([0, 100]);
 	}
 		
@@ -274,9 +274,16 @@ function annualScores(salesArray){
 	var currYearScores = 0;
 	var currReleases = 0;
 	
+	
 	for (var i = 0; i < salesArray.length; i++){
 
 		if(isNaN(salesArray[i].score) || +(salesArray[i].score) == 0){
+			if( i == salesArray.length-1){
+				if(currReleases == 0)
+					currReleases = 1;
+				scoreArray.push( { sales: (currYearScores/currReleases), year: tempYear});
+			}
+			
 			continue;
 		}
 		if(tempYear == salesArray[i].year){

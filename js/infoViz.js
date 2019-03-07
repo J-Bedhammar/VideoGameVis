@@ -36,12 +36,12 @@ function infoViz(data, update, updateAnnual){
 		annualSetting = "individualScores";
 
 	
-	if(!update){// Load page
+	if(!update && !updateAnnual){// Load page
 		var annualSetting = "individual";
-		newItemName = barChart(data, columnName, annualSetting, show, sortBy);
+		barChart(data, columnName, annualSetting, show, sortBy);
 		sunBurst(data, data[0], columnName);
-		annualSales(data, columnName, newItemName, annualSetting);
-		brushChart(data, columnName, newItemName, annualSetting, show, sortBy);
+		annualSales(data, columnName, itemName, annualSetting);
+		brushChart(data, columnName, itemName, annualSetting, show, sortBy);
 	}
 	else if(updateAnnual){	// Annual Data
 		
@@ -68,7 +68,6 @@ function infoViz(data, update, updateAnnual){
 	else{ // Category
 		console.log("Update")
 		
-		d3.select("#brush > *").remove();
 		d3.select("#bar-chart > *").remove();
 		d3.select("#donut > *").remove();
 		d3.select(".sunburstName > *").remove();
@@ -77,7 +76,6 @@ function infoViz(data, update, updateAnnual){
 		barChart(data, columnName, annualSetting, show, sortBy);
 		sunBurst(data, data[0],columnName);
 		annualSales(data, columnName, itemName, annualSetting);
-		brushChart(data, columnName, itemName, annualSetting, show, sortBy);
 
 	}
 
@@ -87,6 +85,8 @@ function infoViz(data, update, updateAnnual){
 		var sortBy = $('input[type=radio][name=sortBy]:checked').val();
 		
 		var targetData = updateData(data);
+		
+		updateTitles(show, sortBy);
 		
 		d3.select("#bar-chart > *").remove();
 		barChart(targetData, columnName, annualSetting, show, sortBy );
@@ -98,6 +98,8 @@ function infoViz(data, update, updateAnnual){
 		
 		var targetData = updateData(data);
 		
+		updateTitles(show, sortBy);
+		
 		d3.select("#bar-chart > *").remove();
 		barChart(targetData, columnName, annualSetting, show, sortBy);
 	});
@@ -105,7 +107,7 @@ function infoViz(data, update, updateAnnual){
 	//console.log("DONE!");
 }
 
-
+// Update data based on brushchart
 function updateData(data){
 	var minYear = document.getElementById('minYear').className;
 	var maxYear = document.getElementById('maxYear').className;
@@ -120,4 +122,13 @@ function updateData(data){
 	
 	return targetData;
 	
+}
+
+
+function updateTitles(show, sortBy){
+	var title = d3.select("#showTitle")
+	if(show == "Top5")
+		title.html("Top 5: " + sortBy);
+	else
+		title.html("Bot 5: " + sortBy);
 }

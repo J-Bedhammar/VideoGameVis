@@ -36,8 +36,8 @@ function sunBurst(data, displayData, columnName){
 	var height = (240 - marginTop - marginBottom)/2;
 	var radius = Math.min(width, height)/ 2;
 	
-	//sets the color of the chart
-	var color = d3.scaleOrdinal(d3.schemeCategory20);
+	//sets the color of the chart	
+	var color = d3.scaleOrdinal(d3.schemeCategory20);					//OBS ANVÄNDS INTE??
 	
 	// decides where to put the graph and creates a svg element
 	var g = d3.select("#donut")
@@ -95,7 +95,7 @@ function sunBurst(data, displayData, columnName){
 		.attr("display", function (d) { return d.depth ? null : "none"; })
 		.attr("d", arc)
 		.style("stroke", "#000000")
-		.style("fill", function(d) { return color((d.children ? d : d.parent).data.name); })
+		.style("fill", function(d) { return platformColor((d.children ? d : d.parent).data.name); })
 		.on("mouseover", function(d) { 
 			/*tooltip.style("display", "inline-block")
 			.style("left", d3.event.pageX + 10 + "px")
@@ -256,5 +256,93 @@ function sunBurst(data, displayData, columnName){
 		
 		return nodeData;
 	}
+	
+}
+
+
+function platformColor(platform){
+	
+	switch(platform) {
+	case "2600":			//Atari
+		return "#7f2704";
+	case "3DO":
+		return "#a63603";	
+	case "PCFX":		
+		return "#d94801";
+	case "TG16":
+		return "#f16913";
+	case "NG":				//Neo Geo
+		return "#fd8d3c";
+	case "WS":
+		return "#fdae6b";
+
+	
+	//Nintendo portable consoles - Pink
+	case "3DS":
+		return "#d7b5d8";
+	case "DS":			
+		return "#df65b0";
+	case "GB":
+		return "#dd1c77";
+	case "GBA":
+		return "#980043";
+
+	//SEGA - Red
+	case "GEN":
+		return "#a50f15";
+	case "GG":			
+		return "#de2d26";
+	case "DC":
+		return "#fb6a4a";
+	case "SCD":
+		return "#fcae91";
+	case "SAT":
+		return "#fee5d9";
+	
+	//Nintendo old home consoles - Purple
+	case "GC":
+		return "#54278f";
+	case "N64":
+		return "#756bb1";
+	case "NES":
+		return "#9e9ac8";
+	case "SNES":
+		return "#cbc9e2";
+	
+	//Nintendo newer home consoles - White/Gray
+	case "Wii":
+		return "#ffffff";
+	case "WiiU":
+		return "#969696";
+		
+	//Computer
+	case "PC":
+		return "#ffff1a";
+	
+	//Sony Playstation - Blue
+	case "PS":
+		return "#08306b";
+	case "PS2":
+		return "#08519c";
+	case "PS3":
+		return "#2171b5";
+	case "PS4":
+		return "#4292c6";
+	case "PSP":			
+		return "#9ecae1";
+	case "PSV":
+		return "#deebf7";
+	
+	//Microsoft Xbox - Green
+	case "X360":
+		return "#006d2c";
+	case "XB":			
+		return "#31a354";
+	default: //XOne
+		return "#74c476";
+
+}
+	
+	
 	
 }
