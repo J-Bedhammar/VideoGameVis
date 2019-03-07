@@ -42,7 +42,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		var counter = 0;
 		
-		for ( i = 0; i<=sortedData.length; i++){
+		for ( i = 0; i< sortedData.length; i++){
 			
 			//if score is zero, ignore it
 			if( sortBy == "Score" && (+sortedData[i].Critic_Score == 0 || isNaN(+sortedData[i].Critic_Score))){
@@ -145,7 +145,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		var counter = 0;
 		
-		for ( i = 0; i<=publisherArray.length; i++){
+		for ( i = 0; i< publisherArray.length; i++){
 			
 			if( sortBy == "Score" && (+publisherArray[i].score == 0 || isNaN(+publisherArray[i].score)))
 				continue;
@@ -240,7 +240,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		
 		var counter = 0;
-		for ( i = 0; i<=developerArray.length; i++){
+		for ( i = 0; i< developerArray.length; i++){
 			
 			if( developerArray[i].developer == []){
 				continue;
@@ -342,7 +342,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		}
 		
 		var counter = 0;
-		for ( i = 0; i<=platformArray.length; i++){
+		for ( i = 0; i< platformArray.length; i++){
 			if( sortBy == "Score" && (+platformArray[i].score == 0 || isNaN(+platformArray[i].score)))
 				continue;
 			
@@ -395,9 +395,17 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		.append("g")
 		.attr("transform", "translate(" + marginLeft + ',' + marginTop + ")");
 	
-	//maps the data to the x and y values
+	//maps the data to the y axis
 	y.domain(top5.map(function(d) { return d.nr; }));
-	x.domain([0, d3.max(top5, function(d) { return d.xValue; })]);
+	
+	//get the max value for x value
+	top5.forEach(function(d) {
+            d.xValue = +d.xValue
+			});
+	var maxX = d3.max(top5, function(d) { return d.xValue; });
+	
+	//map the data to the x axis
+	x.domain([0, maxX]);
 	
 	//shorten the names of the games
 	names.domain(top5.map(function(d) { 
