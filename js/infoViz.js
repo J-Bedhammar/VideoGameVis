@@ -1,5 +1,6 @@
 
 function infoViz(data, update, updateAnnual){
+
 	
 	//Print outs
 	//console.log("infoViz()");
@@ -43,18 +44,9 @@ function infoViz(data, update, updateAnnual){
 	else if(updateAnnual){	// Annual Data
 		
 		var newItemName = document.getElementsByClassName("item")[0].id;
-		var minYear = document.getElementById('minYear').className;
-		var maxYear = document.getElementById('maxYear').className;
-		var targetData = [];
-		
-		for (var i = 0; i < data.length; i++){
-			var row = data[i];
-			if (row.Year_of_Release >= minYear && row.Year_of_Release <= maxYear ){ // || isNaN(row.Year_of_Release)
-				targetData.push(row);
-			}
-		}
-		
-		d3.select("#bar-chart").attr("class", annualSetting);
+		var targetData = updateData(data);
+
+		//d3.select("#bar-chart").attr("class", annualSetting);
 		
 		d3.select("#annualSales > *").remove();
 		annualSales(targetData, columnName, newItemName, annualSetting);
@@ -90,17 +82,38 @@ function infoViz(data, update, updateAnnual){
 		var show = this.value;
 		var sortBy = $('input[type=radio][name=sortBy]:checked').val();
 		
+		var targetData = updateData(data);
+		
 		d3.select("#bar-chart > *").remove();
-		barChart(data, columnName, annualSetting, show, sortBy );
+		barChart(targetData, columnName, annualSetting, show, sortBy );
 	});
 
 	$('input[type=radio][name=sortBy]').change(function() {
 		var sortBy = this.value;
 		var show = $('input[type=radio][name=show]:checked').val();
 		
+		var targetData = updateData(data);
+		
 		d3.select("#bar-chart > *").remove();
-		barChart(data, columnName, annualSetting, show, sortBy );
+		barChart(targetData, columnName, annualSetting, show, sortBy);
 	});
 	// END OF infoViz
 	//console.log("DONE!");
+}
+
+
+function updateData(data){
+	var minYear = document.getElementById('minYear').className;
+	var maxYear = document.getElementById('maxYear').className;
+	var targetData = [];
+		
+	for (var i = 0; i < data.length; i++){
+		var row = data[i];
+		if (row.Year_of_Release >= minYear && row.Year_of_Release <= maxYear ){ // || isNaN(row.Year_of_Release)
+			targetData.push(row);
+		}
+	}
+	
+	return targetData;
+	
 }

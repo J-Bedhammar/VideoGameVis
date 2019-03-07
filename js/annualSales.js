@@ -1,5 +1,6 @@
 
 function annualSales(data, columnName, itemName, annualSetting){
+
 	
 	var salesArray = [];
 	var nanRemoved = [];
@@ -23,6 +24,11 @@ function annualSales(data, columnName, itemName, annualSetting){
 		}	
 	}
 	
+	// Sort data in ascending order after year
+	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
+	nanRemoved.sort(function (a,b) {return d3.ascending(a.year, b.year);});
+
+	
 	// Switch between salesArray and nanRemoved depending on Sum/Individual setting
 	var whichArray = nanRemoved;
 	
@@ -30,8 +36,6 @@ function annualSales(data, columnName, itemName, annualSetting){
 	if(itemName == "All" || itemName == "")
 		salesArray = nanRemoved;
 	
-	// Sort data in ascending order after year
-	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	
 	if(columnName == "Publisher")
 		whichArray = salesArray;
@@ -259,27 +263,36 @@ function annualScores(salesArray){
 	var currYearScores = 0;
 	var currReleases = 0;
 	
-	//console.log(salesArray)
-	
 	for (var i = 0; i < salesArray.length; i++){
-		
+
+		if(isNaN(salesArray[i].score) || +(salesArray[i].score) == 0){
+			continue;
+		}
 		if(tempYear == salesArray[i].year){
 			currYearScores += salesArray[i].score;
 			currReleases += 1;
 		}
 		else{
-			scoreArray.push( { sales: (currYearScores/currReleases), year: tempYear});
-			currYearScores = salesArray[i].score;
-			currReleases = 1;
-			tempYear = salesArray[i].year;				
+			if(currReleases == 0){
+				currYearScores = salesArray[i].score;
+				currReleases = 1;
+				tempYear = salesArray[i].year;
+			}
+			else{
+				scoreArray.push( { sales: (currYearScores/currReleases), year: tempYear});
+				currYearScores = salesArray[i].score;
+				currReleases = 1;
+				tempYear = salesArray[i].year;
+			}
 		}
 		//Last item
-		if( i == salesArray.length-1)
+		if( i == salesArray.length-1){
 			scoreArray.push( { sales: (currYearScores/currReleases), year: salesArray[i].year});
+		}
 		
 	}
 		
-	//console.log(summedSales);
+	console.log(scoreArray);
 	return scoreArray;
 }
 

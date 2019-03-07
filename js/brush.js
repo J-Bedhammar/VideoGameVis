@@ -1,6 +1,7 @@
 
 function brushChart(data, tempColumn, tempPublisher, annualSetting, show, sortBy){
-
+	
+	console.log("sort: " + sortBy + "show: " + show)
 	
 	// Creating margins and figure sizes
     var margin = { top: 10, right: 50, bottom: 30, left: 50 },
@@ -91,7 +92,8 @@ function brushChart(data, tempColumn, tempPublisher, annualSetting, show, sortBy
 		
 		d3.select("#bar-chart > *").remove();
 		d3.select("#annualSales > *").remove();
-	
+		
+		console.log("sort: " + sortBy + " annual:" + newAnnualSetting)
 
 		annualSales(targetData, tempColumn, tempPublisher, newAnnualSetting);
 		barChart(targetData, tempColumn, newAnnualSetting, show, sortBy);
