@@ -74,6 +74,17 @@ function sunBurst(data, displayData, columnName){
 	
 	// Name
 	d3.select("#donutTitle").html(rootName);
+	
+	// Info
+	var donutInfoTitle = g.append("g")
+		.append("text")
+		.attr("text-anchor", "middle")
+		.style("font-weight", "bold")
+		.style("fill", "#545454");
+	var donutInfoNumbers = g.append("g")
+		.append("text")
+		.attr("text-anchor", "middle")
+		.attr("y", 1.2 + "rem");
 
 		
 	//put all the parts together
@@ -86,17 +97,21 @@ function sunBurst(data, displayData, columnName){
 		.style("stroke", "#000000")
 		.style("fill", function(d) { return color((d.children ? d : d.parent).data.name); })
 		.on("mouseover", function(d) { 
-			tooltip.style("display", "inline-block")
+			/*tooltip.style("display", "inline-block")
 			.style("left", d3.event.pageX + 10 + "px")
 			.style("top", d3.event.pageY - 15 + "px")
-			.html( "<strong>" + d.data.name + ": </strong> " + parseFloat(Math.round(d.value * 100) / 100).toFixed(2));
+			.html( "<strong>" + d.data.name + ": </strong> " + parseFloat(Math.round(d.value * 100) / 100).toFixed(2));*/
 			d3.select(this)
 			.attr('opacity', 0.6);
+			donutInfoTitle.text(d.data.name);
+			donutInfoNumbers.text(parseFloat(Math.round(d.value * 100) / 100).toFixed(2));
 		})
 		.on("mouseout", function(d){ 
 			tooltip.style("display", "none");
 			d3.select(this)
 			.attr('opacity', 1.0);
+			donutInfoTitle.text("");
+			donutInfoNumbers.text("");
 		});
 	
 	function createHierarchy(gamesData, displayData){

@@ -52,8 +52,14 @@ function annualSales(data, columnName, itemName, annualSetting){
 		whichArray = salesArray;
 	}
 	
+	// Show annual number of releases 
 	if(annualSetting == "score"){
 		salesArray = annualScores(salesArray);
+		whichArray = salesArray;
+	}
+	
+	if(annualSetting == "individualScores"){
+		salesArray = individualScores(salesArray);
 		whichArray = salesArray;
 	}
 	
@@ -100,9 +106,12 @@ function annualSales(data, columnName, itemName, annualSetting){
 	yScale.domain(d3.extent(whichArray, function(d) { return d.sales }));
 	xTime.domain(d3.extent(nanRemoved, function(d) { return parseDate(d.year) }));
 	
-	if(annualSetting == "releases" || annualSetting == "score"){
+	if(annualSetting == "releases" || annualSetting == "score" || annualSetting == "individualScores"){
 		var maxReleases = d3.max(salesArray, function (d) { return d.sales});
 		yScale.domain([0, maxReleases]);
+	}
+	if(annualSetting == "individualScores"){
+		yScale.domain([0, 100]);
 	}
 		
 	/*this.changeXScale = function (newScale) {
@@ -127,7 +136,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 			.attr("dy", "0.71em")
 			.attr("text-anchor", "end")
 			.text("Units");
-	} else if (annualSetting == "score"){
+	} else if (annualSetting == "score" || annualSetting == "individualScores"){
 		g.append("g")
 			.call(d3.axisLeft(yScale))
 			.append("text")
@@ -189,6 +198,8 @@ function annualSales(data, columnName, itemName, annualSetting){
 				infoDiv.html("Year: " + d.year + "</br>Releases: "  + d.sales);
 			if (annualSetting == "score")
 				infoDiv.html("Year: " + d.year + "</br>Average Score: "  + parseFloat(d.sales).toFixed(2));
+			if (annualSetting == "individualScores")
+				infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br>Score: "  + parseFloat(d.sales).toFixed(2));
 			})
 		.on("mouseout", function(d){
 			d3.select(this)
@@ -296,4 +307,19 @@ function annualScores(salesArray){
 	return scoreArray;
 }
 
+// Show annual score
+function individualScores(salesArray){
+	var scoreArray = [];
+	
+	for (var i = 0; i < salesArray.length; i++){
 
+		if(isNaN(salesArray[i].score) || +(salesArray[i].score) == 0){
+			continue;
+		}
+		
+		scoreArray.push( { name: salesArray[i].name, platform: salesArray[i].platform, sales: salesArray[i].score, year: salesArray[i].year});
+	}
+		
+	console.log(scoreArray);
+	return scoreArray;
+}

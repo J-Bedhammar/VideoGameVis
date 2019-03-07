@@ -32,6 +32,8 @@ function infoViz(data, update, updateAnnual){
 		annualSetting = "releases";
 	if(annualSaleValue == "Average Score Per Year")
 		annualSetting = "score";
+	if(annualSaleValue == "Individual Game Scores")
+		annualSetting = "individualScores";
 
 	
 	if(!update){// Load page
@@ -46,7 +48,7 @@ function infoViz(data, update, updateAnnual){
 		var newItemName = document.getElementsByClassName("item")[0].id;
 		var targetData = updateData(data);
 
-		//d3.select("#bar-chart").attr("class", annualSetting);
+		d3.select("#bar-chart").attr("class", annualSetting);
 		
 		d3.select("#annualSales > *").remove();
 		annualSales(targetData, columnName, newItemName, annualSetting);
@@ -58,6 +60,8 @@ function infoViz(data, update, updateAnnual){
 			title.html("Releases: " + newItemName);
 		else if(annualSetting == "score")
 			title.html("Average Score: " + newItemName);
+		else if(annualSetting == "individualScores")
+			title.html("Individual Score: " + newItemName);
 		else
 			title.html("Individual Sales: " + newItemName);
 	}
