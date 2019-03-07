@@ -144,7 +144,6 @@ function sunBurst(data, displayData, columnName){
 				if( i == sortedData.length - 1){
 					platformArray.push( { Platform: tempPlatform, NA_Sales: currNASales,
 						EU_Sales: currEUSales, JP_Sales: currJPSales, Other_Sales: currOSales});
-					console.log("if (" +i +") " + tempPlatform);
 				}
 			}
 			
