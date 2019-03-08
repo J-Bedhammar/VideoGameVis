@@ -1,6 +1,7 @@
 
 function annualSales(data, columnName, itemName, annualSetting){
-
+	
+	console.log(columnName + ", " +  itemName);
 	
 	var salesArray = [];
 	var nanRemoved = [];
@@ -245,6 +246,7 @@ function annualSums(salesArray){
 // Show annual releases
 function annualReleases(salesArray){
 	var releaseArray = [];
+	//console.log(salesArray[0]);
 	var tempYear = salesArray[0].year;
 	var currReleases = 0;
 
