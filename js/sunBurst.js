@@ -7,7 +7,6 @@ function sunBurst(data, displayData, columnName){
 	
 	//if no data exists, a place holder takes place
 	if(displayData == "NO DATA"){
-		console.log(displayData);
 		columnName = "Name";
 		displayData = data[0].Name;
 	}
