@@ -9,28 +9,34 @@
 	</head>
 	
 	<body id="background" onload="main(false,false)">
+		<!-- Title -->
 		<div class="card-body">
 			<div class="card-header">
 				<h2>Video Game Sales and Ratings</h2>
 			</div>
 		</div>
+		<!-- Charts -->
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-9" id="container-charts">
+					<!-- Brush -->
 					<div class="col">
 						<h3 class="graph-title">Time Interval</h3>
 						<div id="brush"></div>
 					</div>
 					<div class="row" >
+						<!-- Bar Chart -->
 						<div class="col-7">
 							<h2 class="graph-title" id="showTitle">Top 5: Sales</h2>
 							<div id="bar-chart"></div>
 						</div>
+						<!-- Sunburst -->
 						<div class="col-5 sales">
 							<h2 class="graph-title" id="donutTitle">Donut</h2>
 							<div id="donut"></div>
 						</div>
 					</div>
+					<!-- Annual Data -->
 					<div class="col">
 						<h3 class="graph-title" id="annualSalesTitle">Annual Data</h3>
 						<div class="item"></div>
@@ -40,8 +46,10 @@
 						<div id="annualSales"></div>
 					</div>
 				</div>
+				<!-- Options -->
 				<div class="col-3"  id="options">
 					<h2 class="graph-title" id="optionTitle">Options</h2>
+					<!-- Show buttons -->
 					<label for="category">Show:</label>
 					<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons" >
 						<label class="btn btn-secondary active" id="show">
@@ -51,6 +59,7 @@
 							<input type="radio" name="show" value="Bot5" autocomplete="off" > Bot 5
 						</label>
 					</div>
+					<!-- Category -->
 					<div class="form-group">
 						<label for="category">Category:</label>
 						<select class="form-control" id="category" onchange="main(true, false)">
@@ -59,6 +68,7 @@
 							<option>Developer</option>
 							<option>Platform</option>
 						</select>
+						<!-- Sort By Buttons -->
 						<label for="sumAnnualSales">Sort By:</label>
 						<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons" >
 							<label class="btn btn-secondary active">
@@ -71,6 +81,7 @@
 								<input type="radio" name="sortBy" value="Score" autocomplete="off"> Score
 							</label>
 						</div>
+						<!-- Annual Settings -->
 						<label for="sumAnnualSales">Annual Data:</label>
 						<select class="form-control" id="sumAnnualSales" onchange="main(true, true)">
 							<option>Individual Game Sales</option>
@@ -84,7 +95,6 @@
 				</div>
 			</div>
 		</div>
-		
 	</body>
 	
 	<!-- Library scripts -->

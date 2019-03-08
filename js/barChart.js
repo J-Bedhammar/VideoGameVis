@@ -382,8 +382,8 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	}
 	
 	
-	
-	var top1 = top5[4].yValue;
+	var firstItem = top5.length - 1;
+	var top1 = top5[firstItem].yValue; //top5[4].yValue;
 	
 	var marginTop = 20;
 	var marginLeft = 150;

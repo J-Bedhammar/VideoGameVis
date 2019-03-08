@@ -5,7 +5,7 @@ function sunBurst(data, displayData, columnName){
 	var gamesData = [];
 	var rootName = " "
 	
-	console.log(displayData.yValue);
+	//console.log(displayData.yValue);
 	if (typeof displayData.yValue !== 'undefined')
 		rootName = displayData.yValue;
 	else {

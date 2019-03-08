@@ -209,6 +209,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 	// END OF ANNUAL SALES
 }
 
+
 // DATA EXTRACTION FUNCTIONS ------------------------------------
 
 
