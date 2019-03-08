@@ -1,22 +1,20 @@
 
 function annualSales(data, columnName, itemName, annualSetting){
 	
-	console.log(columnName + ", " +  itemName);
-	
 	var salesArray = [];
 	var nanRemoved = [];
 	
-	//Extract year and global_sales depending on column and itemName. Ex: Publisher - Nintendo
+	// Extract data with valid Year_of_Release and Global_Sales
 	for (var i = 0; i < data.length; i++){
 		var row = data[i];
 
-		// NaN removed, otherwise all data
+		// All data except NaNs 
 		if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
 			continue;
 		else
 			nanRemoved.push({name: row.Name, platform: row.Platform, year: +row.Year_of_Release, sales: +row.Global_Sales, score: +row.Critic_Score});
 	
-		// Filtered array
+		// Filtered array, ex: Publisher - Nintendo
 		if (row[columnName] == itemName){
 			if(isNaN(row.Year_of_Release) || isNaN(row.Global_Sales))
 				continue;
@@ -29,42 +27,38 @@ function annualSales(data, columnName, itemName, annualSetting){
 	salesArray.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 	nanRemoved.sort(function (a,b) {return d3.ascending(a.year, b.year);});
 
-	
 	// Switch between salesArray and nanRemoved depending on Sum/Individual setting
 	var whichArray = nanRemoved;
+	
 	
 	// Show all data, but not NaN years
 	if(itemName == "All" || itemName == "")
 		salesArray = nanRemoved;
 	
-	
 	if(columnName == "Publisher")
 		whichArray = salesArray;
 	
-	// Sum the annual sales
+	
+	// Change data content based on annual data setting
 	if(annualSetting == "sum"){
 		salesArray = annualSums(salesArray);
 		whichArray = salesArray;
 	}
-	
-	// Show annual number of releases 
 	if(annualSetting == "releases"){
 		salesArray = annualReleases(salesArray);
 		whichArray = salesArray;
 	}
-	
-	// Show annual number of releases 
 	if(annualSetting == "score"){
 		salesArray = annualScores(salesArray);
 		whichArray = salesArray;
 	}
-	
 	if(annualSetting == "individualScores"){
 		salesArray = individualScores(salesArray);
 		whichArray = salesArray;
 	}
 	
-	// Scatter plot circle size and array switch
+	
+	// If array only contains one item, switch array and scatterplot circle size
 	var circleRadius = 2;
 	
 	if(salesArray.length == 1){
@@ -75,48 +69,47 @@ function annualSales(data, columnName, itemName, annualSetting){
 			whichArray = nanRemoved;
 	}
 	
-	// Creating margins and figure sizes
+	
+	// Margins and Sizes
     var margin = { top: 20, right: 50, bottom: 30, left: 50 },
         width = $("#annualSales").parent().width() - margin.left - margin.right,
         height = 190 - margin.top - margin.bottom;
 
-	// create svg for annual sales chart
+		
+	// Create svg for line chart (Annual Sales)
 	var svg = d3.select("#annualSales").append("svg")
 		.attr("id", "salesChart")
         .attr("position", "relative")
         .attr("width", "100%")
         .attr("height", height + margin.top + margin.bottom);
-
 	var g = svg.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-		
+	
+	
 	// Parse date for printout
 	var parseDate = d3.timeParse("%Y");
 	
-	// Axes and scales
+	
+	// Axes, Scales, Line
 	var xScale = d3.scaleTime().range([0, width]);
     var yScale = d3.scaleLinear().range([height,0]);
 	var xTime = d3.scaleTime().range([0, width]);
 	
-	// Creating the line
 	var line = d3.line()
 		.x(function(d) { return xScale(d.year)}) //console.log(xScale(d.year));
 		.y(function(d) { return yScale(d.sales)});
 	
 	xScale.domain(d3.extent(nanRemoved, function(d) { return d.year }));
-	//yScale.domain(d3.extent(whichArray, function(d) { return d.sales }));
 	xTime.domain(d3.extent(nanRemoved, function(d) { return parseDate(d.year) }));
 	
-	var maxReleases = d3.max(salesArray, function (d) { return d.sales});
+	var maxReleases = d3.max(salesArray, function (d) { return d.sales});				//yScale.domain(d3.extent(whichArray, function(d) { return d.sales }));
 	yScale.domain([0, maxReleases]);
 	
+	
+	// Metacritic Scores
 	if(annualSetting == "score" || annualSetting == "individualScores"){
 		yScale.domain([0, 100]);
 	}
-		
-	/*this.changeXScale = function (newScale) {
-		xScale = newScale;
-	}*/
 
 	
 	// Append the axes
@@ -136,7 +129,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 			.attr("dy", "0.71em")
 			.attr("text-anchor", "end")
 			.text("Units");
-	} else if (annualSetting == "score" || annualSetting == "individualScores"){
+	}else if (annualSetting == "score" || annualSetting == "individualScores"){
 		g.append("g")
 			.call(d3.axisLeft(yScale))
 			.append("text")
@@ -146,7 +139,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 			.attr("dy", "0.71em")
 			.attr("text-anchor", "end")
 			.text("Metacritic");
-	} else{
+	}else {
 		g.append("g")
 			.call(d3.axisLeft(yScale))
 			.append("text")
@@ -157,6 +150,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 			.attr("text-anchor", "end")
 			.text("Units (Million)");
 	}
+	
 	
 	// Append a path
 	g.append("path")
@@ -169,13 +163,13 @@ function annualSales(data, columnName, itemName, annualSetting){
 		.attr("d", line);
 	
 	
-	// Sales Information div
+	// Sales Information div - tooltip
 	var infoDiv = d3.select("body").append("div")	
 		.attr("class", "salesInfo")
 		.style("display", "none");
 	
 	
-	// Add the circles and mouseover information
+	// Add the scatter plot and mouseover information
 	svg.selectAll("dot")
 		.data(salesArray)
 		.enter().append("circle")
@@ -193,11 +187,11 @@ function annualSales(data, columnName, itemName, annualSetting){
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 40) + "px");
 			if (annualSetting == "sum")
-				infoDiv.html("Year: " + d.year + "</br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M");
+				infoDiv.html("<strong>Year: " + d.year + "</strong></br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M");
             if (annualSetting == "releases")
-				infoDiv.html("Year: " + d.year + "</br>Releases: "  + d.sales);
+				infoDiv.html("<strong>Year: " + d.year + "</strong></br>Releases: "  + d.sales);
 			if (annualSetting == "score")
-				infoDiv.html("Year: " + d.year + "</br>Average Score: "  + parseFloat(d.sales).toFixed(2));
+				infoDiv.html("<strong>Year: " + d.year + "</strong></br>Average Score: "  + parseFloat(d.sales).toFixed(2));
 			if (annualSetting == "individualScores")
 				infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br>Score: "  + parseFloat(d.sales).toFixed(2));
 			})
@@ -215,13 +209,15 @@ function annualSales(data, columnName, itemName, annualSetting){
 	// END OF ANNUAL SALES
 }
 
+// DATA EXTRACTION FUNCTIONS ------------------------------------
+
+
 // Show annual sum
+
 function annualSums(salesArray){
 	var summedSales = [];
 	var tempYear = salesArray[0].year;
 	var currYearSales = 0;
-	
-	//console.log(salesArray)
 	
 	for (var i = 0; i < salesArray.length; i++){
 		
@@ -237,18 +233,17 @@ function annualSums(salesArray){
 			summedSales.push( { sales: currYearSales, year: salesArray[i].year});
 		
 	}
-		
-	//console.log(summedSales);
+
 	return summedSales;
 }
 
+
 // Show annual releases
+
 function annualReleases(salesArray){
 	var releaseArray = [];
-	//console.log(salesArray[0]);
 	var tempYear = salesArray[0].year;
 	var currReleases = 0;
-
 	
 	for (var i = 0; i < salesArray.length; i++){
 		
@@ -268,66 +263,69 @@ function annualReleases(salesArray){
 	return releaseArray;
 }
 
+
 // Show annual score
+
 function annualScores(salesArray){
 	var scoreArray = [];
 	var tempYear = salesArray[0].year;
 	var currYearScores = 0;
 	var currReleases = 0;
 	
-	
 	for (var i = 0; i < salesArray.length; i++){
-
+		
 		if(isNaN(salesArray[i].score) || +(salesArray[i].score) == 0){
 			if( i == salesArray.length-1){
 				if(currReleases == 0)
 					currReleases = 1;
 				scoreArray.push( { sales: (currYearScores/currReleases), year: tempYear});
 			}
-			
 			continue;
 		}
+		
 		if(tempYear == salesArray[i].year){
 			currYearScores += salesArray[i].score;
 			currReleases += 1;
-		}
-		else{
+		}else{
 			if(currReleases == 0){
 				currYearScores = salesArray[i].score;
 				currReleases = 1;
 				tempYear = salesArray[i].year;
-			}
-			else{
+			}else{
 				scoreArray.push( { sales: (currYearScores/currReleases), year: tempYear});
 				currYearScores = salesArray[i].score;
 				currReleases = 1;
 				tempYear = salesArray[i].year;
 			}
 		}
+		
 		//Last item
 		if( i == salesArray.length-1){
 			scoreArray.push( { sales: (currYearScores/currReleases), year: salesArray[i].year});
 		}
-		
 	}
-		
-	//console.log(scoreArray);
+
 	return scoreArray;
 }
 
-// Show annual score
+
+// Show individual score
+
 function individualScores(salesArray){
 	var scoreArray = [];
 	
 	for (var i = 0; i < salesArray.length; i++){
-
+		
 		if(isNaN(salesArray[i].score) || +(salesArray[i].score) == 0){
 			continue;
 		}
-		
 		scoreArray.push( { name: salesArray[i].name, platform: salesArray[i].platform, sales: salesArray[i].score, year: salesArray[i].year});
 	}
 		
-	//console.log(scoreArray);
 	return scoreArray;
 }
+
+
+
+
+
