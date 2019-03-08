@@ -245,6 +245,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 				.attr("fill", "black")
 				.attr("r", circleRadius);
 			infoDiv.style("display", "none");
+			d3.select(".x-line").style("display", "none");
 			d3.select(".y-line").style("display", "none");
 		})
 	
