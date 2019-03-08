@@ -383,6 +383,9 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	
 	}
 	
+	
+	var top1 = top5[4];
+	
 	var marginTop = 20;
 	var marginLeft = 150;
 	var marginBottom = 30;
@@ -496,76 +499,81 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	svg.append("g")
 		.call(yAxis);
 		
+	return top1;
+}
 		
-	function updateCharts(displayData, itemName){
-		var newAnnualSetting = document.getElementById('bar-chart').className;
-		var title = d3.select("#annualSalesTitle")
 		
-		if( itemName != ""){
-			if(newAnnualSetting == "sum")
-				title.html("Sales: " + itemName);
-			else if(newAnnualSetting == "releases")
-				title.html("Releases: " + itemName);
-			else if(newAnnualSetting == "score")
-				title.html("Average Score: " + itemName);
-			else
-				title.html("Individual Sales: " + itemName);
 		
-			d3.select(".item").attr("id", itemName);
-		}
-		else{
-			title.html("Annual Sales: None")
-		}
-		
-		d3.select("#donut > *").remove();
-		d3.select(".sunburstName > *").remove();
-		d3.select("#annualSales > *").remove();
-		
-		sunBurst(data, displayData, columnName);
-		annualSales(data, columnName, itemName, newAnnualSetting);
-		
+function updateCharts(displayData, itemName){
+	var newAnnualSetting = document.getElementById('bar-chart').className;
+	var title = d3.select("#annualSalesTitle")
+	
+	if( itemName != ""){
+		if(newAnnualSetting == "sum")
+			title.html("Sales: " + itemName);
+		else if(newAnnualSetting == "releases")
+			title.html("Releases: " + itemName);
+		else if(newAnnualSetting == "score")
+			title.html("Average Score: " + itemName);
+		else
+			title.html("Individual Sales: " + itemName);
+	
+		d3.select(".item").attr("id", itemName);
+	}
+	else{
+		title.html("Annual Sales: None")
 	}
 	
-	function mouseover(d) {
-		if( columnName == "Name"){
-			if( sortBy == "Sales") {
-				tooltip.style("display", "inline-block")
-				.style("left", d3.event.pageX + 10 + "px")
-				.style("top", d3.event.pageY - 15 + "px")
-				.html("<strong>" + d.yValue + " (" + d.Platform + ") </strong> <br/> Global Sales: " + parseFloat(Math.round(d.xValue * 100) / 100).toFixed(2) + "M");
-				d3.select(this)
-				.attr("opacity", 0.6);
-			}else {
-				tooltip.style("display", "inline-block")
-				.style("left", d3.event.pageX + 10 + "px")
-				.style("top", d3.event.pageY - 15 + "px")
-				.html("<strong>" + d.yValue + " (" + d.Platform + ") </strong> <br/> Critic Score: " + d.xValue);
-				d3.select(this)
-				.attr("opacity", 0.6);
-			}
+	d3.select("#donut > *").remove();
+	d3.select(".sunburstName > *").remove();
+	d3.select("#annualSales > *").remove();
+	
+	sunBurst(data, displayData, columnName);
+	annualSales(data, columnName, itemName, newAnnualSetting);
+	
+}
+
+
+
+function mouseover(d) {
+	if( columnName == "Name"){
+		if( sortBy == "Sales") {
+			tooltip.style("display", "inline-block")
+			.style("left", d3.event.pageX + 10 + "px")
+			.style("top", d3.event.pageY - 15 + "px")
+			.html("<strong>" + d.yValue + " (" + d.Platform + ") </strong> <br/> Global Sales: " + parseFloat(Math.round(d.xValue * 100) / 100).toFixed(2) + "M");
+			d3.select(this)
+			.attr("opacity", 0.6);
+		}else {
+			tooltip.style("display", "inline-block")
+			.style("left", d3.event.pageX + 10 + "px")
+			.style("top", d3.event.pageY - 15 + "px")
+			.html("<strong>" + d.yValue + " (" + d.Platform + ") </strong> <br/> Critic Score: " + d.xValue);
+			d3.select(this)
+			.attr("opacity", 0.6);
+		}
+	} else{
+		if(sortBy == "Sales"){
+			tooltip.style("display", "inline-block")
+			.style("left", d3.event.pageX + 10 + "px")
+			.style("top", d3.event.pageY - 15 + "px")
+			.html("<strong>" + d.yValue +  "</strong> <br/> Global Sales: " + parseFloat(Math.round(d.xValue * 100) / 100).toFixed(2) + "M");
+			d3.select(this)
+			.attr("opacity", 0.6);
+		} else if (sortBy == "Releases"){
+			tooltip.style("display", "inline-block")
+			.style("left", d3.event.pageX + 10 + "px")
+			.style("top", d3.event.pageY - 15 + "px")
+			.html("<strong>" + d.yValue +  "</strong> <br/> Game releases: " + d.xValue);
+			d3.select(this)
+			.attr("opacity", 0.6);
 		} else{
-			if(sortBy == "Sales"){
-				tooltip.style("display", "inline-block")
-				.style("left", d3.event.pageX + 10 + "px")
-				.style("top", d3.event.pageY - 15 + "px")
-				.html("<strong>" + d.yValue +  "</strong> <br/> Global Sales: " + parseFloat(Math.round(d.xValue * 100) / 100).toFixed(2) + "M");
-				d3.select(this)
-				.attr("opacity", 0.6);
-			} else if (sortBy == "Releases"){
-				tooltip.style("display", "inline-block")
-				.style("left", d3.event.pageX + 10 + "px")
-				.style("top", d3.event.pageY - 15 + "px")
-				.html("<strong>" + d.yValue +  "</strong> <br/> Game releases: " + d.xValue);
-				d3.select(this)
-				.attr("opacity", 0.6);
-			} else{
-				tooltip.style("display", "inline-block")
-				.style("left", d3.event.pageX + 10 + "px")
-				.style("top", d3.event.pageY - 15 + "px")
-				.html("<strong>" + d.yValue +  "</strong> <br/> Critic Score: " + parseFloat(Math.round(d.xValue * 100) / 100).toFixed(2));
-				d3.select(this)
-				.attr("opacity", 0.6);
-			}
+			tooltip.style("display", "inline-block")
+			.style("left", d3.event.pageX + 10 + "px")
+			.style("top", d3.event.pageY - 15 + "px")
+			.html("<strong>" + d.yValue +  "</strong> <br/> Critic Score: " + parseFloat(Math.round(d.xValue * 100) / 100).toFixed(2));
+			d3.select(this)
+			.attr("opacity", 0.6);
 		}
 	}
 }
