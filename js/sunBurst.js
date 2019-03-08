@@ -10,13 +10,13 @@ function sunBurst(data, displayData, columnName){
 		rootName = displayData.yValue;
 	else {
 		if( columnName == "Name"){
-			rootName = displayData.Name;
+			rootName = displayData;
 		}else if( columnName == "Publisher"){
-			rootName = displayData.Publisher;
+			rootName = displayData;
 		}else if( columnName == "Developer"){
-			rootName = displayData.Developer;
+			rootName = displayData;
 		}else if(columnName == "Platform"){
-			rootName = displayData.Platform;
+			rootName = displayData;
 		}
 	}	
 		

@@ -100,7 +100,7 @@ function brushChart(data, columnName, itemName, annualSetting, show, sortBy){
 		show = $('input[type=radio][name=show]:checked').val();
 		sortBy = $('input[type=radio][name=sortBy]:checked').val();
 		
-		var top1 = barChart(targetData, newColumn, newAnnualSetting, show, sortBy);
+		barChart(targetData, newColumn, newAnnualSetting, show, sortBy);
 		annualSales(targetData, newColumn, newItem, newAnnualSetting);
     }
 	

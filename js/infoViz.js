@@ -36,8 +36,8 @@ function infoViz(data, update, updateAnnual){
 	
 	if(!update && !updateAnnual){// Load page
 		var annualSetting = "individual";
-		barChart(data, columnName, annualSetting, show, sortBy);
-		sunBurst(data, data[0], columnName);
+		var top1 = barChart(data, columnName, annualSetting, show, sortBy);
+		sunBurst(data, top1, columnName);
 		annualSales(data, columnName, itemName, annualSetting);
 		brushChart(data, columnName, itemName, annualSetting, show, sortBy);
 	}
@@ -103,8 +103,8 @@ function infoViz(data, update, updateAnnual){
 		d3.select("#bar-chart > *").remove();
 		d3.select("#donut > *").remove();
 		d3.select("#bar-chart > *").remove();
-		barChart(targetData, columnName, annualSetting, show, sortBy );
-		sunBurst(targetData, targetData[0], columnName);
+		top1 = barChart(targetData, columnName, annualSetting, show, sortBy );
+		sunBurst(targetData, top1, columnName);
 	});
 
 	$('input[type=radio][name=sortBy]').change(function() {
@@ -118,7 +118,7 @@ function infoViz(data, update, updateAnnual){
 		d3.select("#bar-chart > *").remove();
 		d3.select("#donut > *").remove();
 		d3.select(".sunburstName > *").remove();
-		top1 = barChart(targetData, columnName, annualSetting, show, sortBy);
+		var top1 = barChart(targetData, columnName, annualSetting, show, sortBy);
 		sunBurst(targetData, top1, columnName);
 	});
 	// END OF infoViz
