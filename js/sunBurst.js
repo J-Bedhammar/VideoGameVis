@@ -5,6 +5,13 @@ function sunBurst(data, displayData, columnName){
 	var gamesData = [];
 	var rootName = " "
 	
+	//if no data exists, a place holder takes place
+	if(displayData == "NO DATA"){
+		console.log(displayData);
+		columnName = "Name";
+		displayData = data[0].Name;
+	}
+	
 	//Extracts the name of the object shown, which will be used as the root node when creating the hierarchy data
 	if (typeof displayData.yValue !== 'undefined')
 		rootName = displayData.yValue;

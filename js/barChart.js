@@ -5,7 +5,6 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	var top5 = [];
 	var axisText;
 	
-	
 	//extracts the top 5 values from the data depending on columnName (settings)
 	if( columnName == "Name"){
 		
@@ -399,9 +398,19 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	
 	}
 	
-
 	//the highest element in the top 5 array, later used in the sunburst chart
-	var top1 = top5[top5.length - 1].yValue; //top5[4].yValue;
+	// Or create an placeholder if the array if it is empty
+	var top1 =  "";
+	if ( top5.length  != 0){
+		top1 = top5[top5.length - 1].yValue;
+	}	
+	else {
+		top5.push(data[0]);
+		top5[0].Name = "NO DATA";
+		top5[0].yValue = "NO DATA";
+		top5[0].xValue = 0;
+		top1 = "NO DATA";
+	}
 	
 	var marginTop = 20;
 	var marginLeft = 150;
