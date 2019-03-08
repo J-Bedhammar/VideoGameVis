@@ -485,7 +485,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		.on("click", function(d){
 			// need to recalculate the number when clicked upon, because they are sorted differently depending on settings
 			if( show == "Top5")
-				var num = 4-d.nr;
+				var num = (top5.length - 1)-d.nr;
 			else
 				var num = d.nr; 
 	
