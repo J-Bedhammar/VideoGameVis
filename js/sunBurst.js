@@ -10,13 +10,13 @@ function sunBurst(data, displayData, columnName){
 		rootName = displayData.yValue;
 	else {
 		if( columnName == "Name"){
-			rootName = "Wii Sports";
+			rootName = displayData;
 		}else if( columnName == "Publisher"){
-			rootName = "Nintendo";
+			rootName = displayData;
 		}else if( columnName == "Developer"){
-			rootName = "Ubisoft";
+			rootName = displayData;
 		}else if(columnName == "Platform"){
-			rootName = "XOne";
+			rootName = displayData;
 		}
 	}	
 		

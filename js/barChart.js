@@ -8,8 +8,6 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	if( columnName == "Name"){
 		
 		sortedData = data;
-		
-		
 		if(sortBy == "Sales")
 			if(show == "Top5"){
 				sortedData.sort(function(a, b){
@@ -383,6 +381,10 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	
 	}
 	
+	
+	
+	var top1 = top5[4].yValue;
+	
 	var marginTop = 20;
 	var marginLeft = 150;
 	var marginBottom = 30;
@@ -496,6 +498,10 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	svg.append("g")
 		.call(yAxis);
 		
+	return top1;
+
+		
+		
 		
 	function updateCharts(displayData, itemName){
 		var newAnnualSetting = document.getElementById('bar-chart').className;
@@ -525,7 +531,9 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		annualSales(data, columnName, itemName, newAnnualSetting);
 		
 	}
-	
+
+
+
 	function mouseover(d) {
 		if( columnName == "Name"){
 			if( sortBy == "Sales") {
@@ -568,4 +576,5 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			}
 		}
 	}
+
 }
