@@ -30,14 +30,12 @@ function annualSales(data, columnName, itemName, annualSetting){
 	// Switch between salesArray and nanRemoved depending on Sum/Individual setting
 	var whichArray = nanRemoved;
 	
-	
 	// Show all data, but not NaN years
-	if(itemName == "All" || itemName == "")
+	if(itemName == "All" || itemName == "" )// || salesArray.length == 0)
 		salesArray = nanRemoved;
 	
 	if(columnName == "Publisher")
 		whichArray = salesArray;
-	
 	
 	// Change data content based on annual data setting
 	if(annualSetting == "sum"){
@@ -117,7 +115,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 		.attr("class","axis axis--x")
 		.attr("transform", "translate(0, " + height + ")")
 		.call(d3.axisBottom(xTime));
-		
+	
 	// Append text depending on setting
 	if(annualSetting == "releases"){
 		g.append("g")
@@ -150,6 +148,37 @@ function annualSales(data, columnName, itemName, annualSetting){
 			.attr("text-anchor", "end")
 			.text("Units (Million)");
 	}
+
+
+	// Gridlines Y
+	function make_y_gridlines() {		
+		return d3.axisLeft(yScale)
+			.ticks(5)
+	}
+
+	g.append("g")			
+		.attr("class", "grid")
+		.call(make_y_gridlines()
+			.tickSize(-width)
+			.tickFormat(""));
+	
+	// X line
+    g.append("line")
+        .attr("class", "x-line")
+        .style("stroke", "red")
+        .style("stroke-dasharray", "3,3")
+        .style("opacity", 0.5)
+        .attr("y1", 0)
+        .attr("y2", height);
+
+    // Y line
+    g.append("line")
+        .attr("class", "y-line")
+        .style("stroke", "red")
+        .style("stroke-dasharray", "3,3")
+        .style("opacity", 0.5)
+        .attr("x1", width)
+        .attr("x2", width);
 	
 	
 	// Append a path
@@ -181,11 +210,25 @@ function annualSales(data, columnName, itemName, annualSetting){
             d3.select(this)
 				.transition(200)
 				.attr("fill", "red")
-				.attr("r", 10);
+				.attr("r", 8);
 			infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M")
 				.style("display", "inline-block")
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 40) + "px");
+			
+			// Grid lines
+			d3.select(".x-line")
+				.attr("transform", "translate(" + xScale(d.year) + "," +
+                           yScale(d.sales) + ")")
+                .attr("y2", height - yScale(d.sales))
+				.style("display", "inline-block");
+			d3.select(".y-line")
+				.attr("transform", "translate(" + width * -1 + "," +
+                           yScale(d.sales) + ")")
+                .attr("x2", width + width)
+				.style("display", "inline-block");
+	
+			// Change title
 			if (annualSetting == "sum")
 				infoDiv.html("<strong>Year: " + d.year + "</strong></br>Global Sales: "  + parseFloat(d.sales).toFixed(2) + "M");
             if (annualSetting == "releases")
@@ -194,15 +237,15 @@ function annualSales(data, columnName, itemName, annualSetting){
 				infoDiv.html("<strong>Year: " + d.year + "</strong></br>Average Score: "  + parseFloat(d.sales).toFixed(2));
 			if (annualSetting == "individualScores")
 				infoDiv.html("<strong>" + d.name + " (" + d.platform + ")" + "</strong>" + "</br> Year: " + d.year + "</br>Score: "  + parseFloat(d.sales).toFixed(2));
+			
 			})
 		.on("mouseout", function(d){
 			d3.select(this)
 				.transition(200)
 				.attr("fill", "black")
 				.attr("r", circleRadius);
-			/*dot_year.text("");
-			dot_sales.text("");*/
 			infoDiv.style("display", "none");
+			d3.select(".y-line").style("display", "none");
 		})
 	
 	
