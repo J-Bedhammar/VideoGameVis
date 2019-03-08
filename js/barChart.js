@@ -481,7 +481,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			
 		});
 	
-	var xAxis = d3.axisTop(x).ticks(10, "s");
+	var xAxis = d3.axisTop(x).ticks(10);
 	var yAxis = d3.axisLeft(names);
 	
 	console.log(xAxis.length);
@@ -490,8 +490,6 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		.call(xAxis)
 	.append("text")
 		.attr("x", containerWidth*9.5/14)
-		//.attr("y", 20)
-		//.attr("dx", "0.71em")
 		.attr("fill", "#000")
 		.attr("text-anchor", "end")
 		.text(axisText);
