@@ -451,15 +451,15 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	//shorten the names of the variables shown.
 	names.domain(top5.map(function(d) { 
 		if(columnName == "Name"){
-			if( d.yValue.length > 23)
-				return d.yValue.substring(0,16) + "... (" + d.Platform + ")";
+			if( d.yValue.length > 20)
+				return (d.nr+1) + ". " + d.yValue.substring(0,16) + "... (" + d.Platform + ")";
 			else
-				return d.yValue + " (" +  d.Platform + ")";
+				return (d.nr+1) + ". " + d.yValue + " (" +  d.Platform + ")";
 		} else{
-			if( d.yValue.length > 23)
-				return d.yValue.substring(0,20) + "...";
+			if( d.yValue.length > 20)
+				return (d.nr+1) + ". " + d.yValue.substring(0,20) + "...";
 			else
-				return d.yValue;
+				return (d.nr+1) + ". " + d.yValue;
 		}
 	}));
 	
