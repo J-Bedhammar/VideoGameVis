@@ -1,12 +1,15 @@
 
 function barChart(data, columnName, annualSetting, show, sortBy){
 
-	//extracts the top 5 values from the data
+	
 	var top5 = [];
 	var axisText;
 	
+	
+	//extracts the top 5 values from the data depending on columnName (settings)
 	if( columnName == "Name"){
 		
+		//sorts the data based on settings (show and sortBy)
 		sortedData = data;
 		if(sortBy == "Sales")
 			if(show == "Top5"){
@@ -40,6 +43,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		var counter = 0;
 		
+		//extracts the top 5 elements into a new array
 		for ( i = 0; i< sortedData.length; i++){
 			
 			//if score is zero, ignore it
@@ -70,9 +74,10 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			top5.sort(function(a, b) { return b.nr - a.nr; });
 		else
 			top5.sort(function(a, b) { return a.nr - b.nr; });
-		
+	
 	} else if( columnName == "Publisher"){
 		
+		//sorts the data based on publisher and settings (show and sortBy)
 		sortedData = data;
 		sortedData.sort(function(a, b){
 			if(a.Publisher < b.Publisher) { return -1; }
@@ -87,6 +92,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		var scoreCounter = 0;
 		var publisherArray = [];
 		
+		// creates a new array with sorted and relevant data
 		for( var i = 0; i < sortedData.length; i++){
 			
 			if(tempPublisher == sortedData[i].Publisher){
@@ -116,11 +122,13 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				
 				tempPublisher = sortedData[i].Publisher;				
 			}
+			
 			//Last item
 			if( i == sortedData.length-1)
 				publisherArray.push( { nrOfGames: currGames, publisher: tempPublisher, score: (publisherScore/scoreCounter), sales: publisherSales });		
 		}
 		
+		//sorts the new array depending on settings (sortBy and show)
 		if( show == "Top5"){
 			if( sortBy == "Sales")
 				publisherArray.sort(function(a, b) { return b.sales - a.sales; });
@@ -140,6 +148,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		var counter = 0;
 		
+		//extracts the top 5 elements and store them in a new array.
 		for ( i = 0; i< publisherArray.length; i++){
 			
 			if( sortBy == "Score" && (+publisherArray[i].score == 0 || isNaN(+publisherArray[i].score)))
@@ -166,8 +175,6 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			counter++;
 		}
 		
-		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
-		
 		// sorts the data depending on top5 or bot5
 		if( show == "Top5")
 			top5.sort(function(a, b) { return b.nr - a.nr; });
@@ -176,6 +183,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 	} else if( columnName == "Developer"){
 		
+		//sorts the data by Developer
 		sortedData = data;
 		sortedData.sort(function(a, b){
 			if(a.Developer < b.Developer) { return -1; }
@@ -190,6 +198,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		var scoreCounter = 0;
 		var developerArray = [];
 		
+		//creates a new array with the sorted and relevant data
 		for( var i = 0; i < sortedData.length; i++){
 
 			if(tempDeveloper == sortedData[i].Developer && sortedData[i].Developer != []) {
@@ -197,11 +206,13 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				developerSales += +sortedData[i].Global_Sales;
 				developerScore += +sortedData[i].Critic_Score;
 				
+				//checks if it has any critic score
 				if(+sortedData[i].Critic_Score != 0 && !isNaN(+sortedData[i].Critic_Score))
 					scoreCounter += 1;
 				
 			}else{
 				
+				// set scoreCounter to 1 if it is 0, because developerScore is divided by it later.
 				if( scoreCounter == 0)
 					scoreCounter = 1;
 				
@@ -210,6 +221,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				developerSales = +sortedData[i].Global_Sales;
 				developerScore = +sortedData[i].Critic_Score;
 				
+				//checks if it has any score
 				if(+sortedData[i].Critic_Score != 0 && !isNaN(+sortedData[i].Critic_Score))
 					scoreCounter = 1;
 				else
@@ -217,12 +229,14 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				
 				tempDeveloper = sortedData[i].Developer;				
 			}
+			
 			//Last item
 			if( i == sortedData.length-1){
 				developerArray.push( { nrOfGames: currGames, developer: tempDeveloper, score: (developerScore/scoreCounter), sales: developerSales } );		
 			}
 		}
 		
+		//sorts the data based on settings (sortBy and show)
 		if( show == "Top5"){
 			if( sortBy == "Sales")
 				developerArray.sort(function(a, b) { return b.sales - a.sales; });
@@ -241,15 +255,17 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 		
 		var counter = 0;
+		//extracts the top 5 elements into a new array
 		for ( i = 0; i< developerArray.length; i++){
 			
-			if( developerArray[i].developer == []){
+			//checks if the developer slot is empty
+			if( developerArray[i].developer == [])
 				continue;
-				console.log("noDev");
-			}
-			if( sortBy == "Score" && (+developerArray[i].score == 0|| isNaN(+developerArray[i].score))){
+			
+			//checks if it has any score
+			if( sortBy == "Score" && (+developerArray[i].score == 0|| isNaN(+developerArray[i].score)))
 				continue;
-			}
+			
 			
 			top5.push(developerArray[i]);
 			top5[counter].nr = counter;
@@ -272,7 +288,6 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			counter++;
 		}
 		
-		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
 		// sorts the data depending on top5 or bot5
 		if( show == "Top5")
 			top5.sort(function(a, b) { return b.nr - a.nr; });
@@ -281,6 +296,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		
 	} else if ( columnName == "Platform"){
 		
+		//sorts the data based on platform
 		sortedData = data;
 		sortedData.sort(function(a, b){
 			if(a.Platform < b.Platform) { return -1; }
@@ -299,6 +315,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		var platformSales= 0;
 		var platformArray = [];
 		
+		//creates a new array with the relevant and sorted data
 		for( var i = 0; i < sortedData.length; i++){
 
 			if(tempPlatform == sortedData[i].Platform){
@@ -330,6 +347,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 				platformArray.push( { nrOfGames: currGames, platform: tempPlatform, score: (platformScore/scoreCounter), sales: platformSales});		
 		}
 		
+		//sorts the new array based on settings
 		if( show == "Top5"){
 			if( sortBy == "Sales")
 				platformArray.sort(function(a, b) { return b.sales - a.sales; });
@@ -347,6 +365,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		}
 		
 		var counter = 0;
+		//extracts the top5 elements into a new array
 		for ( i = 0; i< platformArray.length; i++){
 			if( sortBy == "Score" && (+platformArray[i].score == 0 || isNaN(+platformArray[i].score)))
 				continue;
@@ -372,7 +391,6 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			counter ++;
 		}
 		
-		//top5.sort(function(a, b) { return a.xValue - b.xValue; });
 		// sorts the data depending on top5 or bot5
 		if( show == "Top5")
 			top5.sort(function(a, b) { return b.nr - a.nr; });
@@ -381,8 +399,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	
 	}
 	
-	
-	
+	//the highest element in the top 5 array, later used in the sunburst chart
 	var top1 = top5[4].yValue;
 	
 	var marginTop = 20;
@@ -393,7 +410,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	var containerWidth =  $("#bar-chart").parent().width();
 	var containerHeight = 240 - marginTop - marginBottom;
 	
-	//creates scales in x and y
+	//creates scales in x and y, also has a variable to display the names in the chart
 	var x = d3.scaleLinear()
 		.range([0, containerWidth*0.6]);
 	var y = d3.scaleBand().range([containerHeight - marginBottom, 0])
@@ -421,7 +438,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	//map the data to the x axis
 	x.domain([0, maxX]);
 	
-	//shorten the names of the games
+	//shorten the names of the variables shown.
 	names.domain(top5.map(function(d) { 
 		if(columnName == "Name"){
 			if( d.yValue.length > 23)
@@ -441,13 +458,14 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 		.append("div")
 		.style("display", "none")
 		.attr("class","salesInfo");
-		
+	
+	//creates a range of color used on the bars
 	var barColor = d3.scaleLinear()
 		.range(["#E60000", "#CC0000", "#B30000", "#990000", "#800000"]);
 	
 	var displayData = " ";
 	
-	//attaches the x and y to the bars
+	//creates the bars
 	svg.selectAll(".bar")
 		.data(top5)
 		.enter()
@@ -464,12 +482,11 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			.attr("opacity", 1.0);
 		})
 		.on("click", function(d){
-			// need to recalculate the number, because it is sorted lowest to highest
+			// need to recalculate the number when clicked upon, because they are sorted differently depending on settings
 			if( show == "Top5")
 				var num = 4-d.nr;
 			else
 				var num = d.nr; 
-			//var num = 4-d.nr;
 	
 			var displayData = top5[num];
 			var itemName = displayData.yValue;
@@ -479,14 +496,15 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			d3.select(this)
 				.attr("fill", "#009900");
 			
+			//update the other charts when an element is clicked on
 			updateCharts(displayData, itemName);
 			
 		});
 	
+	//creates the axes
 	var xAxis = d3.axisTop(x).ticks(10);
 	var yAxis = d3.axisLeft(names);
-	
-	//creates axes for the bar chart 	
+	 	
 	svg.append("g")
 		.call(xAxis)
 	.append("text")
@@ -498,15 +516,18 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	svg.append("g")
 		.call(yAxis);
 		
+		
 	return top1;
-
-		
-		
-		
+	
+	
+	
+	
+	//Called when any bar is clicked om
 	function updateCharts(displayData, itemName){
 		var newAnnualSetting = document.getElementById('bar-chart').className;
 		var title = d3.select("#annualSalesTitle")
 		
+		//sets the title on the line chart
 		if( itemName != ""){
 			if(newAnnualSetting == "sum")
 				title.html("Sales: " + itemName);
@@ -523,17 +544,19 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 			title.html("Annual Sales: None")
 		}
 		
+		//remove the old elements
 		d3.select("#donut > *").remove();
 		d3.select(".sunburstName > *").remove();
 		d3.select("#annualSales > *").remove();
 		
+		//creates new charts
 		sunBurst(data, displayData, columnName);
 		annualSales(data, columnName, itemName, newAnnualSetting);
 		
 	}
 
 
-
+	//called when hover over an element
 	function mouseover(d) {
 		if( columnName == "Name"){
 			if( sortBy == "Sales") {
