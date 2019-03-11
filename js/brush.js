@@ -4,7 +4,7 @@ function brushChart(data, columnName, itemName, annualSetting, show, sortBy){
 	// Margins and Sizes
     var margin = { top: 10, right: 50, bottom: 30, left: 50 },
         width = $("#brush").parent().width() - margin.left - margin.right,
-        height = 55 - margin.top - margin.bottom;
+        height = 60 - margin.top - margin.bottom;
 	
 	
 	// Create svg for brush chart

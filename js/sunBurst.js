@@ -41,7 +41,7 @@ function sunBurst(data, displayData, columnName){
 	var marginBottom = 30;
 	
 	var width = $("#donut").parent().width();
-	var height = (240 - marginTop - marginBottom)/2;
+	var height = (300 - marginTop - marginBottom)/2;
 	var radius = Math.min(width, height)/ 2;
 	
 	// decides where to put the graph and creates a svg element

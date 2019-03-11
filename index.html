@@ -50,7 +50,7 @@
 				<div class="col-3"  id="options">
 					<h2 class="graph-title" id="optionTitle">Options</h2>
 					<!-- Show buttons -->
-					<label for="category">Show:</label>
+					<label class="optionSubTitle" for="category">Show:</label>
 					<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons" >
 						<label class="btn btn-secondary active" id="show">
 							<input type="radio" name="show" value="Top5" autocomplete="off" checked> Top 5
@@ -61,15 +61,15 @@
 					</div>
 					<!-- Category -->
 					<div class="form-group">
-						<label for="category">Category:</label>
-						<select class="form-control" id="category" onchange="main(true, false)">
+						<label class="optionSubTitle" for="category">Category:</label>
+						<select class="form-control buttonContainer" id="category" onchange="main(true, false)">
 							<option>Game</option>
 							<option>Publisher</option>
 							<option>Developer</option>
 							<option>Platform</option>
 						</select>
 						<!-- Sort By Buttons -->
-						<label for="sumAnnualSales">Sort By:</label>
+						<label class="optionSubTitle" for="sumAnnualSales">Sort By:</label>
 						<div class="btn-group btn-group-toggle buttonContainer" data-toggle="buttons" >
 							<label class="btn btn-secondary active">
 								<input type="radio" name="sortBy" value="Sales" autocomplete="off" checked> Sales
@@ -82,8 +82,8 @@
 							</label>
 						</div>
 						<!-- Annual Settings -->
-						<label for="sumAnnualSales">Annual Data:</label>
-						<select class="form-control" id="sumAnnualSales" onchange="main(true, true)">
+						<label class="optionSubTitle" for="sumAnnualSales">Annual Data:</label>
+						<select class="form-control buttonContainer" id="sumAnnualSales" onchange="main(true, true)">
 							<option>Individual Game Sales</option>
 							<option>Individual Game Scores</option>
 							<option>Sales Per Year</option>

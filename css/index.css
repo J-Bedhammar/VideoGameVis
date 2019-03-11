@@ -1,9 +1,10 @@
+
 /* FONTS */
 .graph-title{
 	text-align: center;
 	font-size: 1.25rem;
 	color: #545454;
-	margin-top: 0.5rem;
+	margin-top: 2rem;
 }
 
 label{
@@ -17,6 +18,11 @@ label{
 	height: 100%;
 }
 
+#leftContainer{
+	background-color: #800000;	
+	width: 1rem !important;
+	height: 100%;
+}
 
 #options{
 	background-color: #800000;
@@ -33,10 +39,17 @@ label{
 }
 
 #container-charts{
-	min-height: 80vh;
+	min-height: 85vh;
+	border: 1rem #800000;
+	border-left-style: solid;
 }
 
+
 /* CLASS */
+.optionSubTitle{
+	margin-left: 6%;
+}
+
 .sales{
 	position: relative;
 	width: 100%;
@@ -88,8 +101,10 @@ label{
 
 /* BUTTONS */
 .buttonContainer{
-	width: 100%;
+	width: 90% !important;
+	float: center;
 	margin-top: 0;
+	margin-left: 5%;
 }
 
 .btn{

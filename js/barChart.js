@@ -418,7 +418,7 @@ function barChart(data, columnName, annualSetting, show, sortBy){
 	
 	var container = $("#bar-chart");
 	var containerWidth =  $("#bar-chart").parent().width();
-	var containerHeight = 240 - marginTop - marginBottom;
+	var containerHeight = 300 - marginTop - marginBottom;
 	
 	//creates scales in x and y, also has a variable to display the names in the chart
 	var x = d3.scaleLinear()
