@@ -71,7 +71,7 @@ function annualSales(data, columnName, itemName, annualSetting){
 	// Margins and Sizes
     var margin = { top: 20, right: 50, bottom: 30, left: 50 },
         width = $("#annualSales").parent().width() - margin.left - margin.right,
-        height = 250 - margin.top - margin.bottom;
+        height = 300 - margin.top - margin.bottom;
 
 		
 	// Create svg for line chart (Annual Sales)
